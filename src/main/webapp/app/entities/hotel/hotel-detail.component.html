@@ -1,0 +1,64 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="hotel">
+            <h2><span>Hotel</span> {{hotel.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Image</span></dt>
+                <dd>
+                    <div *ngIf="hotel.image">
+                        <a (click)="openFile(hotel.imageContentType, hotel.image)">
+                            <img [src]="'data:' + hotel.imageContentType + ';base64,' + hotel.image" style="max-width: 100%;" alt="hotel image"/>
+                        </a>
+                        {{hotel.imageContentType}}, {{byteSize(hotel.image)}}
+                    </div>
+                </dd>
+                <dt><span>Name</span></dt>
+                <dd>
+                    <span>{{hotel.name}}</span>
+                </dd>
+                <dt><span>Type</span></dt>
+                <dd>
+                    <span>{{hotel.type}}</span>
+                </dd>
+                <dt><span>Open Time</span></dt>
+                <dd>
+                    <span>{{hotel.openTime}}</span>
+                </dd>
+                <dt><span>Close Time</span></dt>
+                <dd>
+                    <span>{{hotel.closeTime}}</span>
+                </dd>
+                <dt><span>City</span></dt>
+                <dd>
+                    <span>{{hotel.city}}</span>
+                </dd>
+                <dt><span>Address</span></dt>
+                <dd>
+                    <span>{{hotel.address}}</span>
+                </dd>
+                <dt><span>Pincode</span></dt>
+                <dd>
+                    <span>{{hotel.pincode}}</span>
+                </dd>
+                <dt><span>Description</span></dt>
+                <dd>
+                    <span>{{hotel.description}}</span>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/hotel', hotel.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
