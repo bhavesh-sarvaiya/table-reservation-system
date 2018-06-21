@@ -1,0 +1,67 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-hotel-table-heading">Create or edit a Hotel Table</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!hotelTable.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="hotelTable.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_tableNumber">Table Number</label>
+                    <input type="text" class="form-control" name="tableNumber" id="field_tableNumber"
+                        [(ngModel)]="hotelTable.tableNumber" required/>
+                    <div [hidden]="!(editForm.controls.tableNumber?.dirty && editForm.controls.tableNumber?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.tableNumber?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_noOfCustomer">No Of Customer</label>
+                    <input type="number" class="form-control" name="noOfCustomer" id="field_noOfCustomer"
+                        [(ngModel)]="hotelTable.noOfCustomer" required min="1" jhiMin="1"/>
+                    <div [hidden]="!(editForm.controls.noOfCustomer?.dirty && editForm.controls.noOfCustomer?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.noOfCustomer?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.noOfCustomer?.errors?.min">
+                            This field should be at least 1.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.noOfCustomer?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_hotel">Hotel</label>
+                    <select class="form-control" id="field_hotel" name="hotel" [(ngModel)]="hotelTable.hotelId"  required>
+                        <option *ngIf="!editForm.value.hotel" [ngValue]="null" selected></option>
+                        <option [ngValue]="hotelOption.id" *ngFor="let hotelOption of hotels; trackBy: trackHotelById">{{hotelOption.id}}</option>
+                    </select>
+                </div>
+                <div [hidden]="!(editForm.controls.hotel?.dirty && editForm.controls.hotel?.invalid)">
+                    <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.hotel?.errors?.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

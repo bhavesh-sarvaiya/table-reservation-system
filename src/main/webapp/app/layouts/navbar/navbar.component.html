@@ -1,11 +1,11 @@
-<nav class="navbar navbar-dark navbar-expand-md jh-navbar">
+<nav class="navbar navbar-dark navbar-expand-md jh-navbar" style="height: 70px;">
     <div class="jh-logo-container float-left">
         <a class="jh-navbar-toggler d-lg-none float-right" href="javascript:void(0);" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation" (click)="toggleNavbar()">
             <fa-icon [icon]="'bars'"></fa-icon>
         </a>
         <a class="navbar-brand logo float-left" routerLink="/" (click)="collapseNavbar()">
-            <span class="logo-img"></span>
-            <span class="navbar-title">TableReservation</span> <span class="navbar-version">{{version}}</span>
+            <!-- <span class="logo-img"></span> -->
+            <span class="navbar-title">Table Reservation System</span> <!--<span class="navbar-version">{{version}}</span>-->
         </a>
     </div>
     <div class="navbar-collapse collapse" id="navbarResponsive" [ngbCollapse]="isNavbarCollapsed" [ngSwitch]="isAuthenticated()">
@@ -18,6 +18,12 @@
                     </span>
                 </a>
             </li>
+            <li *ngSwitchCase="true" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+                    <a class="nav-link" routerLink="hotel"   (click)="collapseNavbar()">
+                        <fa-icon [icon]="'asterisk'"></fa-icon>
+                        <span>Hotel</span>
+                    </a>
+                </li>
             <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
             <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
@@ -29,10 +35,16 @@
                     </span>
                 </a>
                 <ul class="dropdown-menu" ngbDropdownMenu>
-                    <li>
+                    <!-- <li>
                         <a class="dropdown-item" routerLink="hotel" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                             <fa-icon [icon]="'asterisk'" [fixedWidth]="true"></fa-icon>
                             <span>Hotel</span>
+                        </a>
+                    </li> -->
+                    <li>
+                        <a class="dropdown-item" routerLink="hotel-table" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                            <fa-icon [icon]="'asterisk'" [fixedWidth]="true"></fa-icon>
+                            <span>Hotel Table</span>
                         </a>
                     </li>
                     <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
