@@ -1,0 +1,16 @@
+entity Hotel{
+image ImageBlob,
+name String required,
+type String required,
+openTime Instant required,
+closeTime Instant required,
+city String required,
+address String required,
+pincode String required maxlength(6),
+description String
+}
+
+paginate Hotel with pagination
+
+service Hotel with serviceClass
+service Hotel with serviceImpl
