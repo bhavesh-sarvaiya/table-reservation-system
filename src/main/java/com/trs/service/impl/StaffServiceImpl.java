@@ -1,7 +1,9 @@
 package com.trs.service.impl;
 
 import com.trs.service.StaffService;
+import com.trs.domain.Hotel;
 import com.trs.domain.Staff;
+import com.trs.repository.HotelRepository;
 import com.trs.repository.StaffRepository;
 import com.trs.service.dto.StaffDTO;
 import com.trs.service.mapper.StaffMapper;
@@ -25,12 +27,14 @@ public class StaffServiceImpl implements StaffService {
     private final Logger log = LoggerFactory.getLogger(StaffServiceImpl.class);
 
     private final StaffRepository staffRepository;
+    private final HotelRepository hotelRepository;
 
     private final StaffMapper staffMapper;
 
-    public StaffServiceImpl(StaffRepository staffRepository, StaffMapper staffMapper) {
+    public StaffServiceImpl(StaffRepository staffRepository, StaffMapper staffMapper, HotelRepository hotelRepository) {
         this.staffRepository = staffRepository;
         this.staffMapper = staffMapper;
+        this.hotelRepository = hotelRepository;
     }
 
     /**
@@ -85,5 +89,19 @@ public class StaffServiceImpl implements StaffService {
     public void delete(Long id) {
         log.debug("Request to delete Staff : {}", id);
         staffRepository.deleteById(id);
+    }
+
+    // custom method
+
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<StaffDTO> findAllByHotel(Long id) {
+        log.debug("Request to get all Staff");
+
+        Hotel h = hotelRepository.findById(id);
+        return staffRepository.findAllByHotel(h).stream()
+            .map(staffMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 }

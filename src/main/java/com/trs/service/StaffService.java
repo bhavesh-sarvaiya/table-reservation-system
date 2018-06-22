@@ -24,6 +24,7 @@ public interface StaffService {
      * @return the list of entities
      */
     List<StaffDTO> findAll();
+    List<StaffDTO> findAllByHotel(Long id);
 
 
     /**

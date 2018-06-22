@@ -1,48 +1,29 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <div *ngIf="hotel">
-            <h2><span>Hotel</span> {{hotel.id}}</h2>
+            <h2><span>Hotel</span> {{hotel.name}}</h2>
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
-                <dt><span>Image</span></dt>
-                <dd>
-                    <div *ngIf="hotel.image">
+                <!-- <dt><span>Image</span></dt> -->
+                <div class="row">
+                    <div class="col-md-6" *ngIf="hotel.image">
                         <a (click)="openFile(hotel.imageContentType, hotel.image)">
                             <img [src]="'data:' + hotel.imageContentType + ';base64,' + hotel.image" style="max-width: 100%;" alt="hotel image"/>
                         </a>
-                        {{hotel.imageContentType}}, {{byteSize(hotel.image)}}
+                        <!-- {{hotel.imageContentType}}, {{byteSize(hotel.image)}} -->
                     </div>
-                </dd>
-                <dt><span>Name</span></dt>
-                <dd>
-                    <span>{{hotel.name}}</span>
-                </dd>
-                <dt><span>Type</span></dt>
-                <dd>
-                    <span>{{hotel.type}}</span>
-                </dd>
-                <dt><span>Open Time</span></dt>
-                <dd>
-                    <span>{{hotel.openTime}}</span>
-                </dd>
-                <dt><span>Close Time</span></dt>
-                <dd>
-                    <span>{{hotel.closeTime}}</span>
-                </dd>
-                <dt><span>City</span></dt>
-                <dd>
-                    <span>{{hotel.city}}</span>
-                </dd>
-                <dt><span>Address</span></dt>
-                <dd>
-                    <span>{{hotel.address}}</span>
-                </dd>
-                <dt><span>Pincode</span></dt>
-                <dd>
-                    <span>{{hotel.pincode}}</span>
-                </dd>
-                <dt><span>Description</span></dt>
+                    <div class="col-md-6">
+                        <h3> <b>{{hotel.name}}</b></h3>
+                        <span>{{hotel.type}}</span><br>
+                        <hr>
+                        <span>Open Time: {{hotel.openTime |  date:'shortTime'}}</span><br>
+                        <span>Close Time: {{hotel.closeTime | date:'shortTime'}}</span>
+                        <br>
+                        <hr>
+                        <span>Location: {{hotel.address}}, {{hotel.city}}, {{hotel.pincode}}</span>
+                    </div>
+                </div>
                 <dd>
                     <span>{{hotel.description}}</span>
                 </dd>

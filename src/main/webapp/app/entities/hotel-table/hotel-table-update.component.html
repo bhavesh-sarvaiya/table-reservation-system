@@ -44,7 +44,7 @@
                     <label class="form-control-label" for="field_hotel">Hotel</label>
                     <select class="form-control" id="field_hotel" name="hotel" [(ngModel)]="hotelTable.hotelId"  required>
                         <option *ngIf="!editForm.value.hotel" [ngValue]="null" selected></option>
-                        <option [ngValue]="hotelOption.id" *ngFor="let hotelOption of hotels; trackBy: trackHotelById">{{hotelOption.id}}</option>
+                        <option [ngValue]="hotelOption.id" *ngFor="let hotelOption of hotels; trackBy: trackHotelById">{{hotelOption.name}}</option>
                     </select>
                 </div>
                 <div [hidden]="!(editForm.controls.hotel?.dirty && editForm.controls.hotel?.invalid)">

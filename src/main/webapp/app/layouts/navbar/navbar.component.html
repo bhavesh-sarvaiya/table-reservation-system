@@ -18,11 +18,36 @@
                     </span>
                 </a>
             </li>
-            <li *ngSwitchCase="true" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-                    <a class="nav-link" routerLink="hotel"   (click)="collapseNavbar()">
-                        <fa-icon [icon]="'asterisk'"></fa-icon>
-                        <span>Hotel</span>
+            <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true }">
+                    <a class="nav-link"   ngbDropdownToggle href="javascript:void(0);" (click)="collapseNavbar()">
+                        <!-- <fa-icon [icon]="'asterisk'"></fa-icon> -->
+                        <span>
+                            <fa-icon [icon]="'th-list'"></fa-icon>
+                            <span>
+                                Hotel
+                            </span>
+                        </span>
                     </a>
+                    <ul class="dropdown-menu" ngbDropdownMenu>
+                            <li>
+                                    <a class="dropdown-item" routerLink="hotel" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                                        <fa-icon [icon]="'asterisk'" [fixedWidth]="true"></fa-icon>
+                                        <span>Hotel</span>
+                                    </a>
+                                </li>
+                        <li>
+                            <a class="dropdown-item" routerLink="hotel-table" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                                <fa-icon [icon]="'asterisk'" [fixedWidth]="true"></fa-icon>
+                                <span>Hotel Table</span>
+                            </a>
+                        </li>
+                        <li>
+                                <a class="dropdown-item" routerLink="staff" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                                    <fa-icon [icon]="'asterisk'" [fixedWidth]="true"></fa-icon>
+                                    <span>Staff</span>
+                                </a>
+                            </li>
+                    </ul>
                 </li>
             <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
             <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
@@ -41,18 +66,18 @@
                             <span>Hotel</span>
                         </a>
                     </li> -->
-                    <li>
+                    <!-- <li>
                         <a class="dropdown-item" routerLink="hotel-table" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                             <fa-icon [icon]="'asterisk'" [fixedWidth]="true"></fa-icon>
                             <span>Hotel Table</span>
                         </a>
-                    </li>
-                    <li>
+                    </li> -->
+                    <!-- <li>
                         <a class="dropdown-item" routerLink="staff" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                             <fa-icon [icon]="'asterisk'" [fixedWidth]="true"></fa-icon>
                             <span>Staff</span>
                         </a>
-                    </li>
+                    </li> -->
                     <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
                 </ul>
             </li>

@@ -14,7 +14,7 @@
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)">
-            <th jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <!-- <th jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th> -->
             <th jhiSortBy="image"><span>Image</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="name"><span>Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="type"><span>Type</span> <fa-icon [icon]="'sort'"></fa-icon></th>
@@ -29,17 +29,17 @@
             </thead>
             <tbody>
             <tr *ngFor="let hotel of hotels ;trackBy: trackId">
-                <td><a [routerLink]="['/hotel', hotel.id, 'view' ]">{{hotel.id}}</a></td>
+                <!-- <td><a [routerLink]="['/hotel', hotel.id, 'view' ]">{{hotel.id}}</a></td> -->
                 <td>
                     <a *ngIf="hotel.image" (click)="openFile(hotel.imageContentType, hotel.image)">
-                        <img [src]="'data:' + hotel.imageContentType + ';base64,' + hotel.image" style="max-height: 30px;" alt="hotel image"/>
+                        <img [src]="'data:' + hotel.imageContentType + ';base64,' + hotel.image" style="max-height: 50px;" alt="hotel image"/>
                     </a>
-                    <span *ngIf="hotel.image">{{hotel.imageContentType}}, {{byteSize(hotel.image)}}</span>
+                    <!-- <span *ngIf="hotel.image">{{hotel.imageContentType}}, {{byteSize(hotel.image)}}</span> -->
                 </td>
                 <td>{{hotel.name}}</td>
                 <td>{{hotel.type}}</td>
-                <td>{{hotel.openTime | date:'medium'}}</td>
-                <td>{{hotel.closeTime | date:'medium'}}</td>
+                <td>{{hotel.openTime | date:'shortTime'}}</td>
+                <td>{{hotel.closeTime | date:'shortTime'}}</td>
                 <td>{{hotel.city}}</td>
                 <td>{{hotel.address}}</td>
                 <td>{{hotel.pincode}}</td>

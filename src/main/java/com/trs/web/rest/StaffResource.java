@@ -116,4 +116,14 @@ public class StaffResource {
         staffService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    // Custom API
+
+    @GetMapping("/staff-hetel")
+    @Timed
+    public List<StaffDTO> getAllStaffByHotel(@RequestParam Long id ) {
+        log.debug("REST request to get all Staff by Hotel");
+        return staffService.findAllByHotel(id);
+    }
+
 }

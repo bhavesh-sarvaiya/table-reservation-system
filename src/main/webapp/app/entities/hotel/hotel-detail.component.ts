@@ -3,6 +3,9 @@ import { ActivatedRoute } from '@angular/router';
 import { JhiDataUtils } from 'ng-jhipster';
 
 import { IHotel } from 'app/shared/model/hotel.model';
+import { IStaff } from 'app/shared/model/staff.model';
+import { StaffService } from 'app/entities/staff';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'jhi-hotel-detail',
@@ -10,12 +13,21 @@ import { IHotel } from 'app/shared/model/hotel.model';
 })
 export class HotelDetailComponent implements OnInit {
     hotel: IHotel;
-
-    constructor(private dataUtils: JhiDataUtils, private activatedRoute: ActivatedRoute) {}
+    staff: IStaff[];
+    constructor(private dataUtils: JhiDataUtils,
+        private staffService: StaffService,
+         private activatedRoute: ActivatedRoute) {}
 
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ hotel }) => {
             this.hotel = hotel;
+
+            this.staffService.getStaffByHotel(this.hotel.id).subscribe(
+                (res: HttpResponse<IStaff[]>) => {
+                    this.staff = res.body;
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
         });
     }
 
@@ -28,5 +40,9 @@ export class HotelDetailComponent implements OnInit {
     }
     previousState() {
         window.history.back();
+    }
+
+    private onError(errorMessage: string) {
+        this.jhiAlertService.error(errorMessage, null, null);
     }
 }

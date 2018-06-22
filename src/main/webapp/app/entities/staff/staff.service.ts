@@ -12,6 +12,7 @@ type EntityArrayResponseType = HttpResponse<IStaff[]>;
 @Injectable({ providedIn: 'root' })
 export class StaffService {
     private resourceUrl = SERVER_API_URL + 'api/staff';
+    private resourceUrl1 = SERVER_API_URL + 'api/staff-hotel';
 
     constructor(private http: HttpClient) {}
 
@@ -34,5 +35,12 @@ export class StaffService {
 
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    }
+
+    // Custom method
+
+    getStaffByHotel(id?: number): Observable<EntityArrayResponseType> {
+        const options = createRequestOption(id);
+        return this.http.get<IStaff[]>(this.resourceUrl1, { params: options, observe: 'response' });
     }
 }

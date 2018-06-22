@@ -3,6 +3,7 @@ import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { JhiEventManager } from 'ng-jhipster';
 
 import { LoginModalService, Principal, Account } from 'app/core';
+import { HotelService } from 'app/entities/hotel';
 
 @Component({
     selector: 'jhi-home',
@@ -13,7 +14,9 @@ export class HomeComponent implements OnInit {
     account: Account;
     modalRef: NgbModalRef;
 
-    constructor(private principal: Principal, private loginModalService: LoginModalService, private eventManager: JhiEventManager) {}
+    constructor(private principal: Principal,
+        private hotelService: HotelService,
+         private loginModalService: LoginModalService, private eventManager: JhiEventManager) {}
 
     ngOnInit() {
         this.principal.identity().then(account => {
