@@ -99,8 +99,8 @@ public class StaffServiceImpl implements StaffService {
     public List<StaffDTO> findAllByHotel(Long id) {
         log.debug("Request to get all Staff");
 
-        Hotel h = hotelRepository.findById(id);
-        return staffRepository.findAllByHotel(h).stream()
+        Hotel h = hotelRepository.findById(id).get();
+              return staffRepository.findAllByHotel(h).stream()
             .map(staffMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }

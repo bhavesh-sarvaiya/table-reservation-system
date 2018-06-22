@@ -40,4 +40,14 @@ public interface HotelTableService {
      * @param id the id of the entity
      */
     void delete(Long id);
+    
+    
+    // Custom Method
+    
+    /**
+     * Get all the hotelTables by hotel.
+     *
+     * @return the list of entities
+     */
+    List<HotelTableDTO> findAllByHotel(Long id);
 }

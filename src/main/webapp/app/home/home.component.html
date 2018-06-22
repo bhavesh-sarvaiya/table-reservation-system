@@ -3,11 +3,76 @@
 
     <div class="row" *ngSwitchCase="true" >
            <div class="col-md-11 input-group">
-                <input type="text" class="form-control" placeholder="Search hotel..." style="height: 50px; font-size: 20px; font-weight: bold;">
+                <input type="text" name="search" [(ngModel)]="search" class="form-control" placeholder="Search hotel..." style="height: 50px; font-size: 20px; font-weight: bold;">
                 <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button">Search</button>
-                      </div>
+                        <button class="btn btn-outline-secondary" type="button" (click)="searchHotel()" >Search</button>
+                </div>
 
+
+                <div class="table-responsive" *ngIf="hotels">
+                        <table class="table table-striped">
+                            <thead>
+                            <!-- <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="transition.bind(this)"> -->
+                        <tr>
+                            <!-- <th jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th> -->
+                            <th ><span>Image</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                            <th><span>Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                            <th ><span>Type</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                            <th><span>Open Time</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                            <th><span>Close Time</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                            <th><span>City</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                            <th><span>Pincode</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                            <th><span>Address</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+                            <!-- <th jhiSortBy="description"><span>Description</span> <fa-icon [icon]="'sort'"></fa-icon></th> -->
+                            <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let hotel of hotels ;">
+                                <!-- <td><a [routerLink]="['/hotel', hotel.id, 'view' ]">{{hotel.id}}</a></td> -->
+                                <td>
+                                    <a *ngIf="hotel.image" (click)="openFile(hotel.imageContentType, hotel.image)">
+                                        <img [src]="'data:' + hotel.imageContentType + ';base64,' + hotel.image" style="max-height: 50px;" alt="hotel image"/>
+                                    </a>
+                                    <!-- <span *ngIf="hotel.image">{{hotel.imageContentType}}, {{byteSize(hotel.image)}}</span> -->
+                                </td>
+                                <td>{{hotel.name}}</td>
+                                <td>{{hotel.type}}</td>
+                                <td>{{hotel.openTime | date:'shortTime'}}</td>
+                                <td>{{hotel.closeTime | date:'shortTime'}}</td>
+                                <td>{{hotel.city}}</td>
+                                <td>{{hotel.pincode}}</td>
+                                <td>{{hotel.address}}</td>
+                               
+                                <!-- <td>{{hotel.description}}</td> -->
+                                <td class="text-right">
+                                    <div class="btn-group flex-btn-group-container">
+                                        <button type="submit"
+                                                [routerLink]="['/hotel', hotel.id, 'view' ]"
+                                                class="btn btn-info btn-sm">
+                                            <fa-icon [icon]="'eye'"></fa-icon>
+                                            <span class="d-none d-md-inline">View</span>
+                                        </button>
+                                        <button type="submit"
+                                                [routerLink]="['/hotel', hotel.id, 'edit']"
+                                                class="btn btn-primary btn-sm">
+                                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                            <span class="d-none d-md-inline">Edit</span>
+                                        </button>
+                                        <button type="submit"
+                                                [routerLink]="['/', { outlets: { popup: 'hotel/'+ hotel.id + '/delete'} }]"
+                                                replaceUrl="true"
+                                                queryParamsHandling="merge"
+                                                class="btn btn-danger btn-sm">
+                                            <fa-icon [icon]="'times'"></fa-icon>
+                                            <span class="d-none d-md-inline">Delete</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
        </div>
     </div>
     <div class="row" *ngSwitchCase="false">

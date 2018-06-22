@@ -1,7 +1,9 @@
 package com.trs.service.impl;
 
 import com.trs.service.HotelTableService;
+import com.trs.domain.Hotel;
 import com.trs.domain.HotelTable;
+import com.trs.repository.HotelRepository;
 import com.trs.repository.HotelTableRepository;
 import com.trs.service.dto.HotelTableDTO;
 import com.trs.service.mapper.HotelTableMapper;
@@ -25,12 +27,14 @@ public class HotelTableServiceImpl implements HotelTableService {
     private final Logger log = LoggerFactory.getLogger(HotelTableServiceImpl.class);
 
     private final HotelTableRepository hotelTableRepository;
-
+    private final HotelRepository hotelRepository;
+    
     private final HotelTableMapper hotelTableMapper;
 
-    public HotelTableServiceImpl(HotelTableRepository hotelTableRepository, HotelTableMapper hotelTableMapper) {
+    public HotelTableServiceImpl(HotelTableRepository hotelTableRepository, HotelTableMapper hotelTableMapper, HotelRepository hotelRepository) {
         this.hotelTableRepository = hotelTableRepository;
         this.hotelTableMapper = hotelTableMapper;
+        this.hotelRepository = hotelRepository;
     }
 
     /**
@@ -86,4 +90,14 @@ public class HotelTableServiceImpl implements HotelTableService {
         log.debug("Request to delete HotelTable : {}", id);
         hotelTableRepository.deleteById(id);
     }
+
+    //Custom Method
+	@Override
+	public List<HotelTableDTO> findAllByHotel(Long id) {
+		 log.debug("Request to get all HotelTables by hotel");
+		 Hotel hotel = hotelRepository.findById(id).get();
+	        return hotelTableRepository.findAllByHotel(hotel).stream()
+	            .map(hotelTableMapper::toDto)
+	            .collect(Collectors.toCollection(LinkedList::new));
+	}
 }

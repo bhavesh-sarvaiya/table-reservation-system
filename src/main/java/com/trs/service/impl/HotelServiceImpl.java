@@ -13,7 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 /**
  * Service Implementation for managing Hotel.
@@ -86,4 +87,30 @@ public class HotelServiceImpl implements HotelService {
         log.debug("Request to delete Hotel : {}", id);
         hotelRepository.deleteById(id);
     }
+
+    // custom method
+    // Search hotel
+	@Override
+	public List<HotelDTO> searchHotel(String search) {
+		log.debug("Request to search Hotels");
+		
+		List<Hotel> hotelList = hotelRepository.searchWithJPQLQuery(search);
+		List<HotelDTO> dto = new ArrayList<>();
+		HotelDTO hotelDTO = new HotelDTO();
+		for (Hotel item : hotelList) {
+			hotelDTO.setName(item.getName());
+			hotelDTO.setAddress(item.getAddress());
+			hotelDTO.setCity(item.getCity());
+			hotelDTO.setCloseTime(item.getCloseTime());
+			hotelDTO.setDescription(item.getDescription());
+			hotelDTO.setId(item.getId());
+			hotelDTO.setImage(item.getImage());
+			hotelDTO.setImageContentType(item.getImageContentType());
+			hotelDTO.setOpenTime(item.getOpenTime());
+			hotelDTO.setType(item.getType());
+			hotelDTO.setPincode(item.getPincode());
+			dto.add(hotelDTO);
+		}
+        return dto;
+	}
 }

@@ -124,4 +124,20 @@ public class HotelResource {
         hotelService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+    
+    // Custom API
+    /**
+     * GET  /hotels : search the hotels.
+     *
+     * @param pageable the pagination information
+     * @return the ResponseEntity with status 200 (OK) and the list of hotels in body
+     */
+    @GetMapping("/hotels-search")
+    @Timed
+    public List<HotelDTO> searchHotel(@RequestParam String search) {
+        log.debug("REST request to get a page of Hotels");
+        return  hotelService.searchHotel(search);
+       // HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/hotels");
+       // return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
 }

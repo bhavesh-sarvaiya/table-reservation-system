@@ -165,3 +165,11 @@ To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`)
 [Protractor]: https://angular.github.io/protractor/
 [Leaflet]: http://leafletjs.com/
 [DefinitelyTyped]: http://definitelytyped.org/
+
+
+
+## liquibase
+    ### mvnw liquibase:diff
+      	
+    ### clearCheckSums
+    mvnw liquibase:clearCheckSums

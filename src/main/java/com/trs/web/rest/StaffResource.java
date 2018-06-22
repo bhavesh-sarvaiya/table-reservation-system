@@ -119,9 +119,9 @@ public class StaffResource {
 
     // Custom API
 
-    @GetMapping("/staff-hetel")
+    @GetMapping("/staff-hotel")
     @Timed
-    public List<StaffDTO> getAllStaffByHotel(@RequestParam Long id ) {
+    public List<StaffDTO> getAllStaffByHotel(@RequestParam Long id) {
         log.debug("REST request to get all Staff by Hotel");
         return staffService.findAllByHotel(id);
     }

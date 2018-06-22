@@ -1,6 +1,10 @@
 package com.trs.repository;
 
+import com.trs.domain.Hotel;
 import com.trs.domain.HotelTable;
+
+import java.util.List;
+
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
@@ -11,5 +15,5 @@ import org.springframework.stereotype.Repository;
 @SuppressWarnings("unused")
 @Repository
 public interface HotelTableRepository extends JpaRepository<HotelTable, Long> {
-
+	List<HotelTable> findAllByHotel(Hotel hotel);
 }

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { JhiEventManager } from 'ng-jhipster';
+import { JhiEventManager, JhiAlertService, JhiDataUtils } from 'ng-jhipster';
 
 import { LoginModalService, Principal, Account } from 'app/core';
 import { HotelService } from 'app/entities/hotel';
+import { IHotel } from 'app/shared/model/hotel.model';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
     selector: 'jhi-home',
@@ -13,9 +15,12 @@ import { HotelService } from 'app/entities/hotel';
 export class HomeComponent implements OnInit {
     account: Account;
     modalRef: NgbModalRef;
-
+    search: String;
+    hotels: IHotel[];
     constructor(private principal: Principal,
         private hotelService: HotelService,
+        private dataUtils: JhiDataUtils,
+        private jhiAlertService: JhiAlertService,
          private loginModalService: LoginModalService, private eventManager: JhiEventManager) {}
 
     ngOnInit() {
@@ -32,12 +37,29 @@ export class HomeComponent implements OnInit {
             });
         });
     }
-
+    searchHotel() {
+        this.hotelService
+        .searchHotel(this.search)
+        .subscribe(
+            (res: HttpResponse<IHotel[]>) => {
+                this.hotels = res.body;
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
+    }
     isAuthenticated() {
         return this.principal.isAuthenticated();
     }
 
     login() {
         this.modalRef = this.loginModalService.open();
+    }
+
+    private onError(errorMessage: string) {
+        this.jhiAlertService.error(errorMessage, null, null);
+    }
+
+    openFile(contentType, field) {
+        return this.dataUtils.openFile(contentType, field);
     }
 }

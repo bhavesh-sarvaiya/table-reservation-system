@@ -14,6 +14,7 @@ type EntityArrayResponseType = HttpResponse<IHotel[]>;
 @Injectable({ providedIn: 'root' })
 export class HotelService {
     private resourceUrl = SERVER_API_URL + 'api/hotels';
+    private resourceUrl1 = SERVER_API_URL + 'api/hotels-search';
 
     constructor(private http: HttpClient) {}
 
@@ -68,5 +69,13 @@ export class HotelService {
             hotel.closeTime = hotel.closeTime != null ? moment(hotel.closeTime) : null;
         });
         return res;
+    }
+
+    // custome method
+    searchHotel(search?: any): Observable<EntityArrayResponseType> {
+        const options = createRequestOption({search});
+        return this.http
+            .get<IHotel[]>(this.resourceUrl1, { params: options, observe: 'response' })
+            .map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res));
     }
 }

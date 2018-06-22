@@ -40,7 +40,7 @@ export class StaffService {
     // Custom method
 
     getStaffByHotel(id?: number): Observable<EntityArrayResponseType> {
-        const options = createRequestOption(id);
+        const options = createRequestOption({id});
         return this.http.get<IStaff[]>(this.resourceUrl1, { params: options, observe: 'response' });
     }
 }

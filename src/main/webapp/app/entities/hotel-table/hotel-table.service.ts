@@ -12,6 +12,7 @@ type EntityArrayResponseType = HttpResponse<IHotelTable[]>;
 @Injectable({ providedIn: 'root' })
 export class HotelTableService {
     private resourceUrl = SERVER_API_URL + 'api/hotel-tables';
+    private resourceUrl1 = SERVER_API_URL + 'api/hotel-tables-hotel';
 
     constructor(private http: HttpClient) {}
 
@@ -34,5 +35,12 @@ export class HotelTableService {
 
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    }
+
+    // Custom method
+
+    getTablesByHotel(id?: any): Observable<EntityArrayResponseType> {
+        const options = createRequestOption({id});
+        return this.http.get<IHotelTable[]>(this.resourceUrl1, { params: options, observe: 'response' });
     }
 }

@@ -116,4 +116,19 @@ public class HotelTableResource {
         hotelTableService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+    
+    //Custom method
+    
+    
+    /**
+     * GET  /hotel-tables : get all the hotelTables.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of hotelTables in body
+     */
+    @GetMapping("/hotel-tables-hotel")
+    @Timed
+    public List<HotelTableDTO> getAllHotelTablesByHotel(@RequestParam Long id) {
+        log.debug("REST request to get all HotelTables by Hotel");
+        return hotelTableService.findAllByHotel(id);
+    }
 }
