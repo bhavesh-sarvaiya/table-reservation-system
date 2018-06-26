@@ -1,0 +1,112 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="hotel">
+            <h2><span>Hotel</span> {{hotel.name}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <!-- <dt><span>Image</span></dt> -->
+                <div class="row">
+                    <div class="col-md-6" *ngIf="hotel.image">
+                        <a (click)="openFile(hotel.imageContentType, hotel.image)">
+                            <img [src]="'data:' + hotel.imageContentType + ';base64,' + hotel.image" style="max-width: 100%;" alt="hotel image"/>
+                        </a>
+                        <!-- {{hotel.imageContentType}}, {{byteSize(hotel.image)}} -->
+                    </div>
+                    <div class="col-md-6">
+                        <h3> <b>{{hotel.name}}</b></h3>
+                        <span>{{hotel.type}}</span><br>
+                        <hr>
+                        <span>Open Time: {{hotel.openTime |  date:'shortTime'}}</span><br>
+                        <span>Close Time: {{hotel.closeTime | date:'shortTime'}}</span>
+                        <br>
+                        <hr>
+                        <span>Location: {{hotel.address}}, {{hotel.city}}, {{hotel.pincode}}</span>
+                    </div>
+                </div>
+                    <dd>
+                        <span>{{hotel.description}}</span>
+                    </dd>
+                    <hr>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2>Tables</h2>
+                        <div class="input-group" *ngIf="hotelTables">
+                                <div *ngFor="let hotelTable of hotelTables;">
+                                    <a>                                
+                                        <div  style="background-color: #71bf71;width: 6vw;height: 6vw; margin-left: 2px;margin-top: 2px;">
+                                       <h3>{{hotelTable.tableNumber}}</h3>
+                                       <span style="font-size: 10px">Customers: {{hotelTable.noOfCustomer}}</span>
+                                    </div>
+                                </a>
+                                </div>
+                                <!-- <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                    <th><span>Number</span></th>
+                                    <th><span>Customers</span></th>
+                                    <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let hotelTable of hotelTables ;">
+                                        <td>{{hotelTable.tableNumber}}</td>
+                                        <td>{{hotelTable.noOfCustomer}}</td>
+                                        <td class="text-right">
+                                            <div class="btn-group flex-btn-group-container">
+                                                <button type="submit"
+                                                        [routerLink]="['/hotel-table', hotelTable.id, 'view' ]"
+                                                        class="btn btn-info btn-sm">
+                                                    <fa-icon [icon]="'eye'"></fa-icon>
+                                                    <span class="d-none d-md-inline">View</span>
+                                                </button>
+                                                <button type="submit"
+                                                        [routerLink]="['/hotel-table', hotelTable.id, 'edit']"
+                                                        class="btn btn-primary btn-sm">
+                                                    <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                                    <span class="d-none d-md-inline">Edit</span>
+                                                </button>
+                                                <button type="submit"
+                                                        [routerLink]="['/', { outlets: { popup: 'hotel-table/'+ hotelTable.id + '/delete'} }]"
+                                                        replaceUrl="true"
+                                                        queryParamsHandling="merge"
+                                                        class="btn btn-danger btn-sm">
+                                                    <fa-icon [icon]="'times'"></fa-icon>
+                                                    <span class="d-none d-md-inline">Delete</span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table> -->
+                            </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                                <div style="background-color:  #71bf71; height: 20px; width: 20px"></div>
+                                &nbsp;&nbsp;&nbsp;<span>Available</span>
+                        </div>
+                        <div class="input-group">
+                                <div style="background-color:  blue; height: 20px; width: 20px"></div>
+                                &nbsp;&nbsp;&nbsp;<span>Booked</span>
+                        </div>
+                       
+                       
+                    </div>
+                </div>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/hotel', hotel.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

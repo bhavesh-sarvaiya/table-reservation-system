@@ -11,6 +11,7 @@ import { HotelDetailComponent } from './hotel-detail.component';
 import { HotelUpdateComponent } from './hotel-update.component';
 import { HotelDeletePopupComponent } from './hotel-delete-dialog.component';
 import { IHotel } from 'app/shared/model/hotel.model';
+import { TableBookComponent } from 'app/entities/hotel/table-book.component';
 
 @Injectable({ providedIn: 'root' })
 export class HotelResolve implements Resolve<IHotel> {
@@ -48,6 +49,18 @@ export const hotelRoute: Routes = [
         data: {
             authorities: ['ROLE_USER'],
             pageTitle: 'Hotels'
+        },
+        canActivate: [UserRouteAccessService]
+    },
+    {
+        path: 'hotel/:id/table-book',
+        component: TableBookComponent,
+        resolve: {
+            hotel: HotelResolve
+        },
+        data: {
+            authorities: ['ROLE_USER'],
+            pageTitle: 'Table Book'
         },
         canActivate: [UserRouteAccessService]
     },
