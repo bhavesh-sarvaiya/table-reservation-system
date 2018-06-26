@@ -8,6 +8,9 @@ import { StaffService } from 'app/entities/staff';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { IHotelTable } from 'app/shared/model/hotel-table.model';
 import { HotelTableService } from 'app/entities/hotel-table';
+import { IBooking, Booking } from 'app/shared/model/booking.model';
+import { Observable } from 'rxjs';
+import { BookingService } from 'app/entities/booking';
 
 @Component({
     selector: 'jhi-hotel-detail',
@@ -15,15 +18,22 @@ import { HotelTableService } from 'app/entities/hotel-table';
 })
 export class TableBookComponent implements OnInit {
     hotel: IHotel;
+    _booking: IBooking;
+    isSaving: boolean;
     staff: IStaff[];
     hotelTables: IHotelTable[];
+    bookDateDp: any;
     constructor(private dataUtils: JhiDataUtils,
         private staffService: StaffService,
         private hotelTableService: HotelTableService,
         private jhiAlertService: JhiAlertService,
+        private bookingService: BookingService,
          private activatedRoute: ActivatedRoute) {}
 
     ngOnInit() {
+        this.activatedRoute.data.subscribe(({ booking }) => {
+            this.booking = new Booking();
+        });
         this.activatedRoute.data.subscribe(({ hotel }) => {
             this.hotel = hotel;
             this.hotelTableService.getTablesByHotel(this.hotel.id).subscribe(
@@ -42,6 +52,12 @@ export class TableBookComponent implements OnInit {
         return this.dataUtils.byteSize(field);
     }
 
+    save() {
+        this.isSaving = true;
+        this._booking.hotelId = this.hotel.id;
+        this.subscribeToSaveResponse(this.bookingService.create(this.booking));
+    }
+
     openFile(contentType, field) {
         return this.dataUtils.openFile(contentType, field);
     }
@@ -51,5 +67,25 @@ export class TableBookComponent implements OnInit {
 
     private onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
+    }
+
+    private subscribeToSaveResponse(result: Observable<HttpResponse<IBooking>>) {
+        result.subscribe((res: HttpResponse<IBooking>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
+    }
+    private onSaveSuccess() {
+        this.isSaving = false;
+        this.previousState();
+    }
+
+    private onSaveError() {
+        this.isSaving = false;
+    }
+
+    get booking() {
+        return this._booking;
+    }
+
+    set booking(booking: IBooking) {
+        this._booking = booking;
     }
 }

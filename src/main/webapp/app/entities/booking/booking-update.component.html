@@ -1,0 +1,91 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-booking-heading">Create or edit a Booking</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!booking.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="booking.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_bookDate">Book Date</label>
+                    <div class="input-group">
+                        <input id="field_bookDate" type="text" class="form-control" name="bookDate" ngbDatepicker  #bookDateDp="ngbDatepicker" [(ngModel)]="booking.bookDate"
+                        required/>
+                        <span class="input-group-append">
+                            <button type="button" class="btn btn-secondary" (click)="bookDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>
+                        </span>
+                    </div>
+                    <div [hidden]="!(editForm.controls.bookDate?.dirty && editForm.controls.bookDate?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.bookDate?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_bookTime">Book Time</label>
+                    <input type="time" class="form-control" name="bookTime" id="field_bookTime" 
+                        [(ngModel)]="booking.bookTime" required />
+                    <div [hidden]="!(editForm.controls.bookTime?.dirty && editForm.controls.bookTime?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.bookTime?.errors?.required">
+                        This field is required.
+                        </small>
+                       
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_noOfGuest">No Of Guest</label>
+                    <input type="number" class="form-control" name="noOfGuest" id="field_noOfGuest"
+                        [(ngModel)]="booking.noOfGuest" required min="1" jhiMin="1"/>
+                    <div [hidden]="!(editForm.controls.noOfGuest?.dirty && editForm.controls.noOfGuest?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.noOfGuest?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.noOfGuest?.errors?.number">
+                            This field should be a number.
+                        </small>
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.bookTime?.errors?.min">
+                        This field should be at least 1.
+                    </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_hotel">Hotel</label>
+                    <select class="form-control" id="field_hotel" name="hotel" [(ngModel)]="booking.hotelId"  required>
+                        <option *ngIf="!editForm.value.hotel" [ngValue]="null" selected></option>
+                        <option [ngValue]="hotelOption.id" *ngFor="let hotelOption of hotels; trackBy: trackHotelById">{{hotelOption.name}}</option>
+                    </select>
+                </div>
+                <div [hidden]="!(editForm.controls.hotel?.dirty && editForm.controls.hotel?.invalid)">
+                    <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.hotel?.errors?.required">
+                        This field is required.
+                    </small>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_hotelTable">Hotel Table</label>
+                    <select class="form-control" id="field_hotelTable" name="hotelTable" [(ngModel)]="booking.hotelTableId" >
+                        <option [ngValue]="null"></option>
+                        <option [ngValue]="hotelTableOption.id" *ngFor="let hotelTableOption of hoteltables; trackBy: trackHotelTableById">{{hotelTableOption.tableNumber}}</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

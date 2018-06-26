@@ -19,7 +19,7 @@ public class HotelTableDTO implements Serializable {
     private Integer noOfCustomer;
 
     private Long hotelId;
-
+    private String hotelName;
     public Long getId() {
         return id;
     }
@@ -52,6 +52,15 @@ public class HotelTableDTO implements Serializable {
         this.hotelId = hotelId;
     }
 
+    public String getHotelName() {
+        return hotelName;
+    }
+
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
+    }
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -80,6 +89,7 @@ public class HotelTableDTO implements Serializable {
             ", tableNumber='" + getTableNumber() + "'" +
             ", noOfCustomer=" + getNoOfCustomer() +
             ", hotel=" + getHotelId() +
+            ", hotel='" + getHotelName() + "'" +
             "}";
     }
 }

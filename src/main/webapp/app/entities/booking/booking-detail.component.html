@@ -1,0 +1,47 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="booking">
+            <h2><span>Booking</span> {{booking.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Book Date</span></dt>
+                <dd>
+                    <span>{{booking.bookDate}}</span>
+                </dd>
+                <dt><span>Book Time</span></dt>
+                <dd>
+                    <span>{{booking.bookTime}}</span>
+                </dd>
+                <dt><span>No Of Guest</span></dt>
+                <dd>
+                    <span>{{booking.noOfGuest}}</span>
+                </dd>
+                <dt><span>Hotel</span></dt>
+                <dd>
+                    <div *ngIf="booking.hotelId">
+                        <a [routerLink]="['/hotel', booking.hotelId, 'view']">{{booking.hotelName}}</a>
+                    </div>
+                </dd>
+                <dt><span>Hotel Table</span></dt>
+                <dd>
+                    <div *ngIf="booking.hotelTableId">
+                        <a [routerLink]="['/hotel-table', booking.hotelTableId, 'view']">{{booking.hotelTableTableNumber}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/booking', booking.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

@@ -94,7 +94,7 @@ public class HotelServiceImpl implements HotelService {
 	public List<HotelDTO> searchHotel(String search) {
 		log.debug("Request to search Hotels");
 		
-		List<Hotel> hotelList = hotelRepository.searchWithJPQLQuery(search);
+		List<Hotel> hotelList = hotelRepository.findBySearchTerm(search);
 		List<HotelDTO> dto = new ArrayList<>();
 		HotelDTO hotelDTO = new HotelDTO();
 		for (Hotel item : hotelList) {

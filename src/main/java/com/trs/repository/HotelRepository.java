@@ -20,4 +20,7 @@ public interface HotelRepository extends JpaRepository<Hotel, Long> {
 	
 	@Query("SELECT h FROM Hotel h WHERE h.name LIKE %:name%")
     public List<Hotel> searchWithJPQLQuery(@Param("name") String name);
+
+    @Query("SELECT h FROM Hotel h WHERE LOWER(h.name) LIKE LOWER(CONCAT('%',:searchTerm, '%'))")
+    List<Hotel> findBySearchTerm(@Param("searchTerm") String searchTerm);
 }

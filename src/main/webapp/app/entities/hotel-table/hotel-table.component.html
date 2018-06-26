@@ -28,7 +28,7 @@
                 <td>{{hotelTable.noOfCustomer}}</td>
                 <td>
                     <div *ngIf="hotelTable.hotelId">
-                        <a [routerLink]="['../hotel', hotelTable.hotelId , 'view' ]" >{{hotelTable.hotelId}}</a>
+                        <a [routerLink]="['../hotel', hotelTable.hotelId , 'view' ]" >{{hotelTable.hotelName}}</a>
                     </div>
                 </td>
                 <td class="text-right">
