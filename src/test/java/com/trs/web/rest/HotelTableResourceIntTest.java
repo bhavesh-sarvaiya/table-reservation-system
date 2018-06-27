@@ -49,6 +49,9 @@ public class HotelTableResourceIntTest {
     private static final Integer DEFAULT_NO_OF_CUSTOMER = 1;
     private static final Integer UPDATED_NO_OF_CUSTOMER = 2;
 
+    private static final String DEFAULT_STATUS = "AAAAAAAAAA";
+    private static final String UPDATED_STATUS = "BBBBBBBBBB";
+
     @Autowired
     private HotelTableRepository hotelTableRepository;
 
@@ -96,7 +99,8 @@ public class HotelTableResourceIntTest {
     public static HotelTable createEntity(EntityManager em) {
         HotelTable hotelTable = new HotelTable()
             .tableNumber(DEFAULT_TABLE_NUMBER)
-            .noOfCustomer(DEFAULT_NO_OF_CUSTOMER);
+            .noOfCustomer(DEFAULT_NO_OF_CUSTOMER)
+            .status(DEFAULT_STATUS);
         // Add required entity
         Hotel hotel = HotelResourceIntTest.createEntity(em);
         em.persist(hotel);
@@ -128,6 +132,7 @@ public class HotelTableResourceIntTest {
         HotelTable testHotelTable = hotelTableList.get(hotelTableList.size() - 1);
         assertThat(testHotelTable.getTableNumber()).isEqualTo(DEFAULT_TABLE_NUMBER);
         assertThat(testHotelTable.getNoOfCustomer()).isEqualTo(DEFAULT_NO_OF_CUSTOMER);
+        assertThat(testHotelTable.getStatus()).isEqualTo(DEFAULT_STATUS);
     }
 
     @Test
@@ -200,7 +205,8 @@ public class HotelTableResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(hotelTable.getId().intValue())))
             .andExpect(jsonPath("$.[*].tableNumber").value(hasItem(DEFAULT_TABLE_NUMBER.toString())))
-            .andExpect(jsonPath("$.[*].noOfCustomer").value(hasItem(DEFAULT_NO_OF_CUSTOMER)));
+            .andExpect(jsonPath("$.[*].noOfCustomer").value(hasItem(DEFAULT_NO_OF_CUSTOMER)))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.toString())));
     }
     
 
@@ -216,7 +222,8 @@ public class HotelTableResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(hotelTable.getId().intValue()))
             .andExpect(jsonPath("$.tableNumber").value(DEFAULT_TABLE_NUMBER.toString()))
-            .andExpect(jsonPath("$.noOfCustomer").value(DEFAULT_NO_OF_CUSTOMER));
+            .andExpect(jsonPath("$.noOfCustomer").value(DEFAULT_NO_OF_CUSTOMER))
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.toString()));
     }
     @Test
     @Transactional
@@ -240,7 +247,8 @@ public class HotelTableResourceIntTest {
         em.detach(updatedHotelTable);
         updatedHotelTable
             .tableNumber(UPDATED_TABLE_NUMBER)
-            .noOfCustomer(UPDATED_NO_OF_CUSTOMER);
+            .noOfCustomer(UPDATED_NO_OF_CUSTOMER)
+            .status(UPDATED_STATUS);
         HotelTableDTO hotelTableDTO = hotelTableMapper.toDto(updatedHotelTable);
 
         restHotelTableMockMvc.perform(put("/api/hotel-tables")
@@ -254,6 +262,7 @@ public class HotelTableResourceIntTest {
         HotelTable testHotelTable = hotelTableList.get(hotelTableList.size() - 1);
         assertThat(testHotelTable.getTableNumber()).isEqualTo(UPDATED_TABLE_NUMBER);
         assertThat(testHotelTable.getNoOfCustomer()).isEqualTo(UPDATED_NO_OF_CUSTOMER);
+        assertThat(testHotelTable.getStatus()).isEqualTo(UPDATED_STATUS);
     }
 
     @Test

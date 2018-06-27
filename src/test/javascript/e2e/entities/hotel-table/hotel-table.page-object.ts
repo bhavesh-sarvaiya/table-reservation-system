@@ -19,6 +19,7 @@ export class HotelTableUpdatePage {
     cancelButton = element(by.id('cancel-save'));
     tableNumberInput = element(by.id('field_tableNumber'));
     noOfCustomerInput = element(by.id('field_noOfCustomer'));
+    statusInput = element(by.id('field_status'));
     hotelSelect = element(by.id('field_hotel'));
 
     getPageTitle() {
@@ -39,6 +40,14 @@ export class HotelTableUpdatePage {
 
     getNoOfCustomerInput() {
         return this.noOfCustomerInput.getAttribute('value');
+    }
+
+    setStatusInput(status): promise.Promise<void> {
+        return this.statusInput.sendKeys(status);
+    }
+
+    getStatusInput() {
+        return this.statusInput.getAttribute('value');
     }
 
     hotelSelectLastOption(): promise.Promise<void> {

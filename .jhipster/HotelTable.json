@@ -28,6 +28,10 @@
                 "min"
             ],
             "fieldValidateRulesMin": "1"
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20180621145002",

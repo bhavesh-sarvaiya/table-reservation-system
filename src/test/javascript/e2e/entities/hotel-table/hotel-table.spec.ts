@@ -34,6 +34,8 @@ describe('HotelTable e2e test', () => {
         expect(hotelTableUpdatePage.getTableNumberInput()).toMatch('tableNumber');
         hotelTableUpdatePage.setNoOfCustomerInput('5');
         expect(hotelTableUpdatePage.getNoOfCustomerInput()).toMatch('5');
+        hotelTableUpdatePage.setStatusInput('status');
+        expect(hotelTableUpdatePage.getStatusInput()).toMatch('status');
         hotelTableUpdatePage.hotelSelectLastOption();
         hotelTableUpdatePage.save();
         expect(hotelTableUpdatePage.getSaveButton().isPresent()).toBeFalsy();

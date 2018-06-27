@@ -31,6 +31,9 @@ public class HotelTable implements Serializable {
     @Column(name = "no_of_customer", nullable = false)
     private Integer noOfCustomer;
 
+    @Column(name = "status")
+    private String status;
+
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties("")
@@ -69,6 +72,19 @@ public class HotelTable implements Serializable {
 
     public void setNoOfCustomer(Integer noOfCustomer) {
         this.noOfCustomer = noOfCustomer;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public HotelTable status(String status) {
+        this.status = status;
+        return this;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Hotel getHotel() {
@@ -111,6 +127,7 @@ public class HotelTable implements Serializable {
             "id=" + getId() +
             ", tableNumber='" + getTableNumber() + "'" +
             ", noOfCustomer=" + getNoOfCustomer() +
+            ", status='" + getStatus() + "'" +
             "}";
     }
 }

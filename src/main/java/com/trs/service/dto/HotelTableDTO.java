@@ -18,8 +18,11 @@ public class HotelTableDTO implements Serializable {
     @Min(value = 1)
     private Integer noOfCustomer;
 
+    private String status;
+
     private Long hotelId;
     private String hotelName;
+
     public Long getId() {
         return id;
     }
@@ -44,22 +47,30 @@ public class HotelTableDTO implements Serializable {
         this.noOfCustomer = noOfCustomer;
     }
 
-    public Long getHotelId() {
-        return hotelId;
+  
+    public String getStatus() {
+        return status;
     }
 
-    public void setHotelId(Long hotelId) {
-        this.hotelId = hotelId;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getHotelName() {
         return hotelName;
     }
 
+    public Long getHotelId() {
+        return hotelId;
+    }
+
     public void setHotelName(String hotelName) {
         this.hotelName = hotelName;
     }
-
+    
+    public void setHotelId(Long hotelId) {
+        this.hotelId = hotelId;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -88,6 +99,7 @@ public class HotelTableDTO implements Serializable {
             "id=" + getId() +
             ", tableNumber='" + getTableNumber() + "'" +
             ", noOfCustomer=" + getNoOfCustomer() +
+            ", status='" + getStatus() + "'" +
             ", hotel=" + getHotelId() +
             ", hotel='" + getHotelName() + "'" +
             "}";
