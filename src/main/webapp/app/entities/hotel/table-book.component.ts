@@ -41,6 +41,14 @@ export class TableBookComponent implements OnInit {
                     this.hotelTables = res.body;
                     if (this.hotelTables.length === 0) {
                         this.hotelTables = undefined;
+                    } else {
+                        let i = 0;
+                        res.body.forEach(element => {
+                            if (element.status === 'Available') {
+                                this.hotelTables[i] = element;
+                            }
+                            i++;
+                        });
                     }
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)

@@ -2,7 +2,10 @@ package com.trs.service.impl;
 
 import com.trs.service.BookingService;
 import com.trs.domain.Booking;
+import com.trs.domain.HotelTable;
 import com.trs.repository.BookingRepository;
+import com.trs.repository.HotelRepository;
+import com.trs.repository.HotelTableRepository;
 import com.trs.service.dto.BookingDTO;
 import com.trs.service.mapper.BookingMapper;
 import org.slf4j.Logger;
@@ -25,12 +28,13 @@ public class BookingServiceImpl implements BookingService {
     private final Logger log = LoggerFactory.getLogger(BookingServiceImpl.class);
 
     private final BookingRepository bookingRepository;
-
+    private final HotelTableRepository hotelTableRepository;
     private final BookingMapper bookingMapper;
 
-    public BookingServiceImpl(BookingRepository bookingRepository, BookingMapper bookingMapper) {
+    public BookingServiceImpl(BookingRepository bookingRepository, BookingMapper bookingMapper, HotelTableRepository hotelTableRepository) {
         this.bookingRepository = bookingRepository;
         this.bookingMapper = bookingMapper;
+        this.hotelTableRepository = hotelTableRepository;
     }
 
     /**
@@ -43,6 +47,9 @@ public class BookingServiceImpl implements BookingService {
     public BookingDTO save(BookingDTO bookingDTO) {
         log.debug("Request to save Booking : {}", bookingDTO);
         Booking booking = bookingMapper.toEntity(bookingDTO);
+        HotelTable hotelTable = hotelTableRepository.getOne(bookingDTO.getHotelTableId());
+        hotelTable.setStatus("Unavailable");
+        hotelTable = hotelTableRepository.save(hotelTable);
         booking = bookingRepository.save(booking);
         return bookingMapper.toDto(booking);
     }

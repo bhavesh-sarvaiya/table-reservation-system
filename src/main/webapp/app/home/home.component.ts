@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
     modalRef: NgbModalRef;
     search: String;
     hotels: IHotel[];
+    length: number;
     constructor(private principal: Principal,
         private hotelService: HotelService,
         private dataUtils: JhiDataUtils,
@@ -43,6 +44,7 @@ export class HomeComponent implements OnInit {
         .subscribe(
             (res: HttpResponse<IHotel[]>) => {
                 this.hotels = res.body;
+                this.length = this.hotels.length;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
