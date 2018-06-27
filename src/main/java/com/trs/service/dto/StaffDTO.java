@@ -20,6 +20,8 @@ public class StaffDTO implements Serializable {
 
     private Long hotelId;
 
+    private String hotelName;
+
     public Long getId() {
         return id;
     }
@@ -60,6 +62,14 @@ public class StaffDTO implements Serializable {
         this.hotelId = hotelId;
     }
 
+    public String getHotelName() {
+        return hotelName;
+    }
+
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -89,6 +99,7 @@ public class StaffDTO implements Serializable {
             ", contactNo='" + getContactNo() + "'" +
             ", address='" + getAddress() + "'" +
             ", hotel=" + getHotelId() +
+            ", hotel='" + getHotelName() + "'" +
             "}";
     }
 }

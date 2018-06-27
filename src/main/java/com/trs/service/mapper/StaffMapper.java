@@ -12,6 +12,7 @@ import org.mapstruct.*;
 public interface StaffMapper extends EntityMapper<StaffDTO, Staff> {
 
     @Mapping(source = "hotel.id", target = "hotelId")
+    @Mapping(source = "hotel.name", target = "hotelName")
     StaffDTO toDto(Staff staff);
 
     @Mapping(source = "hotelId", target = "hotel")
