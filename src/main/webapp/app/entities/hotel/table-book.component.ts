@@ -22,8 +22,10 @@ export class TableBookComponent implements OnInit {
     isSaving: boolean;
     staff: IStaff[];
     hotelTables: IHotelTable[];
+    hotelTable: IHotelTable;
     availableHotelTables: IHotelTable[];
     bookDateDp: any;
+    moreGuest: boolean;
     constructor(private dataUtils: JhiDataUtils,
         private staffService: StaffService,
         private hotelTableService: HotelTableService,
@@ -43,7 +45,6 @@ export class TableBookComponent implements OnInit {
                     if (this.hotelTables.length === 0) {
                         this.hotelTables = undefined;
                     }
-                    console.log(this.hotelTables);
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
@@ -54,7 +55,6 @@ export class TableBookComponent implements OnInit {
                     if (this.availableHotelTables.length === 0) {
                         this.availableHotelTables = undefined;
                     }
-                    console.log(this.availableHotelTables);
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
@@ -68,9 +68,23 @@ export class TableBookComponent implements OnInit {
     save() {
         this.isSaving = true;
         this._booking.hotelId = this.hotel.id;
-        this.subscribeToSaveResponse(this.bookingService.create(this.booking));
+        this.moreGuest = true;
+       // this.subscribeToSaveResponse(this.bookingService.create(this.booking));
     }
 
+    checkGuest() {
+        this.hotelTableService.find(this._booking.hotelTableId).subscribe(
+            (res: HttpResponse<IHotelTable>) => {
+                this.hotelTable = res.body;
+                if (this._booking.noOfGuest > this.hotelTable.noOfCustomer) {
+                    this.moreGuest = true;
+                } else {
+                    this.moreGuest = false;
+                }
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
+    }
     openFile(contentType, field) {
         return this.dataUtils.openFile(contentType, field);
     }

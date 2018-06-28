@@ -4,6 +4,7 @@ import com.trs.TableReservationApp;
 
 import com.trs.domain.Booking;
 import com.trs.domain.Hotel;
+import com.trs.domain.User;
 import com.trs.repository.BookingRepository;
 import com.trs.service.BookingService;
 import com.trs.service.dto.BookingDTO;
@@ -108,6 +109,11 @@ public class BookingResourceIntTest {
         em.persist(hotel);
         em.flush();
         booking.setHotel(hotel);
+        // Add required entity
+        User user = UserResourceIntTest.createEntity(em);
+        em.persist(user);
+        em.flush();
+        booking.setUser(user);
         return booking;
     }
 

@@ -38,6 +38,7 @@ describe('Booking e2e test', () => {
         expect(bookingUpdatePage.getNoOfGuestInput()).toMatch('5');
         bookingUpdatePage.hotelSelectLastOption();
         bookingUpdatePage.hotelTableSelectLastOption();
+        bookingUpdatePage.userSelectLastOption();
         bookingUpdatePage.save();
         expect(bookingUpdatePage.getSaveButton().isPresent()).toBeFalsy();
     });*/

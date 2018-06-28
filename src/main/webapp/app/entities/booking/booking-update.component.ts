@@ -10,6 +10,7 @@ import { IHotel } from 'app/shared/model/hotel.model';
 import { HotelService } from 'app/entities/hotel';
 import { IHotelTable } from 'app/shared/model/hotel-table.model';
 import { HotelTableService } from 'app/entities/hotel-table';
+import { IUser, UserService } from 'app/core';
 
 @Component({
     selector: 'jhi-booking-update',
@@ -22,6 +23,8 @@ export class BookingUpdateComponent implements OnInit {
     hotels: IHotel[];
 
     hoteltables: IHotelTable[];
+
+    users: IUser[];
     bookDateDp: any;
 
     constructor(
@@ -29,6 +32,7 @@ export class BookingUpdateComponent implements OnInit {
         private bookingService: BookingService,
         private hotelService: HotelService,
         private hotelTableService: HotelTableService,
+        private userService: UserService,
         private activatedRoute: ActivatedRoute
     ) {}
 
@@ -40,6 +44,18 @@ export class BookingUpdateComponent implements OnInit {
         this.hotelService.query().subscribe(
             (res: HttpResponse<IHotel[]>) => {
                 this.hotels = res.body;
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
+        this.hotelTableService.query().subscribe(
+            (res: HttpResponse<IHotelTable[]>) => {
+                this.hoteltables = res.body;
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
+        this.userService.query().subscribe(
+            (res: HttpResponse<IUser[]>) => {
+                this.users = res.body;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
@@ -80,6 +96,10 @@ export class BookingUpdateComponent implements OnInit {
     }
 
     trackHotelTableById(index: number, item: IHotelTable) {
+        return item.id;
+    }
+
+    trackUserById(index: number, item: IUser) {
         return item.id;
     }
     get booking() {

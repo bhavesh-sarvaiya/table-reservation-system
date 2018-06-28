@@ -29,6 +29,10 @@ public class BookingDTO implements Serializable {
 
     private String hotelTableTableNumber;
 
+    private Long userId;
+
+    private String userLogin;
+
     public Long getId() {
         return id;
     }
@@ -69,13 +73,13 @@ public class BookingDTO implements Serializable {
         this.hotelId = hotelId;
     }
 
-        public String getHotelName() {
-            return hotelName;
-        }
+    public String getHotelName() {
+        return hotelName;
+    }
 
-        public void setHotelName(String hotelName) {
-            this.hotelName = hotelName;
-        }
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
+    }
 
     public Long getHotelTableId() {
         return hotelTableId;
@@ -91,6 +95,22 @@ public class BookingDTO implements Serializable {
 
     public void setHotelTableTableNumber(String hotelTableTableNumber) {
         this.hotelTableTableNumber = hotelTableTableNumber;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+    public String getUserLogin() {
+        return userLogin;
+    }
+
+    public void setUserLogin(String userLogin) {
+        this.userLogin = userLogin;
     }
 
     @Override
@@ -125,6 +145,8 @@ public class BookingDTO implements Serializable {
             ", hotel='" + getHotelName() + "'" +
             ", hotelTable=" + getHotelTableId() +
             ", hotelTable='" + getHotelTableTableNumber() + "'" +
+            ", user=" + getUserId() +
+            ", user='" + getUserLogin() + "'" +
             "}";
     }
 }

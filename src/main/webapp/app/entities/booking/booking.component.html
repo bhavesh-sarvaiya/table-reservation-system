@@ -20,6 +20,7 @@
             <th jhiSortBy="noOfGuest"><span>No Of Guest</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="hotelName"><span>Hotel</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="hotelTableTableNumber"><span>Hotel Table</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="userLogin"><span>Customer</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
@@ -38,6 +39,9 @@
                     <div *ngIf="booking.hotelTableId">
                         <a [routerLink]="['../hotel-table', booking.hotelTableId , 'view' ]" >{{booking.hotelTableTableNumber}}</a>
                     </div>
+                </td>
+                <td>
+                    {{booking.userLogin}}
                 </td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">

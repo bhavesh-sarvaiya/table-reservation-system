@@ -114,15 +114,19 @@
                                 [hidden]="!editForm.controls.noOfGuest?.errors?.number">
                                 This field should be a number.
                             </small>
+                          
                             <small class="form-text text-danger"
                             [hidden]="!editForm.controls.bookTime?.errors?.min">
                             This field should be at least 1.
                         </small>
                         </div>
+                        <small class="form-text text-danger" *ngIf="moreGuest">
+                            Guest is more than table's capacity Select another table
+                        </small>
                     </div>
                     <div class="form-group">
                         <label class="form-control-label" for="field_hotelTable">Select Table</label>
-                        <select class="form-control" id="field_hotelTable" name="hotelTable" [(ngModel)]="booking.hotelTableId" >
+                        <select class="form-control" id="field_hotelTable" name="hotelTable" (change)="checkGuest()" [(ngModel)]="booking.hotelTableId" >
                             <option [ngValue]="hotelTableOption.id" *ngFor="let hotelTableOption of availableHotelTables;">{{hotelTableOption.tableNumber}}</option>
                         </select>
 
@@ -138,7 +142,7 @@
                     <!-- <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
                         <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
                     </button> -->
-                    <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary" style="width: 100%">
+                    <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving || moreGuest" class="btn btn-primary" style="width: 100%">
                         <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Book</span>
                     </button>
                 </div>

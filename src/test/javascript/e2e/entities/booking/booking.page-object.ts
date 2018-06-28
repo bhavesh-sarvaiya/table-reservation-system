@@ -22,6 +22,7 @@ export class BookingUpdatePage {
     noOfGuestInput = element(by.id('field_noOfGuest'));
     hotelSelect = element(by.id('field_hotel'));
     hotelTableSelect = element(by.id('field_hotelTable'));
+    userSelect = element(by.id('field_user'));
 
     getPageTitle() {
         return this.pageTitle.getText();
@@ -87,6 +88,25 @@ export class BookingUpdatePage {
 
     getHotelTableSelectedOption() {
         return this.hotelTableSelect.element(by.css('option:checked')).getText();
+    }
+
+    userSelectLastOption(): promise.Promise<void> {
+        return this.userSelect
+            .all(by.tagName('option'))
+            .last()
+            .click();
+    }
+
+    userSelectOption(option): promise.Promise<void> {
+        return this.userSelect.sendKeys(option);
+    }
+
+    getUserSelect(): ElementFinder {
+        return this.userSelect;
+    }
+
+    getUserSelectedOption() {
+        return this.userSelect.element(by.css('option:checked')).getText();
     }
 
     save(): promise.Promise<void> {

@@ -29,6 +29,10 @@
                         <a [routerLink]="['/hotel-table', booking.hotelTableId, 'view']">{{booking.hotelTableTableNumber}}</a>
                     </div>
                 </dd>
+                <dt><span>Customer</span></dt>
+                <dd>
+                    {{booking.userLogin}}
+                </dd>
             </dl>
 
             <button type="submit"

@@ -9,6 +9,8 @@ export interface IBooking {
     hotelId?: number;
     hotelTableTableNumber?: string;
     hotelTableId?: number;
+    userLogin?: string;
+    userId?: number;
 }
 
 export class Booking implements IBooking {
@@ -20,6 +22,8 @@ export class Booking implements IBooking {
         public hotelName?: string,
         public hotelId?: number,
         public hotelTableTableNumber?: string,
-        public hotelTableId?: number
+        public hotelTableId?: number,
+        public userLogin?: string,
+        public userId?: number
     ) {}
 }

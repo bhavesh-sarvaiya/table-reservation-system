@@ -20,5 +20,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="hotel_table"/>
 
+        <addForeignKeyConstraint baseColumnNames="user_id"
+                                 baseTableName="booking"
+                                 constraintName="fk_booking_user_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="jhi_user"/>
+
     </changeSet>
 </databaseChangeLog>

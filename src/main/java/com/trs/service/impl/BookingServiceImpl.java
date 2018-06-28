@@ -1,11 +1,15 @@
 package com.trs.service.impl;
 
 import com.trs.service.BookingService;
+import com.trs.service.UserService;
 import com.trs.domain.Booking;
 import com.trs.domain.HotelTable;
+import com.trs.domain.User;
 import com.trs.repository.BookingRepository;
 import com.trs.repository.HotelRepository;
 import com.trs.repository.HotelTableRepository;
+import com.trs.repository.UserRepository;
+import com.trs.security.SecurityUtils;
 import com.trs.service.dto.BookingDTO;
 import com.trs.service.mapper.BookingMapper;
 import org.slf4j.Logger;
@@ -30,11 +34,14 @@ public class BookingServiceImpl implements BookingService {
     private final BookingRepository bookingRepository;
     private final HotelTableRepository hotelTableRepository;
     private final BookingMapper bookingMapper;
+    private final UserRepository userRepository;
 
-    public BookingServiceImpl(BookingRepository bookingRepository, BookingMapper bookingMapper, HotelTableRepository hotelTableRepository) {
+    public BookingServiceImpl(BookingRepository bookingRepository, BookingMapper bookingMapper,
+     HotelTableRepository hotelTableRepository, UserRepository userRepository) {
         this.bookingRepository = bookingRepository;
         this.bookingMapper = bookingMapper;
         this.hotelTableRepository = hotelTableRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -48,6 +55,8 @@ public class BookingServiceImpl implements BookingService {
         log.debug("Request to save Booking : {}", bookingDTO);
         Booking booking = bookingMapper.toEntity(bookingDTO);
         HotelTable hotelTable = hotelTableRepository.getOne(bookingDTO.getHotelTableId());
+        User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
+        booking.setUser(user);
         hotelTable.setStatus("Unavailable");
         hotelTable = hotelTableRepository.save(hotelTable);
         booking = bookingRepository.save(booking);

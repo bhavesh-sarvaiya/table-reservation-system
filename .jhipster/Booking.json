@@ -16,6 +16,17 @@
             "otherEntityName": "hotelTable",
             "relationshipType": "many-to-one",
             "otherEntityField": "tableNumber"
+        },
+        {
+            "relationshipName": "user",
+            "otherEntityName": "user",
+            "relationshipType": "many-to-one",
+            "relationshipValidateRules": [
+                "required"
+            ],
+            "otherEntityField": "login",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "booking"
         }
     ],
     "fields": [
