@@ -4,10 +4,14 @@ import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { DATE_TIME_FORMAT } from 'app/shared/constants/input.constants';
-import { JhiDataUtils } from 'ng-jhipster';
+import { JhiDataUtils, JhiAlertService } from 'ng-jhipster';
 
 import { IHotel } from 'app/shared/model/hotel.model';
 import { HotelService } from './hotel.service';
+import { HotelTableService } from 'app/entities/hotel-table';
+import { IHotelTable } from 'app/shared/model/hotel-table.model';
+import { IStaff } from 'app/shared/model/staff.model';
+import { StaffService } from 'app/entities/staff';
 
 @Component({
     selector: 'jhi-hotel-update',
@@ -18,10 +22,14 @@ export class HotelUpdateComponent implements OnInit {
     isSaving: boolean;
     openTime: string;
     closeTime: string;
-
+    staff: IStaff[];
+    hotelTables: IHotelTable[];
     constructor(
         private dataUtils: JhiDataUtils,
+        private staffService: StaffService,
         private hotelService: HotelService,
+        private hotelTableService: HotelTableService,
+        private jhiAlertService: JhiAlertService,
         private elementRef: ElementRef,
         private activatedRoute: ActivatedRoute
     ) {}
@@ -30,6 +38,20 @@ export class HotelUpdateComponent implements OnInit {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ hotel }) => {
             this.hotel = hotel;
+            if (hotel.id !== undefined) {
+                this.hotelTableService.getTablesByHotel(this.hotel.id).subscribe(
+                    (res: HttpResponse<IHotelTable[]>) => {
+                        this.hotelTables = res.body;
+                    },
+                    (res: HttpErrorResponse) => this.onError(res.message)
+                );
+                this.staffService.getStaffByHotel(this.hotel.id).subscribe(
+                    (res: HttpResponse<IStaff[]>) => {
+                        this.staff = res.body;
+                    },
+                    (res: HttpErrorResponse) => this.onError(res.message)
+                );
+            }
         });
     }
 
@@ -84,5 +106,9 @@ export class HotelUpdateComponent implements OnInit {
         this._hotel = hotel;
         this.openTime = moment(hotel.openTime).format(DATE_TIME_FORMAT);
         this.closeTime = moment(hotel.closeTime).format(DATE_TIME_FORMAT);
+    }
+
+    private onError(errorMessage: string) {
+        this.jhiAlertService.error(errorMessage, null, null);
     }
 }

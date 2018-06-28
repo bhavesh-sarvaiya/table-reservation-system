@@ -13,6 +13,7 @@ type EntityArrayResponseType = HttpResponse<IHotelTable[]>;
 export class HotelTableService {
     private resourceUrl = SERVER_API_URL + 'api/hotel-tables';
     private resourceUrl1 = SERVER_API_URL + 'api/hotel-tables-hotel';
+    private resourceUrl2 = SERVER_API_URL + 'api/hotel-tables-hotel-status';
 
     constructor(private http: HttpClient) {}
 
@@ -42,5 +43,10 @@ export class HotelTableService {
     getTablesByHotel(id?: any): Observable<EntityArrayResponseType> {
         const options = createRequestOption({id});
         return this.http.get<IHotelTable[]>(this.resourceUrl1, { params: options, observe: 'response' });
+    }
+
+    getTablesByHotelAndStatus(id: any, status: String): Observable<EntityArrayResponseType> {
+        const options = createRequestOption({id, status});
+        return this.http.get<IHotelTable[]>(this.resourceUrl2, { params: options, observe: 'response' });
     }
 }

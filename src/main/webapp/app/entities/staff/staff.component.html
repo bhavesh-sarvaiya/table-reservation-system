@@ -14,7 +14,7 @@
         <table class="table table-striped">
             <thead>
             <tr>
-            <th><span>ID</span></th>
+            <!-- <th><span>ID</span></th> -->
             <th><span>Name</span></th>
             <th><span>Contact No</span></th>
             <th><span>Address</span></th>
@@ -24,7 +24,7 @@
             </thead>
             <tbody>
             <tr *ngFor="let staff of staff ;trackBy: trackId">
-                <td><a [routerLink]="['/staff', staff.id, 'view' ]">{{staff.id}}</a></td>
+                <!-- <td><a [routerLink]="['/staff', staff.id, 'view' ]">{{staff.id}}</a></td> -->
                 <td>{{staff.name}}</td>
                 <td>{{staff.contactNo}}</td>
                 <td>{{staff.address}}</td>

@@ -48,6 +48,7 @@ export class HotelTableUpdateComponent implements OnInit {
         if (this.hotelTable.id !== undefined) {
             this.subscribeToSaveResponse(this.hotelTableService.update(this.hotelTable));
         } else {
+            this._hotelTable.status = 'Available';
             this.subscribeToSaveResponse(this.hotelTableService.create(this.hotelTable));
         }
     }

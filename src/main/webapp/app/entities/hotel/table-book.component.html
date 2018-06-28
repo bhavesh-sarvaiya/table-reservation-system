@@ -123,8 +123,9 @@
                     <div class="form-group">
                         <label class="form-control-label" for="field_hotelTable">Select Table</label>
                         <select class="form-control" id="field_hotelTable" name="hotelTable" [(ngModel)]="booking.hotelTableId" >
-                            <option [ngValue]="hotelTableOption.id" *ngFor="let hotelTableOption of hotelTables;">{{hotelTableOption.tableNumber}}</option>
+                            <option [ngValue]="hotelTableOption.id" *ngFor="let hotelTableOption of availableHotelTables;">{{hotelTableOption.tableNumber}}</option>
                         </select>
+
                     </div>
                     <div [hidden]="!(editForm.controls.hotelTable?.dirty && editForm.controls.hotelTable?.invalid)">
                         <small class="form-text text-danger"

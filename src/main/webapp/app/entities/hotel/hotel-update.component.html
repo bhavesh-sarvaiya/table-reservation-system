@@ -1,5 +1,5 @@
 <div class="row justify-content-center">
-    <div class="col-8">
+    <div class="col-md-4">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
             <h2 id="jhi-hotel-heading">Create or edit a Hotel</h2>
             <div>
@@ -136,4 +136,93 @@
             </div>
         </form>
     </div>
+    <div class="col-md-6" [hidden]="!hotel.id">
+            <h2>Tables</h2>
+            <div class="table-responsive" *ngIf="hotelTables" style="max-height: 240px  ">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                        <th><span>Number</span></th>
+                        <th><span>Customers</span></th>
+                        <th><span>Status</span></th>
+                        <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let hotelTable of hotelTables ;">
+                            <td>{{hotelTable.tableNumber}}</td>
+                            <td>{{hotelTable.noOfCustomer}}</td>
+                            <td>{{hotelTable.status}}</td>
+                            <td class="text-right">
+                                <div class="btn-group flex-btn-group-container">
+                                    <button type="submit"
+                                            [routerLink]="['/hotel-table', hotelTable.id, 'view' ]"
+                                            class="btn btn-info btn-sm">
+                                        <fa-icon [icon]="'eye'"></fa-icon>
+                                        <!-- <span class="d-none d-md-inline">View</span> -->
+                                    </button>
+                                    <button type="submit"
+                                            [routerLink]="['/hotel-table', hotelTable.id, 'edit']"
+                                            class="btn btn-primary btn-sm">
+                                        <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                        <!-- <span class="d-none d-md-inline">Edit</span> -->
+                                    </button>
+                                    <button type="submit"
+                                            [routerLink]="['/', { outlets: { popup: 'hotel-table/'+ hotelTable.id + '/delete'} }]"
+                                            replaceUrl="true"
+                                            queryParamsHandling="merge"
+                                            class="btn btn-danger btn-sm">
+                                        <fa-icon [icon]="'times'"></fa-icon>
+                                        <!-- <span class="d-none d-md-inline">Delete</span> -->
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                        <h2>Staff</h2>
+                            <div class="table-responsive" *ngIf="staff" style="max-height: 240px"> 
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                        <th><span>Name</span></th>
+                                        <th><span>Contact No</span></th>
+                                        <th></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let staff of staff ;">
+                                            <td>{{staff.name}}</td>
+                                            <td>{{staff.contactNo}}</td>
+                                            <td class="text-right">
+                                                <div class="btn-group flex-btn-group-container">
+                                                    <button type="submit"
+                                                            [routerLink]="['/staff', staff.id, 'view' ]"
+                                                            class="btn btn-info btn-sm">
+                                                        <fa-icon [icon]="'eye'"></fa-icon>
+                                                        <!-- <span class="d-none d-md-inline">View</span> -->
+                                                    </button>
+                                                    <button type="submit"
+                                                            [routerLink]="['/staff', staff.id, 'edit']"
+                                                            class="btn btn-primary btn-sm">
+                                                        <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                                        <!-- <span class="d-none d-md-inline">Edit</span> -->
+                                                    </button>
+                                                    <button type="submit"
+                                                            [routerLink]="['/', { outlets: { popup: 'staff/'+ staff.id + '/delete'} }]"
+                                                            replaceUrl="true"
+                                                            queryParamsHandling="merge"
+                                                            class="btn btn-danger btn-sm">
+                                                        <fa-icon [icon]="'times'"></fa-icon>
+                                                        <!-- <span class="d-none d-md-inline">Delete</span> -->
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+        </div>
 </div>

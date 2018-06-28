@@ -59,7 +59,7 @@
 
                 <div class="form-group">
                     <label class="form-control-label" for="field_hotel">Hotel</label>
-                    <select class="form-control" id="field_hotel" name="hotel" [(ngModel)]="booking.hotelId"  required>
+                    <select class="form-control" id="field_hotel" (change) = "findTableByHotel()" name="hotel" [(ngModel)]="booking.hotelId"  required>
                         <option *ngIf="!editForm.value.hotel" [ngValue]="null" selected></option>
                         <option [ngValue]="hotelOption.id" *ngFor="let hotelOption of hotels; trackBy: trackHotelById">{{hotelOption.name}}</option>
                     </select>
@@ -73,7 +73,7 @@
                 <div class="form-group">
                     <label class="form-control-label" for="field_hotelTable">Hotel Table</label>
                     <select class="form-control" id="field_hotelTable" name="hotelTable" [(ngModel)]="booking.hotelTableId" >
-                        <option [ngValue]="null"></option>
+                        <!-- <option [ngValue]="null"></option> -->
                         <option [ngValue]="hotelTableOption.id" *ngFor="let hotelTableOption of hoteltables; trackBy: trackHotelTableById">{{hotelTableOption.tableNumber}}</option>
                     </select>
                 </div>

@@ -16,4 +16,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface HotelTableRepository extends JpaRepository<HotelTable, Long> {
 	List<HotelTable> findAllByHotel(Hotel hotel);
+	List<HotelTable> findAllByHotelAndStatus(Hotel hotel, String status);
+	
 }

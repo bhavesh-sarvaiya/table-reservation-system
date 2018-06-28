@@ -50,4 +50,5 @@ public interface HotelTableService {
      * @return the list of entities
      */
     List<HotelTableDTO> findAllByHotel(Long id);
+    List<HotelTableDTO> findAllByHotelAndStatus(Long id, String status);
 }

@@ -22,6 +22,7 @@ export class TableBookComponent implements OnInit {
     isSaving: boolean;
     staff: IStaff[];
     hotelTables: IHotelTable[];
+    availableHotelTables: IHotelTable[];
     bookDateDp: any;
     constructor(private dataUtils: JhiDataUtils,
         private staffService: StaffService,
@@ -41,15 +42,19 @@ export class TableBookComponent implements OnInit {
                     this.hotelTables = res.body;
                     if (this.hotelTables.length === 0) {
                         this.hotelTables = undefined;
-                    } else {
-                        let i = 0;
-                        res.body.forEach(element => {
-                            if (element.status === 'Available') {
-                                this.hotelTables[i] = element;
-                            }
-                            i++;
-                        });
                     }
+                    console.log(this.hotelTables);
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
+
+            this.hotelTableService.getTablesByHotelAndStatus(this.hotel.id, 'Available').subscribe(
+                (res: HttpResponse<IHotelTable[]>) => {
+                    this.availableHotelTables = res.body;
+                    if (this.availableHotelTables.length === 0) {
+                        this.availableHotelTables = undefined;
+                    }
+                    console.log(this.availableHotelTables);
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );

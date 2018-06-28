@@ -99,5 +99,14 @@ public class HotelTableServiceImpl implements HotelTableService {
 	        return hotelTableRepository.findAllByHotel(hotel).stream()
 	            .map(hotelTableMapper::toDto)
 	            .collect(Collectors.toCollection(LinkedList::new));
+    }
+    
+    @Override
+	public List<HotelTableDTO> findAllByHotelAndStatus(Long id,String status) {
+		 log.debug("Request to get all HotelTables by hotel");
+		 Hotel hotel = hotelRepository.findById(id).get();
+	        return hotelTableRepository.findAllByHotelAndStatus(hotel,status).stream()
+	            .map(hotelTableMapper::toDto)
+	            .collect(Collectors.toCollection(LinkedList::new));
 	}
 }

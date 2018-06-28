@@ -43,12 +43,6 @@ export class BookingUpdateComponent implements OnInit {
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
-        this.hotelTableService.query().subscribe(
-            (res: HttpResponse<IHotelTable[]>) => {
-                this.hoteltables = res.body;
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
     }
 
     previousState() {
@@ -94,5 +88,15 @@ export class BookingUpdateComponent implements OnInit {
 
     set booking(booking: IBooking) {
         this._booking = booking;
+    }
+    // custom method
+
+    findTableByHotel() {
+        this.hotelTableService.getTablesByHotel(this._booking.hotelId).subscribe(
+            (res: HttpResponse<IHotelTable[]>) => {
+                this.hoteltables = res.body;
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
     }
 }
