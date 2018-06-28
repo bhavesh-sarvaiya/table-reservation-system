@@ -1,10 +1,10 @@
 <div>
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <h1>Registration</h1>
+            <h1>Create Account</h1>
 
             <div class="alert alert-success" *ngIf="success">
-                <strong>Registration saved!</strong> Please check your email for confirmation.
+                <strong>Account create successfully</strong> Please check your email for confirmation.
             </div>
 
             <div class="alert alert-danger" *ngIf="error">
@@ -49,6 +49,53 @@
                         </small>
                     </div>
                 </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="firstName">First Name</label>
+                    <input type="text" class="form-control" [(ngModel)]="registerAccount.firstName" id="firstName" name="firstName" #firstName="ngModel" placeholder="Your first name"
+                            required minlength="1" maxlength="50" pattern="^[_@A-Za-z ]*$">
+                    <div *ngIf="firstName.dirty && firstName.invalid">
+                        <small class="form-text text-danger" *ngIf="firstName.errors.required">
+                            Your first name is required.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="firstName.errors.minlength"
+                               >
+                            Your first name is required to be at least 1 character.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="firstName.errors.maxlength"
+                               >
+                            Your first name cannot be longer than 50 characters.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="firstName.errors.pattern"
+                              >
+                            Your first name can only contain letters and whitespace.
+                        </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="lastName">Last Name</label>
+                    <input type="text" class="form-control" [(ngModel)]="registerAccount.lastName" id="lastName" name="lastName" #lastName="ngModel" placeholder="Your last name"
+                            required minlength="1" maxlength="50" pattern="^[_@A-Za-z ]*$">
+                    <div *ngIf="lastName.dirty && lastName.invalid">
+                        <small class="form-text text-danger" *ngIf="lastName.errors.required">
+                            Your last name is required.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="lastName.errors.minlength"
+                               >
+                            Your last name is required to be at least 1 character.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="lastName.errors.maxlength"
+                               >
+                            Your last name cannot be longer than 50 characters.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="lastName.errors.pattern"
+                              >
+                            Your last name can only contain letters and whitespace.
+                        </small>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <label class="form-control-label" for="email">Email</label>
                     <input type="email" class="form-control" id="email" name="email" #email="ngModel" placeholder="Your email"
@@ -69,6 +116,28 @@
                         <small class="form-text text-danger" *ngIf="email.errors.maxlength"
                               >
                             Your email cannot be longer than 100 characters.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="mobileNumber">Mobile Number</label>
+                    <input type="text" class="form-control" [(ngModel)]="registerAccount.mobileNumber" id="mobileNumber" name="mobileNumber" #mobileNumber="ngModel" placeholder="Your mobile number"
+                            required minlength="10" maxlength="15" pattern="^[+@0-9]*$">
+                    <div *ngIf="mobileNumber.dirty && mobileNumber.invalid">
+                        <small class="form-text text-danger" *ngIf="mobileNumber.errors.required">
+                            Your mobile number is required.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="mobileNumber.errors.minlength"
+                               >
+                            Your mobile number is required to be at least 10 character.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="mobileNumber.errors.maxlength"
+                               >
+                            Your mobile number cannot be longer than 15 characters.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="mobileNumber.errors.pattern"
+                              >
+                            Your mobile number can only contain number.
                         </small>
                     </div>
                 </div>
@@ -117,7 +186,7 @@
             <p></p>
             <div class="alert alert-warning">
                 <span>If you want to </span>
-                <a class="alert-link" (click)="openLogin()">sign in</a><span>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").</span>
+                <a class="alert-link" (click)="openLogin()">sign in</a>
             </div>
         </div>
     </div>

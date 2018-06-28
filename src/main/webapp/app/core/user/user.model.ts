@@ -2,6 +2,7 @@ export interface IUser {
     id?: any;
     login?: string;
     firstName?: string;
+    mobileNumber?: string;
     lastName?: string;
     email?: string;
     activated?: boolean;
@@ -19,6 +20,7 @@ export class User implements IUser {
         public id?: any,
         public login?: string,
         public firstName?: string,
+        public  mobileNumber?: string,
         public lastName?: string,
         public email?: string,
         public activated?: boolean,
@@ -33,6 +35,7 @@ export class User implements IUser {
         this.id = id ? id : null;
         this.login = login ? login : null;
         this.firstName = firstName ? firstName : null;
+        this.mobileNumber = mobileNumber ? mobileNumber : null;
         this.lastName = lastName ? lastName : null;
         this.email = email ? email : null;
         this.activated = activated ? activated : false;

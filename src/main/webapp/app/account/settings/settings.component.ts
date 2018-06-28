@@ -41,6 +41,7 @@ export class SettingsComponent implements OnInit {
             activated: account.activated,
             email: account.email,
             firstName: account.firstName,
+            mobileNumber: account.mobileNumber,
             langKey: account.langKey,
             lastName: account.lastName,
             login: account.login,

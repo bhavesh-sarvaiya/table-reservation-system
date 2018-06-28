@@ -35,12 +35,12 @@
                                 <div *ngFor="let hotelTable of hotelTables;">
                                     <a>                                
                                         <div *ngIf="hotelTable.status == 'Available'" style="background-color: #71bf71;width: 5vw;height: 5vw; margin-left: 2px;margin-top: 2px;">
-                                       <h3>{{hotelTable.tableNumber}}</h3>
-                                       <span style="font-size: 10px">Customers: {{hotelTable.noOfCustomer}}</span>
+                                       <h3 style="text-align: center;">{{hotelTable.tableNumber}}</h3>
+                                       <span style="font-size: 10px; margin-left: 8px;">Customers: {{hotelTable.noOfCustomer}}</span>
                                     </div>
                                     <div *ngIf="hotelTable.status == 'Unavailable'" style="background-color:  #ff8a00b8;width: 5vw;height: 5vw; margin-left: 2px;margin-top: 2px;">
-                                            <h3>{{hotelTable.tableNumber}}</h3>
-                                            <span style="font-size: 10px">Customers: {{hotelTable.noOfCustomer}}</span>
+                                            <h3 style="text-align: center;">{{hotelTable.tableNumber}}</h3>
+                                            <span style="font-size: 10px; margin-left: 8px;">Customers: {{hotelTable.noOfCustomer}}</span>
                                          </div>
                                 </a>
                                 </div>

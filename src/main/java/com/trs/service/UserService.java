@@ -109,6 +109,7 @@ public class UserService {
         User user = new User();
         user.setLogin(userDTO.getLogin());
         user.setFirstName(userDTO.getFirstName());
+        user.setMobileNumber(userDTO.getMobileNumber());
         user.setLastName(userDTO.getLastName());
         user.setEmail(userDTO.getEmail());
         user.setImageUrl(userDTO.getImageUrl());
@@ -144,11 +145,12 @@ public class UserService {
      * @param langKey language key
      * @param imageUrl image URL of user
      */
-    public void updateUser(String firstName, String lastName, String email, String langKey, String imageUrl) {
+    public void updateUser(String firstName,String mobileNumber, String lastName, String email, String langKey, String imageUrl) {
         SecurityUtils.getCurrentUserLogin()
             .flatMap(userRepository::findOneByLogin)
             .ifPresent(user -> {
                 user.setFirstName(firstName);
+                user.setMobileNumber(mobileNumber);
                 user.setLastName(lastName);
                 user.setEmail(email);
                 user.setLangKey(langKey);
@@ -171,6 +173,7 @@ public class UserService {
             .map(user -> {
                 user.setLogin(userDTO.getLogin());
                 user.setFirstName(userDTO.getFirstName());
+                user.setMobileNumber(userDTO.getMobileNumber());
                 user.setLastName(userDTO.getLastName());
                 user.setEmail(userDTO.getEmail());
                 user.setImageUrl(userDTO.getImageUrl());

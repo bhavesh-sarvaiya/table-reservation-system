@@ -1,16 +1,19 @@
 <div class="row justify-content-center">
     <div class="col-8">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-            <h2 id="myUserLabel">
-                Create or edit a User
+            <h2 id="myUserLabel" [hidden]="!user.id">
+                Edit a customer
+            </h2>
+            <h2 id="myUserLabel" [hidden]="user.id">
+                Create  a customer
             </h2>
             <div>
                 <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!user.id">
+                <!-- <div class="form-group" [hidden]="!user.id">
                     <label>ID</label>
                     <input type="text" class="form-control" name="id"
                         [(ngModel)]="user.id" readonly>
-                </div>
+                </div> -->
 
                 <div class="form-group">
                     <label class="form-control-label">Login</label>
@@ -90,6 +93,26 @@
                         </small>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="mobileNumber">Mobile Number</label>
+                    <input type="text" class="form-control" id="mobileNumber" name="mobileNumber" placeholder="Your mobile number"
+                           [(ngModel)]="user.mobileNumber" minlength="10" maxlength="15" #mobileNumberInput="ngModel" required>
+                    <div *ngIf="mobileNumberInput.dirty && mobileNumberInput.invalid">
+                        <small class="form-text text-danger"
+                           *ngIf="mobileNumberInput.errors.required">
+                            Your mobile number is required.
+                        </small>
+                        <small class="form-text text-danger"
+                           *ngIf="mobileNumberInput.errors.minlength">
+                            Your mobile number is required to be at least 10 numbers.
+                        </small>
+                        <small class="form-text text-danger"
+                           *ngIf="mobileNumberInput.errors.maxlength">
+                            Your mobile Number cannot be longer than 15 numbers.
+                        </small>
+                    </div>
+                </div>
+
                 <div class="form-check">
                     <label class="form-check-label" for="activated">
                         <input class="form-check-input" [disabled]="user.id === null" type="checkbox" id="activated" name="activated" [(ngModel)]="user.activated">

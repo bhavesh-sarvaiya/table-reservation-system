@@ -18,8 +18,8 @@
                     </span>
                 </a>
             </li>
-            <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true }">
-                    <a class="nav-link"   ngbDropdownToggle href="javascript:void(0);" (click)="collapseNavbar()">
+            <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true }">
+                    <a class="nav-link"  ngbDropdownToggle href="javascript:void(0);" (click)="collapseNavbar()">
                         <!-- <fa-icon [icon]="'asterisk'"></fa-icon> -->
                         <span>
                             <fa-icon [icon]="'th-list'"></fa-icon>
@@ -48,6 +48,13 @@
                                 </a>
                             </li>
                     </ul>
+                </li>
+
+                <li *jhiHasAnyAuthority="'ROLE_ADMIN'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    <a class="nav-link" routerLink="booking" (click)="collapseNavbar()">
+                        <fa-icon [icon]="'asterisk'" [fixedWidth]="true"></fa-icon>
+                        <span>Booking</span>
+                    </a>
                 </li>
             <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
             <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
@@ -78,12 +85,12 @@
                             <span>Staff</span>
                         </a>
                     </li> -->
-                    <li>
+                    <!-- <li>
                         <a class="dropdown-item" routerLink="booking" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                             <fa-icon [icon]="'asterisk'" [fixedWidth]="true"></fa-icon>
                             <span>Booking</span>
                         </a>
-                    </li>
+                    </li> -->
                     <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
                 </ul>
             </li>
@@ -98,10 +105,10 @@
                     <li>
                         <a class="dropdown-item" routerLink="admin/user-management" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon [icon]="'user'" [fixedWidth]="true"></fa-icon>
-                            <span>User management</span>
+                            <span>Customers</span>
                         </a>
                     </li>
-                    <li>
+                    <!-- <li>
                         <a class="dropdown-item" routerLink="admin/jhi-metrics" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon [icon]="'tachometer-alt'" [fixedWidth]="true"></fa-icon>
                             <span>Metrics</span>
@@ -136,7 +143,7 @@
                             <fa-icon [icon]="'book'" [fixedWidth]="true"></fa-icon>
                             <span>API</span>
                         </a>
-                    </li>
+                    </li> -->
                     <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
                 </ul>
             </li>
@@ -180,7 +187,7 @@
                     <li *ngSwitchCase="false">
                         <a class="dropdown-item" routerLink="register" routerLinkActive="active" (click)="collapseNavbar()">
                             <fa-icon [icon]="'user-plus'" [fixedWidth]="true"></fa-icon>
-                            <span>Register</span>
+                            <span>Create Account</span>
                         </a>
                     </li>
                 </ul>
