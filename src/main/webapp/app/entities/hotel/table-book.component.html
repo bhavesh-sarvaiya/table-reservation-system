@@ -2,6 +2,9 @@
     <div class="col-md-7">
         <div *ngIf="hotel">
             <h2><span>Hotel</span> {{hotel.name}}</h2>
+            <div class="alert alert-success" *ngIf="success">
+                <strong>Booking successfully</strong>
+            </div>
             <hr>
             <jhi-alert-error></jhi-alert-error>
             <dl class="row-md jh-entity-details">
@@ -36,11 +39,11 @@
                                     <a>                                
                                         <div *ngIf="hotelTable.status == 'Available'" style="background-color: #71bf71;width: 5vw;height: 5vw; margin-left: 2px;margin-top: 2px;">
                                        <h3 style="text-align: center;">{{hotelTable.tableNumber}}</h3>
-                                       <span style="font-size: 10px; margin-left: 8px;">Customers: {{hotelTable.noOfCustomer}}</span>
+                                       <span style="font-size: 10px; margin-left: 5px;">Customers: {{hotelTable.noOfCustomer}}</span>
                                     </div>
                                     <div *ngIf="hotelTable.status == 'Unavailable'" style="background-color:  #ff8a00b8;width: 5vw;height: 5vw; margin-left: 2px;margin-top: 2px;">
                                             <h3 style="text-align: center;">{{hotelTable.tableNumber}}</h3>
-                                            <span style="font-size: 10px; margin-left: 8px;">Customers: {{hotelTable.noOfCustomer}}</span>
+                                            <span style="font-size: 10px; margin-left: 5px;">Customers: {{hotelTable.noOfCustomer}}</span>
                                          </div>
                                 </a>
                                 </div>
@@ -103,7 +106,7 @@
                     </div>
                     <div class="form-group">
                         <label class="form-control-label" for="field_noOfGuest">No Of Guest</label>
-                        <input type="number" class="form-control" name="noOfGuest" id="field_noOfGuest"
+                        <input type="number" class="form-control" (change) = "checkGuest()  " name="noOfGuest" id="field_noOfGuest"
                         [(ngModel)]="booking.noOfGuest"  required min="1" jhiMin="1"/>
                         <div [hidden]="!(editForm.controls.noOfGuest?.dirty && editForm.controls.noOfGuest?.invalid)">
                             <small class="form-text text-danger"
@@ -126,17 +129,17 @@
                     </div>
                     <div class="form-group">
                         <label class="form-control-label" for="field_hotelTable">Select Table</label>
-                        <select class="form-control" id="field_hotelTable" name="hotelTable" (change)="checkGuest()" [(ngModel)]="booking.hotelTableId" >
+                        <select class="form-control" id="field_hotelTable" name="hotelTable" (change)="checkGuest()" [(ngModel)]="booking.hotelTableId" required>
                             <option [ngValue]="hotelTableOption.id" *ngFor="let hotelTableOption of availableHotelTables;">{{hotelTableOption.tableNumber}}</option>
                         </select>
-
+                        <div [hidden]="!(editForm.controls.hotelTable?.dirty && editForm.controls.hotelTable?.invalid)">
+                            <small class="form-text text-danger"
+                                [hidden]="!editForm.controls.hotelTable?.errors?.required">
+                                This field is required.
+                            </small>
+                        </div>
                     </div>
-                    <div [hidden]="!(editForm.controls.hotelTable?.dirty && editForm.controls.hotelTable?.invalid)">
-                        <small class="form-text text-danger"
-                            [hidden]="!editForm.controls.hotelTable?.errors?.required">
-                            This field is required.
-                        </small>
-                    </div>
+                    
                 </div>
                 <div>
                     <!-- <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

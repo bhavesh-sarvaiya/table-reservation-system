@@ -26,6 +26,7 @@ export class TableBookComponent implements OnInit {
     availableHotelTables: IHotelTable[];
     bookDateDp: any;
     moreGuest: boolean;
+    success: boolean;
     constructor(private dataUtils: JhiDataUtils,
         private staffService: StaffService,
         private hotelTableService: HotelTableService,
@@ -68,22 +69,30 @@ export class TableBookComponent implements OnInit {
     save() {
         this.isSaving = true;
         this._booking.hotelId = this.hotel.id;
-        this.moreGuest = true;
-       // this.subscribeToSaveResponse(this.bookingService.create(this.booking));
+        if (this._booking.hotelTableId !== undefined) {
+            if (this._booking.noOfGuest > this.hotelTable.noOfCustomer) {
+                this.moreGuest = true;
+            } else {
+                this.moreGuest = false;
+                this.subscribeToSaveResponse(this.bookingService.create(this.booking));
+            }
+        }
     }
 
     checkGuest() {
-        this.hotelTableService.find(this._booking.hotelTableId).subscribe(
-            (res: HttpResponse<IHotelTable>) => {
-                this.hotelTable = res.body;
-                if (this._booking.noOfGuest > this.hotelTable.noOfCustomer) {
-                    this.moreGuest = true;
-                } else {
-                    this.moreGuest = false;
-                }
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
+        if (this._booking.hotelTableId !== undefined && this._booking.noOfGuest !== undefined ) {
+            this.hotelTableService.find(this._booking.hotelTableId).subscribe(
+                (res: HttpResponse<IHotelTable>) => {
+                    this.hotelTable = res.body;
+                    if (this._booking.noOfGuest > this.hotelTable.noOfCustomer) {
+                        this.moreGuest = true;
+                    } else {
+                        this.moreGuest = false;
+                    }
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
+        }
     }
     openFile(contentType, field) {
         return this.dataUtils.openFile(contentType, field);
@@ -97,11 +106,13 @@ export class TableBookComponent implements OnInit {
     }
 
     private subscribeToSaveResponse(result: Observable<HttpResponse<IBooking>>) {
-        result.subscribe((res: HttpResponse<IBooking>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
+        result.subscribe((res: HttpResponse<IBooking>) =>  this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
     }
     private onSaveSuccess() {
         this.isSaving = false;
-        this.previousState();
+        this.success = true;
+        this.ngOnInit();
+       // this.previousState();
     }
 
     private onSaveError() {
