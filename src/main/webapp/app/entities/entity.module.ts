@@ -6,6 +6,7 @@ import { TableReservationStaffModule } from './staff/staff.module';
 import { TableReservationBookingModule } from './booking/booking.module';
 import { TableReservationCuisineModule } from './cuisine/cuisine.module';
 import { TableReservationTimeSlotModule } from './time-slot/time-slot.module';
+import { TableReservationTimingModule } from './timing/timing.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -18,6 +19,7 @@ import { TableReservationTimeSlotModule } from './time-slot/time-slot.module';
         TableReservationBookingModule,
         TableReservationCuisineModule,
         TableReservationTimeSlotModule,
+        TableReservationTimingModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

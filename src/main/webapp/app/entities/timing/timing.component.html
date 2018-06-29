@@ -1,0 +1,62 @@
+<div>
+    <h2 id="page-heading">
+        <span>Timings</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-timing" [routerLink]="['/timing/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create new Timing
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="timings">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Start Time</span></th>
+            <th><span>End Time</span></th>
+            <th><span>Time Slot</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let timing of timings ;trackBy: trackId">
+                <td><a [routerLink]="['/timing', timing.id, 'view' ]">{{timing.id}}</a></td>
+                <td>{{timing.startTime}}</td>
+                <td>{{timing.endTime}}</td>
+                <td>
+                    <div *ngIf="timing.timeSlotId">
+                        <a [routerLink]="['../time-slot', timing.timeSlotId , 'view' ]" >{{timing.timeSlotDay}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/timing', timing.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/timing', timing.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'timing/'+ timing.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

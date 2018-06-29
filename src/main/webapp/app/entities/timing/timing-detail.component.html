@@ -1,0 +1,37 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="timing">
+            <h2><span>Timing</span> {{timing.id}}</h2>
+            <hr>
+            <jhi-alert-error></jhi-alert-error>
+            <dl class="row-md jh-entity-details">
+                <dt><span>Start Time</span></dt>
+                <dd>
+                    <span>{{timing.startTime}}</span>
+                </dd>
+                <dt><span>End Time</span></dt>
+                <dd>
+                    <span>{{timing.endTime}}</span>
+                </dd>
+                <dt><span>Time Slot</span></dt>
+                <dd>
+                    <div *ngIf="timing.timeSlotId">
+                        <a [routerLink]="['/time-slot', timing.timeSlotId, 'view']">{{timing.timeSlotDay}}</a>
+                    </div>
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon [icon]="'arrow-left'"></fa-icon>&nbsp;<span> Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/timing', timing.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon [icon]="'pencil-alt'"></fa-icon>&nbsp;<span> Edit</span>
+            </button>
+        </div>
+    </div>
+</div>
