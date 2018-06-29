@@ -8,6 +8,7 @@ import { ITimeSlot } from 'app/shared/model/time-slot.model';
 import { TimeSlotService } from './time-slot.service';
 import { IHotel } from 'app/shared/model/hotel.model';
 import { HotelService } from 'app/entities/hotel';
+import { ITiming, Timing } from 'app/shared/model/timing.model';
 
 @Component({
     selector: 'jhi-time-slot-update',
@@ -15,6 +16,7 @@ import { HotelService } from 'app/entities/hotel';
 })
 export class TimeSlotUpdateComponent implements OnInit {
     private _timeSlot: ITimeSlot;
+    private _timing: ITiming;
     isSaving: boolean;
 
     hotels: IHotel[];
@@ -30,6 +32,9 @@ export class TimeSlotUpdateComponent implements OnInit {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ timeSlot }) => {
             this.timeSlot = timeSlot;
+        });
+        this.activatedRoute.data.subscribe(({ timing }) => {
+            this.timing = new Timing();
         });
         this.hotelService.query().subscribe(
             (res: HttpResponse<IHotel[]>) => {
@@ -78,5 +83,12 @@ export class TimeSlotUpdateComponent implements OnInit {
 
     set timeSlot(timeSlot: ITimeSlot) {
         this._timeSlot = timeSlot;
+    }
+    get timing() {
+        return this._timing;
+    }
+
+    set timing(timing: ITiming) {
+        this._timing = timing;
     }
 }

@@ -46,6 +46,28 @@
                         This field is required.
                     </small>
                 </div>
+                <div class="form-group">
+                        <label class="form-control-label" for="field_startTime">Start Time</label>
+                        <input type="text" class="form-control" name="startTime" id="field_startTime"
+                            [(ngModel)]="timing.startTime" required/>
+                        <div [hidden]="!(editForm.controls.startTime?.dirty && editForm.controls.startTime?.invalid)">
+                            <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.startTime?.errors?.required">
+                            This field is required.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-control-label" for="field_endTime">End Time</label>
+                        <input type="text" class="form-control" name="endTime" id="field_endTime"
+                            [(ngModel)]="timing.endTime" required/>
+                        <div [hidden]="!(editForm.controls.endTime?.dirty && editForm.controls.endTime?.invalid)">
+                            <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.endTime?.errors?.required">
+                            This field is required.
+                            </small>
+                        </div>
+                    </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
