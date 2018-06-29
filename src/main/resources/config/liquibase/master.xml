@@ -12,9 +12,11 @@
     <include file="config/liquibase/changelog/20180628110647_add_mobileNumber_field_to_user.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180628133031_added_rel_to_user.xml" relativeToChangelogFile="false"/>
     
+    <include file="config/liquibase/changelog/20180629090622_added_entity_Cuisine.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20180621145002_added_entity_constraints_HotelTable.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180621153441_added_entity_constraints_Staff.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180626100856_added_entity_constraints_Booking.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180629090622_added_entity_constraints_Cuisine.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

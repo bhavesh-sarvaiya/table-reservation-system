@@ -4,6 +4,7 @@ import { TableReservationHotelTableModule } from './hotel-table/hotel-table.modu
 import { TableReservationHotelModule } from './hotel/hotel.module';
 import { TableReservationStaffModule } from './staff/staff.module';
 import { TableReservationBookingModule } from './booking/booking.module';
+import { TableReservationCuisineModule } from './cuisine/cuisine.module';
 /* jhipster-needle-add-entity-module-import - JHipster will add entity modules imports here */
 
 @NgModule({
@@ -14,6 +15,7 @@ import { TableReservationBookingModule } from './booking/booking.module';
         TableReservationHotelModule,
         TableReservationStaffModule,
         TableReservationBookingModule,
+        TableReservationCuisineModule,
         /* jhipster-needle-add-entity-module - JHipster will add entity modules here */
     ],
     declarations: [],

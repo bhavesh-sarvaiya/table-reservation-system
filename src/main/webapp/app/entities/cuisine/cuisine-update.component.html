@@ -1,0 +1,100 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+            <h2 id="jhi-cuisine-heading">Create or edit a Cuisine</h2>
+            <div>
+                <jhi-alert-error></jhi-alert-error>
+                <div class="form-group" [hidden]="!cuisine.id">
+                    <label for="id">ID</label>
+                    <input type="text" class="form-control" id="id" name="id"
+                        [(ngModel)]="cuisine.id" readonly />
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_name">Name</label>
+                    <input type="text" class="form-control" name="name" id="field_name"
+                        [(ngModel)]="cuisine.name" required/>
+                    <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.name?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_price">Price</label>
+                    <input type="number" class="form-control" name="price" id="field_price"
+                        [(ngModel)]="cuisine.price" required/>
+                    <div [hidden]="!(editForm.controls.price?.dirty && editForm.controls.price?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.price?.errors?.required">
+                        This field is required.
+                        </small>
+                        <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.price?.errors?.number">
+                            This field should be a number.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_type">Type</label>
+                    <select class="form-control" name="type" [(ngModel)]="cuisine.type" id="field_type"  required>
+                        <option value="GUJARATI">GUJARATI</option>
+                        <option value="PUNJABI">PUNJABI</option>
+                        <option value="SOUTHINDIAN">SOUTHINDIAN</option>
+                        <option value="CHINESE">CHINESE</option>
+                        <option value="RAJASTHANI">RAJASTHANI</option>
+                        <option value="ITALIAN">ITALIAN</option>
+                        <option value="FRENCH">FRENCH</option>
+                        <option value="AMERICAN">AMERICAN</option>
+                        <option value="MEXICAN">MEXICAN</option>
+                    </select>
+                    <div [hidden]="!(editForm.controls.type?.dirty && editForm.controls.type?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.type?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_foodImage">Food Image</label>
+                    <div>
+                        <img [src]="'data:' + cuisine.foodImageContentType + ';base64,' + cuisine.foodImage" style="max-height: 100px;" *ngIf="cuisine.foodImage" alt="cuisine image"/>
+                        <div *ngIf="cuisine.foodImage" class="form-text text-danger clearfix">
+                            <span class="pull-left">{{cuisine.foodImageContentType}}, {{byteSize(cuisine.foodImage)}}</span>
+                            <button type="button" (click)="clearInputImage('foodImage', 'foodImageContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
+                                <fa-icon [icon]="'times'"></fa-icon>
+                            </button>
+                        </div>
+                        <input type="file" id="file_foodImage" (change)="setFileData($event, cuisine, 'foodImage', true)" accept="image/*"/>
+                    </div>
+                    <input type="hidden" class="form-control" name="foodImage" id="field_foodImage"
+                        [(ngModel)]="cuisine.foodImage" />
+                    <input type="hidden" class="form-control" name="foodImageContentType" id="field_foodImageContentType"
+                        [(ngModel)]="cuisine.foodImageContentType" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-control-label" for="field_hotel">Hotel</label>
+                    <select class="form-control" id="field_hotel" name="hotel" [(ngModel)]="cuisine.hotelId"  required>
+                        <option *ngIf="!editForm.value.hotel" [ngValue]="null" selected></option>
+                        <option [ngValue]="hotelOption.id" *ngFor="let hotelOption of hotels; trackBy: trackHotelById">{{hotelOption.name}}</option>
+                    </select>
+                </div>
+                <div [hidden]="!(editForm.controls.hotel?.dirty && editForm.controls.hotel?.invalid)">
+                    <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.hotel?.errors?.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+            <div>
+                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                </button>
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
