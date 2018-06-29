@@ -29,7 +29,7 @@
                     </dd>
                     <hr>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <h2>Staff</h2>
                             <div class="table-responsive" *ngIf="staff" style="max-height: 165px"> 
                                     <table class="table table-striped">
@@ -37,26 +37,24 @@
                                         <tr>
                                         <th><span>Name</span></th>
                                         <th><span>Contact No</span></th>
-                                        <th></th>
+                                        <!-- <th></th> -->
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr *ngFor="let staff of staff ;">
                                             <td>{{staff.name}}</td>
                                             <td>{{staff.contactNo}}</td>
-                                            <td class="text-right">
+                                            <!-- <td class="text-right">
                                                 <div class="btn-group flex-btn-group-container">
                                                     <button type="submit"
                                                             [routerLink]="['/staff', staff.id, 'view' ]"
                                                             class="btn btn-info btn-sm">
                                                         <fa-icon [icon]="'eye'"></fa-icon>
-                                                        <!-- <span class="d-none d-md-inline">View</span> -->
                                                     </button>
                                                     <button type="submit"
                                                             [routerLink]="['/staff', staff.id, 'edit']"
                                                             class="btn btn-primary btn-sm">
                                                         <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                                                        <!-- <span class="d-none d-md-inline">Edit</span> -->
                                                     </button>
                                                     <button type="submit"
                                                             [routerLink]="['/', { outlets: { popup: 'staff/'+ staff.id + '/delete'} }]"
@@ -64,16 +62,15 @@
                                                             queryParamsHandling="merge"
                                                             class="btn btn-danger btn-sm">
                                                         <fa-icon [icon]="'times'"></fa-icon>
-                                                        <!-- <span class="d-none d-md-inline">Delete</span> -->
                                                     </button>
                                                 </div>
-                                            </td>
+                                            </td> -->
                                         </tr>
                                         </tbody>
                                     </table>
                                 </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <h2>Tables</h2>
                         <div class="table-responsive" *ngIf="hotelTables" style="max-height: 165px">
                                 <table class="table table-striped">
@@ -81,26 +78,24 @@
                                     <tr>
                                     <th><span>Number</span></th>
                                     <th><span>Customers</span></th>
-                                    <th></th>
+                                    <!-- <th></th> -->
                                     </tr>
                                     </thead>
                                     <tbody>
                                     <tr *ngFor="let hotelTable of hotelTables ;">
                                         <td>{{hotelTable.tableNumber}}</td>
                                         <td>{{hotelTable.noOfCustomer}}</td>
-                                        <td class="text-right">
+                                        <!-- <td class="text-right">
                                             <div class="btn-group flex-btn-group-container">
                                                 <button type="submit"
                                                         [routerLink]="['/hotel-table', hotelTable.id, 'view' ]"
                                                         class="btn btn-info btn-sm">
                                                     <fa-icon [icon]="'eye'"></fa-icon>
-                                                    <!-- <span class="d-none d-md-inline">View</span> -->
                                                 </button>
                                                 <button type="submit"
                                                         [routerLink]="['/hotel-table', hotelTable.id, 'edit']"
                                                         class="btn btn-primary btn-sm">
                                                     <fa-icon [icon]="'pencil-alt'"></fa-icon>
-                                                    <!-- <span class="d-none d-md-inline">Edit</span> -->
                                                 </button>
                                                 <button type="submit"
                                                         [routerLink]="['/', { outlets: { popup: 'hotel-table/'+ hotelTable.id + '/delete'} }]"
@@ -108,10 +103,52 @@
                                                         queryParamsHandling="merge"
                                                         class="btn btn-danger btn-sm">
                                                     <fa-icon [icon]="'times'"></fa-icon>
-                                                    <!-- <span class="d-none d-md-inline">Delete</span> -->
                                                 </button>
                                             </div>
-                                        </td>
+                                        </td> -->
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                    </div>
+                    <div class="col-md-4">
+                            <h2>Cuisine</h2>
+                            <div class="table-responsive" *ngIf="cuisines">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                    <th><span>Name</span> </th>
+                                    <th><span>Price</span></th>
+                                    <th><span>Type</span></th>
+                                    <!-- <th></th> -->
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr *ngFor="let cuisine of cuisines ;">
+                                        <td>{{cuisine.name}}</td>
+                                        <td>{{cuisine.price}}</td>
+                                        <td>{{cuisine.type}}</td>
+                                        <!-- <td class="text-right">
+                                            <div class="btn-group flex-btn-group-container">
+                                                <button type="submit"
+                                                        [routerLink]="['/cuisine', cuisine.id, 'view' ]"
+                                                        class="btn btn-info btn-sm">
+                                                    <fa-icon [icon]="'eye'"></fa-icon>
+                                                </button>
+                                                <button type="submit"
+                                                        [routerLink]="['/cuisine', cuisine.id, 'edit']"
+                                                        class="btn btn-primary btn-sm">
+                                                    <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                                                </button>
+                                                <button type="submit"
+                                                        [routerLink]="['/', { outlets: { popup: 'cuisine/'+ cuisine.id + '/delete'} }]"
+                                                        replaceUrl="true"
+                                                        queryParamsHandling="merge"
+                                                        class="btn btn-danger btn-sm">
+                                                    <fa-icon [icon]="'times'"></fa-icon>
+                                                </button>
+                                            </div>
+                                        </td> -->
                                     </tr>
                                     </tbody>
                                 </table>

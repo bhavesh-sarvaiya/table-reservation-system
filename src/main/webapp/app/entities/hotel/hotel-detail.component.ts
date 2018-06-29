@@ -8,6 +8,8 @@ import { StaffService } from 'app/entities/staff';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { IHotelTable } from 'app/shared/model/hotel-table.model';
 import { HotelTableService } from 'app/entities/hotel-table';
+import { ICuisine } from 'app/shared/model/cuisine.model';
+import { CuisineService } from 'app/entities/cuisine';
 
 @Component({
     selector: 'jhi-hotel-detail',
@@ -16,8 +18,10 @@ import { HotelTableService } from 'app/entities/hotel-table';
 export class HotelDetailComponent implements OnInit {
     hotel: IHotel;
     staff: IStaff[];
+    cuisines: ICuisine[];
     hotelTables: IHotelTable[];
     constructor(private dataUtils: JhiDataUtils,
+        private cuisineService: CuisineService,
         private staffService: StaffService,
         private hotelTableService: HotelTableService,
         private jhiAlertService: JhiAlertService,
@@ -37,6 +41,12 @@ export class HotelDetailComponent implements OnInit {
                 (res: HttpResponse<IHotelTable[]>) => {
                     this.hotelTables = res.body;
                 },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
+            this.cuisineService.getCuisineByHotel(this.hotel.id).subscribe(
+                (res: HttpResponse<ICuisine[]>) => {
+                   this.cuisines = res.body;
+                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
         });

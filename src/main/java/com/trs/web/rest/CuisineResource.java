@@ -7,6 +7,7 @@ import com.trs.web.rest.util.HeaderUtil;
 import com.trs.web.rest.util.PaginationUtil;
 import com.trs.service.dto.CuisineDTO;
 import com.trs.service.dto.CuisineCriteria;
+import com.trs.domain.Cuisine;
 import com.trs.service.CuisineQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
@@ -129,5 +130,13 @@ public class CuisineResource {
         log.debug("REST request to delete Cuisine : {}", id);
         cuisineService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    //custom methos 
+    @GetMapping("/cuisines-hotel")
+    @Timed
+    public List<CuisineDTO> getAllCuisinesByHotel(Long id) {
+        log.debug("REST request to get Cuisines by hotel: {}",id);
+        return cuisineService.findAllByHotel(id);
     }
 }

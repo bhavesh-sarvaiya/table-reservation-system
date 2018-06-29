@@ -21,6 +21,7 @@ export class TableBookComponent implements OnInit {
     _booking: IBooking;
     isSaving: boolean;
     staff: IStaff[];
+    timeSlot: string[];
     hotelTables: IHotelTable[];
     hotelTable: IHotelTable;
     availableHotelTables: IHotelTable[];
@@ -38,6 +39,8 @@ export class TableBookComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ booking }) => {
             this.booking = new Booking();
         });
+        this.timeSlot = [];
+        this.timeSlot.push('8:00 PM - 10:00 PM');
         this.activatedRoute.data.subscribe(({ hotel }) => {
             this.hotel = hotel;
             this.hotelTableService.getTablesByHotel(this.hotel.id).subscribe(

@@ -94,8 +94,13 @@
                     </div>
                     <div class="form-group">
                         <label class="form-control-label" for="field_bookTime">Select Time</label>
-                        <input type="time" class="form-control" name="bookTime" id="field_bookTime" 
-                        [(ngModel)]="booking.bookTime" required />
+                        <!-- <input type="time" class="form-control" name="bookTime" id="field_bookTime" 
+                        [(ngModel)]="booking.bookTime" required /> -->
+
+                        <select class="form-control" id="field_bookTime" name="bookTime"  [(ngModel)]="booking.bookTime" required>
+                                <option *ngFor="let item of timeSlot" >{{item}}</option>
+                            </select>
+
                         <div [hidden]="!(editForm.controls.bookTime?.dirty && editForm.controls.bookTime?.invalid)">
                             <small class="form-text text-danger"
                             [hidden]="!editForm.controls.bookTime?.errors?.required">

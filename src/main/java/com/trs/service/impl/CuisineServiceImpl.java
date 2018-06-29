@@ -2,7 +2,9 @@ package com.trs.service.impl;
 
 import com.trs.service.CuisineService;
 import com.trs.domain.Cuisine;
+import com.trs.domain.Hotel;
 import com.trs.repository.CuisineRepository;
+import com.trs.repository.HotelRepository;
 import com.trs.service.dto.CuisineDTO;
 import com.trs.service.mapper.CuisineMapper;
 import org.slf4j.Logger;
@@ -13,7 +15,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 /**
  * Service Implementation for managing Cuisine.
@@ -25,12 +28,13 @@ public class CuisineServiceImpl implements CuisineService {
     private final Logger log = LoggerFactory.getLogger(CuisineServiceImpl.class);
 
     private final CuisineRepository cuisineRepository;
-
+    private final HotelRepository hotelRepository;
     private final CuisineMapper cuisineMapper;
 
-    public CuisineServiceImpl(CuisineRepository cuisineRepository, CuisineMapper cuisineMapper) {
+    public CuisineServiceImpl(CuisineRepository cuisineRepository, CuisineMapper cuisineMapper, HotelRepository hotelRepository) {
         this.cuisineRepository = cuisineRepository;
         this.cuisineMapper = cuisineMapper;
+        this.hotelRepository = hotelRepository;
     }
 
     /**
@@ -85,5 +89,18 @@ public class CuisineServiceImpl implements CuisineService {
     public void delete(Long id) {
         log.debug("Request to delete Cuisine : {}", id);
         cuisineRepository.deleteById(id);
+    }
+
+    // custom method
+    @Override
+    @Transactional(readOnly = true)
+    public List<CuisineDTO> findAllByHotel(Long hotelId) {
+        log.debug("Request to get all Cuisines");
+        Hotel hotel = hotelRepository.getOne(hotelId);
+        List<CuisineDTO> listDto = new ArrayList<>();
+        for (Cuisine item : cuisineRepository.findAllByHotel(hotel)) {
+            listDto.add(new CuisineDTO(item));
+        }
+        return listDto;
     }
 }

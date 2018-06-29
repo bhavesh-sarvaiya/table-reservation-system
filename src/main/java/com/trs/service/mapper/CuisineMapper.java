@@ -1,5 +1,9 @@
 package com.trs.service.mapper;
 
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 import com.trs.domain.*;
 import com.trs.service.dto.CuisineDTO;
 

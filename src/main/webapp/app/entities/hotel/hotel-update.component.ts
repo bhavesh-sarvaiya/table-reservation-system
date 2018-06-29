@@ -12,6 +12,8 @@ import { HotelTableService } from 'app/entities/hotel-table';
 import { IHotelTable } from 'app/shared/model/hotel-table.model';
 import { IStaff } from 'app/shared/model/staff.model';
 import { StaffService } from 'app/entities/staff';
+import { ICuisine } from 'app/shared/model/cuisine.model';
+import { CuisineService } from 'app/entities/cuisine';
 
 @Component({
     selector: 'jhi-hotel-update',
@@ -24,8 +26,10 @@ export class HotelUpdateComponent implements OnInit {
     closeTime: string;
     staff: IStaff[];
     hotelTables: IHotelTable[];
+    cuisines: ICuisine[];
     constructor(
         private dataUtils: JhiDataUtils,
+        private cuisineService: CuisineService,
         private staffService: StaffService,
         private hotelService: HotelService,
         private hotelTableService: HotelTableService,
@@ -38,7 +42,7 @@ export class HotelUpdateComponent implements OnInit {
         this.isSaving = false;
         this.activatedRoute.data.subscribe(({ hotel }) => {
             this.hotel = hotel;
-            if (hotel.id !== undefined) {
+            if (hotel.id) {
                 this.hotelTableService.getTablesByHotel(this.hotel.id).subscribe(
                     (res: HttpResponse<IHotelTable[]>) => {
                         this.hotelTables = res.body;
@@ -49,6 +53,12 @@ export class HotelUpdateComponent implements OnInit {
                     (res: HttpResponse<IStaff[]>) => {
                         this.staff = res.body;
                     },
+                    (res: HttpErrorResponse) => this.onError(res.message)
+                );
+                this.cuisineService.getCuisineByHotel(this.hotel.id).subscribe(
+                    (res: HttpResponse<ICuisine[]>) => {
+                       this.cuisines = res.body;
+                     },
                     (res: HttpErrorResponse) => this.onError(res.message)
                 );
             }

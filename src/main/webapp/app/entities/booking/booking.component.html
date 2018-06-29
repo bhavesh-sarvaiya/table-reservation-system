@@ -14,7 +14,7 @@
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
-            <th jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <!-- <th jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th> -->
             <th jhiSortBy="bookDate"><span>Book Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="bookTime"><span>Book Time</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="noOfGuest"><span>No Of Guest</span> <fa-icon [icon]="'sort'"></fa-icon></th>
@@ -26,7 +26,7 @@
             </thead>
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
             <tr *ngFor="let booking of bookings ;trackBy: trackId">
-                <td><a [routerLink]="['/booking', booking.id, 'view' ]">{{booking.id}}</a></td>
+                <!-- <td><a [routerLink]="['/booking', booking.id, 'view' ]">{{booking.id}}</a></td> -->
                 <td>{{booking.bookDate | date:'mediumDate'}}</td>
                 <td>{{booking.bookTime}}</td>
                 <td>{{booking.noOfGuest}}</td>

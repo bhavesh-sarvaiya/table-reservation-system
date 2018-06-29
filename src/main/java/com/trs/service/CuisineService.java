@@ -1,10 +1,12 @@
 package com.trs.service;
 
+import com.trs.domain.Cuisine;
 import com.trs.service.dto.CuisineDTO;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -43,4 +45,9 @@ public interface CuisineService {
      * @param id the id of the entity
      */
     void delete(Long id);
+    
+    // custom method
+
+    List<CuisineDTO> findAllByHotel(Long hotelId);
+
 }

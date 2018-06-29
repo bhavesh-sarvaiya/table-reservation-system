@@ -4,6 +4,8 @@ import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Lob;
+
+import com.trs.domain.Cuisine;
 import com.trs.domain.enumeration.FoodType;
 
 /**
@@ -29,6 +31,21 @@ public class CuisineDTO implements Serializable {
     private Long hotelId;
 
     private String hotelName;
+
+    public CuisineDTO(){
+
+    }
+
+    public CuisineDTO(Cuisine cuisine){
+        this.id=cuisine.getId();
+        this.name = cuisine.getName();
+        this.type = cuisine.getType();
+        this.foodImage = cuisine.getFoodImage();
+        this.hotelId = cuisine.getHotel().getId();
+        this.hotelName = cuisine.getHotel().getName();
+        this.price = cuisine.getPrice();
+        this.foodImageContentType = cuisine.getFoodImageContentType();
+    }
 
     public Long getId() {
         return id;
