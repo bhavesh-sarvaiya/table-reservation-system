@@ -52,6 +52,9 @@ export class TimeSlotUpdateComponent implements OnInit {
             this.timingService.findAllByTimeSlot(this.timeSlot.id).subscribe(
                 (res: HttpResponse<ITiming[]>) => {
                     this.timings = res.body;
+                    if (this.timings.length > 0) {
+                        this.isRemove = true;
+                    }
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );

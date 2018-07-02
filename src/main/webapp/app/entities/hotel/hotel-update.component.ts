@@ -27,6 +27,8 @@ export class HotelUpdateComponent implements OnInit {
     staff: IStaff[];
     hotelTables: IHotelTable[];
     cuisines: ICuisine[];
+    staffLength: number;
+    tableLength: number;
     constructor(
         private dataUtils: JhiDataUtils,
         private cuisineService: CuisineService,
@@ -46,12 +48,14 @@ export class HotelUpdateComponent implements OnInit {
                 this.hotelTableService.getTablesByHotel(this.hotel.id).subscribe(
                     (res: HttpResponse<IHotelTable[]>) => {
                         this.hotelTables = res.body;
+                        this.tableLength = this.hotelTables.length;
                     },
                     (res: HttpErrorResponse) => this.onError(res.message)
                 );
                 this.staffService.getStaffByHotel(this.hotel.id).subscribe(
                     (res: HttpResponse<IStaff[]>) => {
                         this.staff = res.body;
+                        this.staffLength = this.staff.length;
                     },
                     (res: HttpErrorResponse) => this.onError(res.message)
                 );

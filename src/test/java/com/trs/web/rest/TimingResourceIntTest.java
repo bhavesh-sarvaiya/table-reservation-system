@@ -49,6 +49,9 @@ public class TimingResourceIntTest {
     private static final String DEFAULT_END_TIME = "AAAAAAAAAA";
     private static final String UPDATED_END_TIME = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_RUSH_HOUR = false;
+    private static final Boolean UPDATED_RUSH_HOUR = true;
+
     @Autowired
     private TimingRepository timingRepository;
 
@@ -96,7 +99,8 @@ public class TimingResourceIntTest {
     public static Timing createEntity(EntityManager em) {
         Timing timing = new Timing()
             .startTime(DEFAULT_START_TIME)
-            .endTime(DEFAULT_END_TIME);
+            .endTime(DEFAULT_END_TIME)
+            .rushHour(DEFAULT_RUSH_HOUR);
         // Add required entity
         TimeSlot timeSlot = TimeSlotResourceIntTest.createEntity(em);
         em.persist(timeSlot);
@@ -128,6 +132,7 @@ public class TimingResourceIntTest {
         Timing testTiming = timingList.get(timingList.size() - 1);
         assertThat(testTiming.getStartTime()).isEqualTo(DEFAULT_START_TIME);
         assertThat(testTiming.getEndTime()).isEqualTo(DEFAULT_END_TIME);
+        assertThat(testTiming.isRushHour()).isEqualTo(DEFAULT_RUSH_HOUR);
     }
 
     @Test
@@ -200,7 +205,8 @@ public class TimingResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(timing.getId().intValue())))
             .andExpect(jsonPath("$.[*].startTime").value(hasItem(DEFAULT_START_TIME.toString())))
-            .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toString())));
+            .andExpect(jsonPath("$.[*].endTime").value(hasItem(DEFAULT_END_TIME.toString())))
+            .andExpect(jsonPath("$.[*].rushHour").value(hasItem(DEFAULT_RUSH_HOUR.booleanValue())));
     }
     
 
@@ -216,7 +222,8 @@ public class TimingResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(timing.getId().intValue()))
             .andExpect(jsonPath("$.startTime").value(DEFAULT_START_TIME.toString()))
-            .andExpect(jsonPath("$.endTime").value(DEFAULT_END_TIME.toString()));
+            .andExpect(jsonPath("$.endTime").value(DEFAULT_END_TIME.toString()))
+            .andExpect(jsonPath("$.rushHour").value(DEFAULT_RUSH_HOUR.booleanValue()));
     }
     @Test
     @Transactional
@@ -240,7 +247,8 @@ public class TimingResourceIntTest {
         em.detach(updatedTiming);
         updatedTiming
             .startTime(UPDATED_START_TIME)
-            .endTime(UPDATED_END_TIME);
+            .endTime(UPDATED_END_TIME)
+            .rushHour(UPDATED_RUSH_HOUR);
         TimingDTO timingDTO = timingMapper.toDto(updatedTiming);
 
         restTimingMockMvc.perform(put("/api/timings")
@@ -254,6 +262,7 @@ public class TimingResourceIntTest {
         Timing testTiming = timingList.get(timingList.size() - 1);
         assertThat(testTiming.getStartTime()).isEqualTo(UPDATED_START_TIME);
         assertThat(testTiming.getEndTime()).isEqualTo(UPDATED_END_TIME);
+        assertThat(testTiming.isRushHour()).isEqualTo(UPDATED_RUSH_HOUR);
     }
 
     @Test

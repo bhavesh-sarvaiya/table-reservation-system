@@ -40,7 +40,6 @@
                 <div class="row">
                     <div class="col-md-6">
                             <label class="form-control-label" for="field_status">Is Open?</label>
-
                     </div>
                     <div class="col-md-6">
                     <input style="margin-top: 8%;" type="checkbox" class="form-control" name="status" id="field_status" [(ngModel)]="timeSlot.status" />
@@ -86,6 +85,9 @@
                 <label class="form-control-label" for="field_endTime">End Time</label>
             </div>
             <div class="col-md-2">
+                <label class="form-control-label" for="field_endTime">Is Rush Hour</label>
+            </div>
+            <div class="col-md-2">
                 <button (click)="addField()">Add</button>
             </div>
             <div class="col-md-2">
@@ -111,6 +113,11 @@
                         This field is required.
                     </small>
                 </div>
+            </div>
+            <div class="col-md-2">
+                <!-- <input  type="checkbox" class="form-control" name="status" id="field_status" [(ngModel)]="timeSlot.status" /> -->
+    
+                <input type="checkbox" class="form-control" name="rushHour" id="field_rushHour"  [(ngModel)]="timing.rushHour"/>
             </div>
             <br>
             <br>

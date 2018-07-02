@@ -19,6 +19,7 @@ export class TimingUpdatePage {
     cancelButton = element(by.id('cancel-save'));
     startTimeInput = element(by.id('field_startTime'));
     endTimeInput = element(by.id('field_endTime'));
+    rushHourInput = element(by.id('field_rushHour'));
     timeSlotSelect = element(by.id('field_timeSlot'));
 
     getPageTitle() {
@@ -41,6 +42,9 @@ export class TimingUpdatePage {
         return this.endTimeInput.getAttribute('value');
     }
 
+    getRushHourInput() {
+        return this.rushHourInput;
+    }
     timeSlotSelectLastOption(): promise.Promise<void> {
         return this.timeSlotSelect
             .all(by.tagName('option'))

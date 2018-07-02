@@ -34,6 +34,7 @@ export class TableBookComponent implements OnInit {
     moreGuest: boolean;
     success: boolean;
     private timings: ITiming[];
+    tableLength: number;
 
     constructor(
         private dataUtils: JhiDataUtils,
@@ -53,16 +54,17 @@ export class TableBookComponent implements OnInit {
         this.timeSlot = [];
         this.activatedRoute.data.subscribe(({ hotel }) => {
             this.hotel = hotel;
-            this.hotelTableService.getTablesByHotel(this.hotel.id).subscribe(
+            this.hotelTableService.findAllByHotelAndStatusBasedOnStaff(this.hotel.id, 'Available').subscribe(
                 (res: HttpResponse<IHotelTable[]>) => {
                     this.hotelTables = res.body;
-                    if (this.hotelTables.length === 0) {
+                    this.tableLength = this.hotelTables.length;
+                    if ( this.tableLength === 0) {
                         this.hotelTables = undefined;
+                        this.tableLength = undefined;
                     }
                 },
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
-
             this.hotelTableService.getTablesByHotelAndStatus(this.hotel.id, 'Available').subscribe(
                 (res: HttpResponse<IHotelTable[]>) => {
                     this.availableHotelTables = res.body;

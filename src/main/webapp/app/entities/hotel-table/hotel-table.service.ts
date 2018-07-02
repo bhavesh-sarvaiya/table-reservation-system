@@ -14,6 +14,7 @@ export class HotelTableService {
     private resourceUrl = SERVER_API_URL + 'api/hotel-tables';
     private resourceUrl1 = SERVER_API_URL + 'api/hotel-tables-hotel';
     private resourceUrl2 = SERVER_API_URL + 'api/hotel-tables-hotel-status';
+    private resourceUrl3 = SERVER_API_URL + 'api/hotel-tables-hotel-status-based-on-staff';
 
     constructor(private http: HttpClient) {}
 
@@ -48,5 +49,10 @@ export class HotelTableService {
     getTablesByHotelAndStatus(id: any, status: String): Observable<EntityArrayResponseType> {
         const options = createRequestOption({id, status});
         return this.http.get<IHotelTable[]>(this.resourceUrl2, { params: options, observe: 'response' });
+    }
+
+    findAllByHotelAndStatusBasedOnStaff(id: any, status: String): Observable<EntityArrayResponseType> {
+        const options = createRequestOption({id, status});
+        return this.http.get<IHotelTable[]>(this.resourceUrl3, { params: options, observe: 'response' });
     }
 }

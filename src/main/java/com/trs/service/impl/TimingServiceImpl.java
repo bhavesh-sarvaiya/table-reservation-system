@@ -100,9 +100,13 @@ public class TimingServiceImpl implements TimingService {
     public TimingDTO save(TimingDTO[] timingDTOs,TimeSlotDTO timeSlotDTO) {
         log.debug("Request to save Timing : {}", timingDTOs);
         Timing timing =null;
+        timingRepository.deleteAll(timingRepository.findAllByTimeSlot(timeSlotMapper.toEntity(timeSlotDTO)));
         for (TimingDTO timingDTO : timingDTOs) {
             timing = timingMapper.toEntity(timingDTO);
             timing.setTimeSlot(timeSlotMapper.toEntity(timeSlotDTO));
+            if(timing.getId() != null){
+                timing.setId(null);
+            }
             timing = timingRepository.save(timing);
         }
         

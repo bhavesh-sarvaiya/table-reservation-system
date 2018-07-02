@@ -1,5 +1,7 @@
 {
-    "name": "Hotel",
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "relationships": [],
     "fields": [
         {
             "fieldName": "image",
@@ -60,16 +62,21 @@
         {
             "fieldName": "description",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "staffInRushHour",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "staffInNormal",
+            "fieldType": "Integer"
         }
     ],
-    "relationships": [],
     "changelogDate": "20180621151803",
-    "entityTableName": "hotel",
     "dto": "mapstruct",
-    "pagination": "pagination",
+    "searchEngine": false,
     "service": "serviceImpl",
+    "entityTableName": "hotel",
     "jpaMetamodelFiltering": false,
-    "fluentMethods": true,
-    "clientRootFolder": "",
-    "applications": "*"
+    "pagination": "pagination"
 }

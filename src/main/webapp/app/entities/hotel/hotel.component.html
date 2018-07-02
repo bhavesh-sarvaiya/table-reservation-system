@@ -21,8 +21,9 @@
             <th jhiSortBy="openTime"><span>Open Time</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="closeTime"><span>Close Time</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="city"><span>City</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="pincode"><span>Pincode</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="address"><span>Address</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="city"><span>Table in normal hour</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="city"><span>Table in rush hour</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <!-- <th jhiSortBy="address"><span>Address</span> <fa-icon [icon]="'sort'"></fa-icon></th>    -->
             <!-- <th jhiSortBy="description"><span>Description</span> <fa-icon [icon]="'sort'"></fa-icon></th> -->
             <th></th>
             </tr>
@@ -41,10 +42,10 @@
                 <td>{{hotel.openTime | date:'shortTime'}}</td>
                 <td>{{hotel.closeTime | date:'shortTime'}}</td>
                 <td>{{hotel.city}}</td>
-                <td>{{hotel.pincode}}</td>
-                <td>{{hotel.address}}</td>
-               
+                <!-- <td>{{hotel.address}}</td> -->
                 <!-- <td>{{hotel.description}}</td> -->
+                <td>{{hotel.staffInRushHour}}</td>
+                <td>{{hotel.staffInNormal}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

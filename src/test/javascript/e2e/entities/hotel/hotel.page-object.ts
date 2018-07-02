@@ -26,6 +26,8 @@ export class HotelUpdatePage {
     addressInput = element(by.id('field_address'));
     pincodeInput = element(by.id('field_pincode'));
     descriptionInput = element(by.id('field_description'));
+    staffInRushHourInput = element(by.id('field_staffInRushHour'));
+    staffInNormalInput = element(by.id('field_staffInNormal'));
 
     getPageTitle() {
         return this.pageTitle.getText();
@@ -101,6 +103,22 @@ export class HotelUpdatePage {
 
     getDescriptionInput() {
         return this.descriptionInput.getAttribute('value');
+    }
+
+    setStaffInRushHourInput(staffInRushHour): promise.Promise<void> {
+        return this.staffInRushHourInput.sendKeys(staffInRushHour);
+    }
+
+    getStaffInRushHourInput() {
+        return this.staffInRushHourInput.getAttribute('value');
+    }
+
+    setStaffInNormalInput(staffInNormal): promise.Promise<void> {
+        return this.staffInNormalInput.sendKeys(staffInNormal);
+    }
+
+    getStaffInNormalInput() {
+        return this.staffInNormalInput.getAttribute('value');
     }
 
     save(): promise.Promise<void> {

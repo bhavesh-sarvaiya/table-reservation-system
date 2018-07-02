@@ -138,4 +138,11 @@ public class HotelTableResource {
         log.debug("REST request to get all HotelTables by Hotel");
         return hotelTableService.findAllByHotelAndStatus(id,status);
     }
+
+    @GetMapping("/hotel-tables-hotel-status-based-on-staff")
+    @Timed
+    public List<HotelTableDTO> findAllByHotelAndStatusBasedOnStaff(@RequestParam Long id, String status) {
+        log.debug("REST request to get all HotelTables by Hotel");
+        return hotelTableService.findAllByHotelAndStatusBasedOnStaff(id,status);
+    }
 }

@@ -6,6 +6,8 @@ import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 import { ITiming } from 'app/shared/model/timing.model';
 import { Principal } from 'app/core';
 import { TimingService } from './timing.service';
+import { IHotel } from 'app/shared/model/hotel.model';
+import { HotelService } from 'app/entities/hotel';
 
 @Component({
     selector: 'jhi-timing',
@@ -15,9 +17,12 @@ export class TimingComponent implements OnInit, OnDestroy {
     timings: ITiming[];
     currentAccount: any;
     eventSubscriber: Subscription;
+    hotels: IHotel[];
+    hotel: string;
 
     constructor(
         private timingService: TimingService,
+        private hotelService: HotelService,
         private jhiAlertService: JhiAlertService,
         private eventManager: JhiEventManager,
         private principal: Principal
@@ -30,6 +35,7 @@ export class TimingComponent implements OnInit, OnDestroy {
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
+       this.getHotels();
     }
 
     ngOnInit() {
@@ -54,5 +60,18 @@ export class TimingComponent implements OnInit, OnDestroy {
 
     private onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
+    }
+
+    getHotels() {
+        if (this.hotel) {
+
+        } else {
+            this.hotelService.query().subscribe(
+                (res: HttpResponse<IHotel[]>) => {
+                    this.hotels = res.body;
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
+        }
     }
 }

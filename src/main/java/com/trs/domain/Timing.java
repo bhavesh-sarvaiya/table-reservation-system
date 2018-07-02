@@ -30,6 +30,9 @@ public class Timing implements Serializable {
     @Column(name = "end_time", nullable = false)
     private String endTime;
 
+    @Column(name = "rush_hour")
+    private Boolean rushHour;
+
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties("")
@@ -68,6 +71,19 @@ public class Timing implements Serializable {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    public Boolean isRushHour() {
+        return rushHour;
+    }
+
+    public Timing rushHour(Boolean rushHour) {
+        this.rushHour = rushHour;
+        return this;
+    }
+
+    public void setRushHour(Boolean rushHour) {
+        this.rushHour = rushHour;
     }
 
     public TimeSlot getTimeSlot() {
@@ -110,6 +126,7 @@ public class Timing implements Serializable {
             "id=" + getId() +
             ", startTime='" + getStartTime() + "'" +
             ", endTime='" + getEndTime() + "'" +
+            ", rushHour='" + isRushHour() + "'" +
             "}";
     }
 }

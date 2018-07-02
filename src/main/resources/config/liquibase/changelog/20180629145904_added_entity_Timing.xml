@@ -29,6 +29,10 @@
                 <constraints nullable="false" />
             </column>
 
+            <column name="rush_hour" type="boolean">
+                <constraints nullable="true" />
+            </column>
+
             <column name="time_slot_id" type="bigint">
                 <constraints nullable="false" />
             </column>

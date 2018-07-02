@@ -17,6 +17,8 @@ public class TimingDTO implements Serializable {
     @NotNull
     private String endTime;
 
+    private Boolean rushHour;
+
     private Long timeSlotId;
 
     private String timeSlotDay;
@@ -43,6 +45,14 @@ public class TimingDTO implements Serializable {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    public Boolean isRushHour() {
+        return rushHour;
+    }
+
+    public void setRushHour(Boolean rushHour) {
+        this.rushHour = rushHour;
     }
 
     public Long getTimeSlotId() {
@@ -88,6 +98,7 @@ public class TimingDTO implements Serializable {
             "id=" + getId() +
             ", startTime='" + getStartTime() + "'" +
             ", endTime='" + getEndTime() + "'" +
+            ", rushHour='" + isRushHour() + "'" +
             ", timeSlot=" + getTimeSlotId() +
             ", timeSlot='" + getTimeSlotDay() + "'" +
             "}";

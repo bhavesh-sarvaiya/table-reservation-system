@@ -50,6 +50,10 @@ describe('Hotel e2e test', () => {
         expect(hotelUpdatePage.getPincodeInput()).toMatch('pincode');
         hotelUpdatePage.setDescriptionInput('description');
         expect(hotelUpdatePage.getDescriptionInput()).toMatch('description');
+        hotelUpdatePage.setStaffInRushHourInput('5');
+        expect(hotelUpdatePage.getStaffInRushHourInput()).toMatch('5');
+        hotelUpdatePage.setStaffInNormalInput('5');
+        expect(hotelUpdatePage.getStaffInNormalInput()).toMatch('5');
         hotelUpdatePage.save();
         expect(hotelUpdatePage.getSaveButton().isPresent()).toBeFalsy();
     });

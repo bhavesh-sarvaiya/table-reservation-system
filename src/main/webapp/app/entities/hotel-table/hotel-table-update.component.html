@@ -41,8 +41,12 @@
                 </div>
                 <div class="form-group" [hidden]="!hotelTable.id">
                     <label class="form-control-label" for="field_status">Status</label>
-                    <input type="text" class="form-control" name="status" id="field_status"
-                        [(ngModel)]="hotelTable.status" />
+                   
+
+                <select class="form-control" id="field_status" name="status" [(ngModel)]="hotelTable.status"  required>
+                        <option  selected>Available</option>
+                        <option>Unavailable</option>
+                    </select>
                 </div>
 
                 <div class="form-group">

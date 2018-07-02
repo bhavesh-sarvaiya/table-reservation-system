@@ -34,6 +34,15 @@ describe('Timing e2e test', () => {
         expect(timingUpdatePage.getStartTimeInput()).toMatch('startTime');
         timingUpdatePage.setEndTimeInput('endTime');
         expect(timingUpdatePage.getEndTimeInput()).toMatch('endTime');
+        timingUpdatePage.getRushHourInput().isSelected().then((selected) => {
+            if (selected) {
+                timingUpdatePage.getRushHourInput().click();
+                expect(timingUpdatePage.getRushHourInput().isSelected()).toBeFalsy();
+            } else {
+                timingUpdatePage.getRushHourInput().click();
+                expect(timingUpdatePage.getRushHourInput().isSelected()).toBeTruthy();
+            }
+        });
         timingUpdatePage.timeSlotSelectLastOption();
         timingUpdatePage.save();
         expect(timingUpdatePage.getSaveButton().isPresent()).toBeFalsy();

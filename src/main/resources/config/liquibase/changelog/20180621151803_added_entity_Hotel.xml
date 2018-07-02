@@ -56,7 +56,15 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="description" type="varchar(1000)">
+            <column name="description" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="staff_in_rush_hour" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="staff_in_normal" type="integer">
                 <constraints nullable="true" />
             </column>
 

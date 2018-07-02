@@ -137,9 +137,76 @@
         </form>
     </div>
     <div class="col-md-6" [hidden]="!hotel.id">
+            <div class="card">
+                    <div class="card-header">
+                     Table Management setting
+                    </div>
+                    <div class="card-body">
+                            <div class="row">
+                                    <div class="col-8">
+                                        <span>Total no of Staff Present :</span>
+                                    </div>
+                                    <div class="col align-self-end">
+                                        <input type="number" class="form-control"  [(ngModel)]="staffLength" disabled/>
+
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-8">
+                                          
+                                        <span>Total no of Table :</span>
+                                    </div>
+                                    <div class="col align-self-end">
+                                        <input type="number" class="form-control"  [(ngModel)]="tableLength" disabled/>
+
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-8">
+                                        <label class="form-control-label" for="field_staffInRushHour" style="margin-right: 2%">How many Table handle in Rush Hours (per staff member)</label>
+                                    </div>
+                                    <div class="col">
+                                        <input type="number" class="form-control" name="staffInRushHour" id="field_staffInRushHour" min="1" [(ngModel)]="hotel.staffInRushHour"
+                                        />
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-8">
+                                        <label class="form-control-label" for="field_staffInNormal" style="margin-right: 2%">How many Table handle in normal Hours (per staff member)</label>
+                                    </div>
+                                    <div class="col">
+                                        <input type="number" class="form-control" name="staffInNormal" id="field_staffInNormal" min="1" [(ngModel)]="hotel.staffInNormal"
+                                        />
+                                    </div>
+                                
+                                </div>
+                                <hr>
+                                    <div class="row">
+                                            <div class="col-8">
+                                                    <span>Total no. of table handle in rush hours :</span>
+                                                </div>
+                                                <div class="col align-self-end">
+                                                        <input type="text" class="form-control"  value="{{staffLength}} * {{hotel.staffInRushHour}} = {{staffLength * hotel.staffInRushHour}}" disabled/>
+                                                </div>
+                                    </div>           
+                                     <hr> 
+                                     <div class="row">
+                                            <div class="col-8">
+                                                    <span> Total no. of table handle in normal hours :</span>
+                                                </div>
+                                                <div class="col align-self-end">
+                                                        <input type="text" class="form-control"  value="{{staffLength}} * {{hotel.staffInNormal}} = {{staffLength * hotel.staffInNormal}} " disabled/>
+                                                </div>
+                                    </div> 
+                    </div>
+                  </div>
+            
         <h2>Tables</h2>
         <div class="table-responsive" *ngIf="hotelTables" style="max-height: 240px  ">
-            <table class="table table-striped">
+            <table class="table table-hover">
                 <thead>
                     <tr>
                         <th>
@@ -183,7 +250,7 @@
     
         <h2>Staff</h2>
         <div class="table-responsive" *ngIf="staff" style="max-height: 240px">
-            <table class="table table-striped">
+            <table class="table table-hover">
                 <thead>
                     <tr>
                         <th>
@@ -222,7 +289,7 @@
         </div>
         <h2>Cuisine</h2>
         <div class="table-responsive" *ngIf="cuisines">
-            <table class="table table-striped">
+            <table class="table table-hover">
                 <thead>
                     <tr>
                 <th><span>Name</span> </th>

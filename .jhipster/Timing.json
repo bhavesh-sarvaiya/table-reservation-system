@@ -26,6 +26,10 @@
             "fieldValidateRules": [
                 "required"
             ]
+        },
+        {
+            "fieldName": "rushHour",
+            "fieldType": "Boolean"
         }
     ],
     "changelogDate": "20180629145904",

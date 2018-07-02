@@ -41,6 +41,10 @@ public class HotelDTO implements Serializable {
 
     private String description;
 
+    private Integer staffInRushHour;
+
+    private Integer staffInNormal;
+
     public Long getId() {
         return id;
     }
@@ -129,6 +133,22 @@ public class HotelDTO implements Serializable {
         this.description = description;
     }
 
+    public Integer getStaffInRushHour() {
+        return staffInRushHour;
+    }
+
+    public void setStaffInRushHour(Integer staffInRushHour) {
+        this.staffInRushHour = staffInRushHour;
+    }
+
+    public Integer getStaffInNormal() {
+        return staffInNormal;
+    }
+
+    public void setStaffInNormal(Integer staffInNormal) {
+        this.staffInNormal = staffInNormal;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -163,6 +183,8 @@ public class HotelDTO implements Serializable {
             ", address='" + getAddress() + "'" +
             ", pincode='" + getPincode() + "'" +
             ", description='" + getDescription() + "'" +
+            ", staffInRushHour=" + getStaffInRushHour() +
+            ", staffInNormal=" + getStaffInNormal() +
             "}";
     }
 }

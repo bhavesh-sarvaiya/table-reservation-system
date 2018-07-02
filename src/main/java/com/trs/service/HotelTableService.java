@@ -51,4 +51,5 @@ public interface HotelTableService {
      */
     List<HotelTableDTO> findAllByHotel(Long id);
     List<HotelTableDTO> findAllByHotelAndStatus(Long id, String status);
+    List<HotelTableDTO> findAllByHotelAndStatusBasedOnStaff(Long id, String status);
 }

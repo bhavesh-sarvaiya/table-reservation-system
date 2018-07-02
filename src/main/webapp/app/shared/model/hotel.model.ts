@@ -12,6 +12,8 @@ export interface IHotel {
     address?: string;
     pincode?: string;
     description?: string;
+    staffInRushHour?: number;
+    staffInNormal?: number;
 }
 
 export class Hotel implements IHotel {
@@ -26,6 +28,8 @@ export class Hotel implements IHotel {
         public city?: string,
         public address?: string,
         public pincode?: string,
-        public description?: string
+        public description?: string,
+        public staffInRushHour?: number,
+        public staffInNormal?: number
     ) {}
 }

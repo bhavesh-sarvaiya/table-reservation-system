@@ -74,6 +74,12 @@ public class HotelResourceIntTest {
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
+    private static final Integer DEFAULT_STAFF_IN_RUSH_HOUR = 1;
+    private static final Integer UPDATED_STAFF_IN_RUSH_HOUR = 2;
+
+    private static final Integer DEFAULT_STAFF_IN_NORMAL = 1;
+    private static final Integer UPDATED_STAFF_IN_NORMAL = 2;
+
     @Autowired
     private HotelRepository hotelRepository;
 
@@ -129,7 +135,9 @@ public class HotelResourceIntTest {
             .city(DEFAULT_CITY)
             .address(DEFAULT_ADDRESS)
             .pincode(DEFAULT_PINCODE)
-            .description(DEFAULT_DESCRIPTION);
+            .description(DEFAULT_DESCRIPTION)
+            .staffInRushHour(DEFAULT_STAFF_IN_RUSH_HOUR)
+            .staffInNormal(DEFAULT_STAFF_IN_NORMAL);
         return hotel;
     }
 
@@ -164,6 +172,8 @@ public class HotelResourceIntTest {
         assertThat(testHotel.getAddress()).isEqualTo(DEFAULT_ADDRESS);
         assertThat(testHotel.getPincode()).isEqualTo(DEFAULT_PINCODE);
         assertThat(testHotel.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
+        assertThat(testHotel.getStaffInRushHour()).isEqualTo(DEFAULT_STAFF_IN_RUSH_HOUR);
+        assertThat(testHotel.getStaffInNormal()).isEqualTo(DEFAULT_STAFF_IN_NORMAL);
     }
 
     @Test
@@ -339,7 +349,9 @@ public class HotelResourceIntTest {
             .andExpect(jsonPath("$.[*].city").value(hasItem(DEFAULT_CITY.toString())))
             .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].pincode").value(hasItem(DEFAULT_PINCODE.toString())))
-            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
+            .andExpect(jsonPath("$.[*].staffInRushHour").value(hasItem(DEFAULT_STAFF_IN_RUSH_HOUR)))
+            .andExpect(jsonPath("$.[*].staffInNormal").value(hasItem(DEFAULT_STAFF_IN_NORMAL)));
     }
     
 
@@ -363,7 +375,9 @@ public class HotelResourceIntTest {
             .andExpect(jsonPath("$.city").value(DEFAULT_CITY.toString()))
             .andExpect(jsonPath("$.address").value(DEFAULT_ADDRESS.toString()))
             .andExpect(jsonPath("$.pincode").value(DEFAULT_PINCODE.toString()))
-            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
+            .andExpect(jsonPath("$.staffInRushHour").value(DEFAULT_STAFF_IN_RUSH_HOUR))
+            .andExpect(jsonPath("$.staffInNormal").value(DEFAULT_STAFF_IN_NORMAL));
     }
     @Test
     @Transactional
@@ -395,7 +409,9 @@ public class HotelResourceIntTest {
             .city(UPDATED_CITY)
             .address(UPDATED_ADDRESS)
             .pincode(UPDATED_PINCODE)
-            .description(UPDATED_DESCRIPTION);
+            .description(UPDATED_DESCRIPTION)
+            .staffInRushHour(UPDATED_STAFF_IN_RUSH_HOUR)
+            .staffInNormal(UPDATED_STAFF_IN_NORMAL);
         HotelDTO hotelDTO = hotelMapper.toDto(updatedHotel);
 
         restHotelMockMvc.perform(put("/api/hotels")
@@ -417,6 +433,8 @@ public class HotelResourceIntTest {
         assertThat(testHotel.getAddress()).isEqualTo(UPDATED_ADDRESS);
         assertThat(testHotel.getPincode()).isEqualTo(UPDATED_PINCODE);
         assertThat(testHotel.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
+        assertThat(testHotel.getStaffInRushHour()).isEqualTo(UPDATED_STAFF_IN_RUSH_HOUR);
+        assertThat(testHotel.getStaffInNormal()).isEqualTo(UPDATED_STAFF_IN_NORMAL);
     }
 
     @Test

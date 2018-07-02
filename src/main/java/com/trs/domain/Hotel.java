@@ -61,6 +61,12 @@ public class Hotel implements Serializable {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "staff_in_rush_hour")
+    private Integer staffInRushHour;
+
+    @Column(name = "staff_in_normal")
+    private Integer staffInNormal;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -199,6 +205,32 @@ public class Hotel implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Integer getStaffInRushHour() {
+        return staffInRushHour;
+    }
+
+    public Hotel staffInRushHour(Integer staffInRushHour) {
+        this.staffInRushHour = staffInRushHour;
+        return this;
+    }
+
+    public void setStaffInRushHour(Integer staffInRushHour) {
+        this.staffInRushHour = staffInRushHour;
+    }
+
+    public Integer getStaffInNormal() {
+        return staffInNormal;
+    }
+
+    public Hotel staffInNormal(Integer staffInNormal) {
+        this.staffInNormal = staffInNormal;
+        return this;
+    }
+
+    public void setStaffInNormal(Integer staffInNormal) {
+        this.staffInNormal = staffInNormal;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -235,6 +267,8 @@ public class Hotel implements Serializable {
             ", address='" + getAddress() + "'" +
             ", pincode='" + getPincode() + "'" +
             ", description='" + getDescription() + "'" +
+            ", staffInRushHour=" + getStaffInRushHour() +
+            ", staffInNormal=" + getStaffInNormal() +
             "}";
     }
 }

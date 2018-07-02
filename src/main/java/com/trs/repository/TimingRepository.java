@@ -15,4 +15,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TimingRepository extends JpaRepository<Timing, Long> {
     List<Timing> findAllByTimeSlot(TimeSlot timeSlot);
+    Timing findOneByTimeSlotAndStartTime(TimeSlot timeSlot, String starTime);
 }
