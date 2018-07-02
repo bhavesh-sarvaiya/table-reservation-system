@@ -116,4 +116,12 @@ public class TimingResource {
         timingService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+    //custom method
+
+    @GetMapping("/timings-timeslot")
+    @Timed
+    public List<TimingDTO> getAllTimingsByTimeSlot(Long timeSlotId) {
+        log.debug("REST request to get all Timings by TimeSlot");
+        return timingService.findAllByTimeSolt(timeSlotId);
+    }
 }

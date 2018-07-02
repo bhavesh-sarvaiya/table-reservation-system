@@ -1,7 +1,10 @@
 package com.trs.service.impl;
 
 import com.trs.service.TimeSlotService;
+import com.trs.domain.Hotel;
 import com.trs.domain.TimeSlot;
+import com.trs.domain.enumeration.DayName;
+import com.trs.repository.HotelRepository;
 import com.trs.repository.TimeSlotRepository;
 import com.trs.service.dto.TimeSlotDTO;
 import com.trs.service.mapper.TimeSlotMapper;
@@ -25,12 +28,14 @@ public class TimeSlotServiceImpl implements TimeSlotService {
     private final Logger log = LoggerFactory.getLogger(TimeSlotServiceImpl.class);
 
     private final TimeSlotRepository timeSlotRepository;
+    private final HotelRepository hotelRepository;
 
     private final TimeSlotMapper timeSlotMapper;
 
-    public TimeSlotServiceImpl(TimeSlotRepository timeSlotRepository, TimeSlotMapper timeSlotMapper) {
+    public TimeSlotServiceImpl(TimeSlotRepository timeSlotRepository, TimeSlotMapper timeSlotMapper, HotelRepository hotelRepository) {
         this.timeSlotRepository = timeSlotRepository;
         this.timeSlotMapper = timeSlotMapper;
+        this.hotelRepository = hotelRepository;
     }
 
     /**
@@ -85,5 +90,11 @@ public class TimeSlotServiceImpl implements TimeSlotService {
     public void delete(Long id) {
         log.debug("Request to delete TimeSlot : {}", id);
         timeSlotRepository.deleteById(id);
+    }
+
+    @Override
+    public TimeSlotDTO findOneByHotelAndDay(Long hotelId, DayName day) {
+        Hotel hotel = hotelRepository.getOne(hotelId);
+        return timeSlotMapper.toDto(timeSlotRepository.findOneByHotelAndDay(hotel, day));
     }
 }

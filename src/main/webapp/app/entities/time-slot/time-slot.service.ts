@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
 import { ITimeSlot } from 'app/shared/model/time-slot.model';
+import { ITiming } from 'app/shared/model/timing.model';
+import { Hotel } from 'app/shared/model/hotel.model';
 
 type EntityResponseType = HttpResponse<ITimeSlot>;
 type EntityArrayResponseType = HttpResponse<ITimeSlot[]>;
@@ -12,10 +14,15 @@ type EntityArrayResponseType = HttpResponse<ITimeSlot[]>;
 @Injectable({ providedIn: 'root' })
 export class TimeSlotService {
     private resourceUrl = SERVER_API_URL + 'api/time-slots';
+    private resourceUrl1 = SERVER_API_URL + 'api/time-slots-timing';
+    private resourceUrl2 = SERVER_API_URL + 'api/time-slots-hotel-day';
 
     constructor(private http: HttpClient) {}
 
-    create(timeSlot: ITimeSlot): Observable<EntityResponseType> {
+    create(timeslotDTO: ITimeSlot, timings: ITiming[]): Observable<EntityResponseType> {
+        return this.http.post<ITimeSlot>(this.resourceUrl, { timeslotDTO, timings }, { observe: 'response' });
+    }
+    create1(timeSlot: ITimeSlot): Observable<EntityResponseType> {
         return this.http.post<ITimeSlot>(this.resourceUrl, timeSlot, { observe: 'response' });
     }
 
@@ -34,5 +41,13 @@ export class TimeSlotService {
 
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    }
+
+    updateWithTiming(timeslotDTO: ITimeSlot, timings: ITiming[]): Observable<EntityResponseType> {
+        return this.http.put<ITimeSlot>(this.resourceUrl1, { timeslotDTO, timings }, { observe: 'response' });
+    }
+    findOneByHotelAndDay(hotelId: number, day: string): Observable<EntityResponseType> {
+        const options = createRequestOption({ hotelId, day });
+        return this.http.get<ITimeSlot>(this.resourceUrl2, { params: options, observe: 'response' });
     }
 }

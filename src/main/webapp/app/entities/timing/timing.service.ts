@@ -12,6 +12,7 @@ type EntityArrayResponseType = HttpResponse<ITiming[]>;
 @Injectable({ providedIn: 'root' })
 export class TimingService {
     private resourceUrl = SERVER_API_URL + 'api/timings';
+    private resourceUrl1 = SERVER_API_URL + 'api/timings-timeslot';
 
     constructor(private http: HttpClient) {}
 
@@ -34,5 +35,12 @@ export class TimingService {
 
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    }
+
+    // custom method
+
+    findAllByTimeSlot(timeSlotId: number): Observable<EntityArrayResponseType> {
+        const options = createRequestOption({ timeSlotId });
+        return this.http.get<ITiming[]>(this.resourceUrl1, { params: options, observe: 'response' });
     }
 }

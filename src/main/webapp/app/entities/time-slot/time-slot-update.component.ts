@@ -9,6 +9,7 @@ import { TimeSlotService } from './time-slot.service';
 import { IHotel } from 'app/shared/model/hotel.model';
 import { HotelService } from 'app/entities/hotel';
 import { ITiming, Timing } from 'app/shared/model/timing.model';
+import { TimingService } from 'app/entities/timing';
 
 @Component({
     selector: 'jhi-time-slot-update',
@@ -16,8 +17,10 @@ import { ITiming, Timing } from 'app/shared/model/timing.model';
 })
 export class TimeSlotUpdateComponent implements OnInit {
     private _timeSlot: ITimeSlot;
-    private _timing: ITiming;
+    private timings: ITiming[];
+    isRemove: boolean;
     isSaving: boolean;
+    private timing1: ITiming;
 
     hotels: IHotel[];
 
@@ -25,23 +28,34 @@ export class TimeSlotUpdateComponent implements OnInit {
         private jhiAlertService: JhiAlertService,
         private timeSlotService: TimeSlotService,
         private hotelService: HotelService,
+        private timingService: TimingService,
         private activatedRoute: ActivatedRoute
     ) {}
 
     ngOnInit() {
         this.isSaving = false;
+        this.timings = [];
+        this.timings.push(new Timing());
         this.activatedRoute.data.subscribe(({ timeSlot }) => {
             this.timeSlot = timeSlot;
         });
-        this.activatedRoute.data.subscribe(({ timing }) => {
-            this.timing = new Timing();
-        });
+        // this.activatedRoute.data.subscribe(({ timing }) => {
+        //     this.timing = new Timing();
+        // });
         this.hotelService.query().subscribe(
             (res: HttpResponse<IHotel[]>) => {
                 this.hotels = res.body;
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
+        if (this.timeSlot.id) {
+            this.timingService.findAllByTimeSlot(this.timeSlot.id).subscribe(
+                (res: HttpResponse<ITiming[]>) => {
+                    this.timings = res.body;
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
+        }
     }
 
     previousState() {
@@ -51,9 +65,9 @@ export class TimeSlotUpdateComponent implements OnInit {
     save() {
         this.isSaving = true;
         if (this.timeSlot.id !== undefined) {
-            this.subscribeToSaveResponse(this.timeSlotService.update(this.timeSlot));
+            this.subscribeToSaveResponse(this.timeSlotService.updateWithTiming(this.timeSlot, this.timings));
         } else {
-            this.subscribeToSaveResponse(this.timeSlotService.create(this.timeSlot));
+            this.subscribeToSaveResponse(this.timeSlotService.create(this.timeSlot, this.timings));
         }
     }
 
@@ -84,11 +98,24 @@ export class TimeSlotUpdateComponent implements OnInit {
     set timeSlot(timeSlot: ITimeSlot) {
         this._timeSlot = timeSlot;
     }
-    get timing() {
-        return this._timing;
-    }
+    // get timing() {
+    //     return this._timing;
+    // }
 
-    set timing(timing: ITiming) {
-        this._timing = timing;
+    // set timing(timing: ITiming) {
+    //     this._timing = timing;
+    // }
+    addField() {
+        this.timing1 = new Timing();
+        this.timing1.timeSlotDay = this._timeSlot.day;
+        this.timing1.timeSlotId = this._timeSlot.id;
+        this.timings.push(this.timing1);
+        this.isRemove = true;
+    }
+    removeField() {
+        this.timings.pop();
+        if (this.timings.length <= 1) {
+            this.isRemove = false;
+        }
     }
 }

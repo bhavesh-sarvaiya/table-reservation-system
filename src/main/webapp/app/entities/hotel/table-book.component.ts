@@ -11,6 +11,10 @@ import { HotelTableService } from 'app/entities/hotel-table';
 import { IBooking, Booking } from 'app/shared/model/booking.model';
 import { Observable } from 'rxjs';
 import { BookingService } from 'app/entities/booking';
+import { TimingService } from 'app/entities/timing';
+import { ITiming } from 'app/shared/model/timing.model';
+import { ITimeSlot, DayName } from 'app/shared/model/time-slot.model';
+import { TimeSlotService } from 'app/entities/time-slot';
 
 @Component({
     selector: 'jhi-hotel-detail',
@@ -22,25 +26,31 @@ export class TableBookComponent implements OnInit {
     isSaving: boolean;
     staff: IStaff[];
     timeSlot: string[];
+    timeSlots: ITimeSlot;
     hotelTables: IHotelTable[];
     hotelTable: IHotelTable;
     availableHotelTables: IHotelTable[];
     bookDateDp: any;
     moreGuest: boolean;
     success: boolean;
-    constructor(private dataUtils: JhiDataUtils,
+    private timings: ITiming[];
+
+    constructor(
+        private dataUtils: JhiDataUtils,
+        private timingService: TimingService,
         private staffService: StaffService,
+        private timeSlotService: TimeSlotService,
         private hotelTableService: HotelTableService,
         private jhiAlertService: JhiAlertService,
         private bookingService: BookingService,
-         private activatedRoute: ActivatedRoute) {}
+        private activatedRoute: ActivatedRoute
+    ) {}
 
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ booking }) => {
             this.booking = new Booking();
         });
         this.timeSlot = [];
-        this.timeSlot.push('8:00 PM - 10:00 PM');
         this.activatedRoute.data.subscribe(({ hotel }) => {
             this.hotel = hotel;
             this.hotelTableService.getTablesByHotel(this.hotel.id).subscribe(
@@ -71,6 +81,14 @@ export class TableBookComponent implements OnInit {
 
     save() {
         this.isSaving = true;
+
+        // if (this._booking.bookDate) {
+        //     const d = this._booking.bookDate.toString().split('-');
+        //     this._booking.bookDate = {
+        //         year: d[0], month: d[1], day: d[2]
+        //     };
+        // }
+
         this._booking.hotelId = this.hotel.id;
         if (this._booking.hotelTableId !== undefined) {
             if (this._booking.noOfGuest > this.hotelTable.noOfCustomer) {
@@ -83,7 +101,7 @@ export class TableBookComponent implements OnInit {
     }
 
     checkGuest() {
-        if (this._booking.hotelTableId !== undefined && this._booking.noOfGuest !== undefined ) {
+        if (this._booking.hotelTableId !== undefined && this._booking.noOfGuest !== undefined) {
             this.hotelTableService.find(this._booking.hotelTableId).subscribe(
                 (res: HttpResponse<IHotelTable>) => {
                     this.hotelTable = res.body;
@@ -109,13 +127,13 @@ export class TableBookComponent implements OnInit {
     }
 
     private subscribeToSaveResponse(result: Observable<HttpResponse<IBooking>>) {
-        result.subscribe((res: HttpResponse<IBooking>) =>  this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
+        result.subscribe((res: HttpResponse<IBooking>) => this.onSaveSuccess(), (res: HttpErrorResponse) => this.onSaveError());
     }
     private onSaveSuccess() {
         this.isSaving = false;
         this.success = true;
         this.ngOnInit();
-       // this.previousState();
+        // this.previousState();
     }
 
     private onSaveError() {
@@ -128,5 +146,54 @@ export class TableBookComponent implements OnInit {
 
     set booking(booking: IBooking) {
         this._booking = booking;
+    }
+
+    private dateChange() {
+        this.timeSlot = [];
+        let d;
+        if (this._booking.bookDate) {
+            d = new Date(this._booking.bookDate.toString()).getDay();
+        } else {
+            d = new Date().getDay();
+        }
+        let day;
+        switch (d) {
+            case 0:
+                day = DayName.SUNDAY;
+                break;
+            case 1:
+                day = DayName.MONDAY;
+                break;
+            case 2:
+                day = DayName.TUESDAY;
+                break;
+            case 3:
+                day = DayName.WEDNESDAY;
+                break;
+            case 4:
+                day = DayName.THRUSDAY;
+                break;
+            case 5:
+                day = DayName.FRIDAY;
+                break;
+            case 6:
+                day = DayName.SATURDAY;
+                break;
+        }
+        this.timeSlotService.findOneByHotelAndDay(this.hotel.id, day).subscribe(
+            (res: HttpResponse<ITimeSlot>) => {
+                this.timeSlots = res.body;
+                this.timingService.findAllByTimeSlot(this.timeSlots.id).subscribe(
+                    (res2: HttpResponse<ITiming[]>) => {
+                        this.timings = res2.body;
+                        this.timings.forEach(element => {
+                            this.timeSlot.push(element.startTime);
+                        });
+                    },
+                    (res2: HttpErrorResponse) => this.onError(res2.message)
+                );
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
     }
 }

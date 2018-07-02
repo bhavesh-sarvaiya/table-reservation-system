@@ -31,7 +31,7 @@ describe('Service Tests', () => {
             });
 
             it('should create a TimeSlot', () => {
-                service.create(new TimeSlot(null)).subscribe(received => {
+                service.create1(new TimeSlot(null)).subscribe(received => {
                     expect(received.body.id).toEqual(null);
                 });
 

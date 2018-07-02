@@ -1,10 +1,17 @@
 package com.trs.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.trs.domain.Hotel;
+import com.trs.domain.Timing;
+import com.trs.domain.enumeration.DayName;
 import com.trs.service.TimeSlotService;
+import com.trs.service.TimingService;
 import com.trs.web.rest.errors.BadRequestAlertException;
 import com.trs.web.rest.util.HeaderUtil;
+import com.trs.service.dto.TimeSlotAndTimingDTO;
 import com.trs.service.dto.TimeSlotDTO;
+import com.trs.service.dto.TimingDTO;
+
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,9 +37,10 @@ public class TimeSlotResource {
     private static final String ENTITY_NAME = "timeSlot";
 
     private final TimeSlotService timeSlotService;
-
-    public TimeSlotResource(TimeSlotService timeSlotService) {
+    private final TimingService timingService;
+    public TimeSlotResource(TimeSlotService timeSlotService, TimingService timingService) {
         this.timeSlotService = timeSlotService;
+        this.timingService = timingService;
     }
 
     /**
@@ -44,12 +52,19 @@ public class TimeSlotResource {
      */
     @PostMapping("/time-slots")
     @Timed
-    public ResponseEntity<TimeSlotDTO> createTimeSlot(@Valid @RequestBody TimeSlotDTO timeSlotDTO) throws URISyntaxException {
-        log.debug("REST request to save TimeSlot : {}", timeSlotDTO);
+    public ResponseEntity<TimeSlotDTO> createTimeSlot(@Valid @RequestBody TimeSlotAndTimingDTO timeSlotAndTimingDTO) throws URISyntaxException {
+        log.debug("REST request to save TimeSlot : {}", timeSlotAndTimingDTO);
+        TimeSlotDTO timeSlotDTO = timeSlotAndTimingDTO.getTimeslotDTO();
+        TimingDTO[] timingDTOs = timeSlotAndTimingDTO.getTimings();
+
+        System.out.println("\n### "+ timeSlotDTO);
         if (timeSlotDTO.getId() != null) {
             throw new BadRequestAlertException("A new timeSlot cannot already have an ID", ENTITY_NAME, "idexists");
         }
         TimeSlotDTO result = timeSlotService.save(timeSlotDTO);
+        if(result != null){
+            timingService.save(timingDTOs, result);
+        }
         return ResponseEntity.created(new URI("/api/time-slots/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -115,5 +130,43 @@ public class TimeSlotResource {
         log.debug("REST request to delete TimeSlot : {}", id);
         timeSlotService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+    }
+
+    // custom method
+
+    /**
+     * PUT  /time-slots : Updates an existing timeSlot.
+     *
+     * @param timeSlotDTO the timeSlotDTO to update
+     * @return the ResponseEntity with status 200 (OK) and with body the updated timeSlotDTO,
+     * or with status 400 (Bad Request) if the timeSlotDTO is not valid,
+     * or with status 500 (Internal Server Error) if the timeSlotDTO couldn't be updated
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @PutMapping("/time-slots-timing")
+    @Timed
+    public ResponseEntity<TimeSlotDTO> updateTimeSlotWithTiming(@Valid @RequestBody TimeSlotAndTimingDTO timeSlotAndTimingDTO) throws URISyntaxException {
+        log.debug("REST request to update TimeSlotAndTimingDTO : {}", timeSlotAndTimingDTO);
+        TimeSlotDTO timeSlotDTO = timeSlotAndTimingDTO.getTimeslotDTO();
+        TimingDTO[] timingDTOs = timeSlotAndTimingDTO.getTimings();
+        if (timeSlotDTO.getId() == null) {
+            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+        }
+        TimeSlotDTO result = timeSlotService.save(timeSlotDTO);
+        if(result != null){
+            timingService.save(timingDTOs, result);
+        }
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, timeSlotDTO.getId().toString()))
+            .body(result);
+    }
+
+    // custom method
+
+    @GetMapping("/time-slots-hotel-day")
+    @Timed
+    public TimeSlotDTO getTimeSlotByHotelAndDay(@RequestParam Long hotelId, DayName day) {
+        log.debug("REST request to get TimeSlot by hotel and day : {},{}", hotelId, day);
+        return timeSlotService.findOneByHotelAndDay(hotelId, day);
     }
 }

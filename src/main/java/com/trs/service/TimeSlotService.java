@@ -1,5 +1,7 @@
 package com.trs.service;
 
+import com.trs.domain.Hotel;
+import com.trs.domain.enumeration.DayName;
 import com.trs.service.dto.TimeSlotDTO;
 
 import java.util.List;
@@ -40,4 +42,7 @@ public interface TimeSlotService {
      * @param id the id of the entity
      */
     void delete(Long id);
+    // custom method
+
+    TimeSlotDTO findOneByHotelAndDay(Long hotelId, DayName day);
 }

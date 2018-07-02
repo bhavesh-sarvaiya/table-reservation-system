@@ -1,5 +1,7 @@
 package com.trs.service;
 
+import com.trs.domain.TimeSlot;
+import com.trs.service.dto.TimeSlotDTO;
 import com.trs.service.dto.TimingDTO;
 
 import java.util.List;
@@ -40,4 +42,9 @@ public interface TimingService {
      * @param id the id of the entity
      */
     void delete(Long id);
+    //custom method
+
+    TimingDTO save(TimingDTO[] timingDTO,TimeSlotDTO timeSlotDTO);
+
+    List<TimingDTO> findAllByTimeSolt(Long timeSlotId);
 }

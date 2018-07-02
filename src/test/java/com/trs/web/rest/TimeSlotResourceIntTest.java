@@ -6,6 +6,7 @@ import com.trs.domain.TimeSlot;
 import com.trs.domain.Hotel;
 import com.trs.repository.TimeSlotRepository;
 import com.trs.service.TimeSlotService;
+import com.trs.service.TimingService;
 import com.trs.service.dto.TimeSlotDTO;
 import com.trs.service.mapper.TimeSlotMapper;
 import com.trs.web.rest.errors.ExceptionTranslator;
@@ -53,6 +54,8 @@ public class TimeSlotResourceIntTest {
     @Autowired
     private TimeSlotRepository timeSlotRepository;
 
+    @Autowired
+    private TimingService timingService;
 
     @Autowired
     private TimeSlotMapper timeSlotMapper;
@@ -80,7 +83,7 @@ public class TimeSlotResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final TimeSlotResource timeSlotResource = new TimeSlotResource(timeSlotService);
+        final TimeSlotResource timeSlotResource = new TimeSlotResource(timeSlotService, timingService);
         this.restTimeSlotMockMvc = MockMvcBuilders.standaloneSetup(timeSlotResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)

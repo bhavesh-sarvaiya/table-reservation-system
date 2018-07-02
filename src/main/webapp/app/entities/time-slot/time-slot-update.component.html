@@ -1,17 +1,18 @@
+<h2 style="text-align: center;" id="jhi-time-slot-heading">Create or edit a Time Slot</h2>
+<br>
 <div class="row justify-content-center">
-    <div class="col-8">
+    <div class="col-md-3">
         <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
-            <h2 id="jhi-time-slot-heading">Create or edit a Time Slot</h2>
+    
             <div>
                 <jhi-alert-error></jhi-alert-error>
-                <div class="form-group" [hidden]="!timeSlot.id">
+                <!-- <div class="form-group" [hidden]="!timeSlot.id">
                     <label for="id">ID</label>
-                    <input type="text" class="form-control" id="id" name="id"
-                        [(ngModel)]="timeSlot.id" readonly />
-                </div>
+                    <input type="text" class="form-control" id="id" name="id" [(ngModel)]="timeSlot.id" readonly />
+                </div> -->
                 <div class="form-group">
                     <label class="form-control-label" for="field_day">Day</label>
-                    <select class="form-control" name="day" [(ngModel)]="timeSlot.day" id="field_day"  required>
+                    <select class="form-control" name="day" [(ngModel)]="timeSlot.day" id="field_day" *ngIf="!timeSlot.id" required>
                         <option value="MONDAY">MONDAY</option>
                         <option value="TUESDAY">TUESDAY</option>
                         <option value="WEDNESDAY">WEDNESDAY</option>
@@ -20,63 +21,101 @@
                         <option value="SATURDAY">SATURDAY</option>
                         <option value="SUNDAY">SUNDAY</option>
                     </select>
+                    <select class="form-control" name="day" [(ngModel)]="timeSlot.day" id="field_day" *ngIf="timeSlot.id" disabled>
+                        <option value="MONDAY">MONDAY</option>
+                        <option value="TUESDAY">TUESDAY</option>
+                        <option value="WEDNESDAY">WEDNESDAY</option>
+                        <option value="THRUSDAY">THRUSDAY</option>
+                        <option value="FRIDAY">FRIDAY</option>
+                        <option value="SATURDAY">SATURDAY</option>
+                        <option value="SUNDAY">SUNDAY</option>
+                    </select>
+                    
                     <div [hidden]="!(editForm.controls.day?.dirty && editForm.controls.day?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.day?.errors?.required">
-                        This field is required.
+                        <small class="form-text text-danger" [hidden]="!editForm.controls.day?.errors?.required">
+                            This field is required.
                         </small>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_status">Status</label>
-                    <input type="checkbox" class="form-control" name="status" id="field_status"
-                        [(ngModel)]="timeSlot.status" />
-                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                            <label class="form-control-label" for="field_status">Is Open?</label>
 
+                    </div>
+                    <div class="col-md-6">
+                    <input style="margin-top: 8%;" type="checkbox" class="form-control" name="status" id="field_status" [(ngModel)]="timeSlot.status" />
+
+                    </div>
+                </div>
+    
                 <div class="form-group">
                     <label class="form-control-label" for="field_hotel">Hotel</label>
-                    <select class="form-control" id="field_hotel" name="hotel" [(ngModel)]="timeSlot.hotelId"  required>
+                    <select class="form-control" id="field_hotel" name="hotel" [(ngModel)]="timeSlot.hotelId" *ngIf="!timeSlot.id" required>
+                        <option *ngIf="!editForm.value.hotel" [ngValue]="null" selected></option>
+                        <option [ngValue]="hotelOption.id" *ngFor="let hotelOption of hotels; trackBy: trackHotelById">{{hotelOption.name}}</option>
+                    </select>
+                    <select class="form-control" id="field_hotel" name="hotel" [(ngModel)]="timeSlot.hotelId" *ngIf="timeSlot.id" disabled>
                         <option *ngIf="!editForm.value.hotel" [ngValue]="null" selected></option>
                         <option [ngValue]="hotelOption.id" *ngFor="let hotelOption of hotels; trackBy: trackHotelById">{{hotelOption.name}}</option>
                     </select>
                 </div>
                 <div [hidden]="!(editForm.controls.hotel?.dirty && editForm.controls.hotel?.invalid)">
-                    <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.hotel?.errors?.required">
+                    <small class="form-text text-danger" [hidden]="!editForm.controls.hotel?.errors?.required">
                         This field is required.
                     </small>
                 </div>
-                <div class="form-group">
-                        <label class="form-control-label" for="field_startTime">Start Time</label>
-                        <input type="text" class="form-control" name="startTime" id="field_startTime"
-                            [(ngModel)]="timing.startTime" required/>
-                        <div [hidden]="!(editForm.controls.startTime?.dirty && editForm.controls.startTime?.invalid)">
-                            <small class="form-text text-danger"
-                            [hidden]="!editForm.controls.startTime?.errors?.required">
-                            This field is required.
-                            </small>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-control-label" for="field_endTime">End Time</label>
-                        <input type="text" class="form-control" name="endTime" id="field_endTime"
-                            [(ngModel)]="timing.endTime" required/>
-                        <div [hidden]="!(editForm.controls.endTime?.dirty && editForm.controls.endTime?.invalid)">
-                            <small class="form-text text-danger"
-                            [hidden]="!editForm.controls.endTime?.errors?.required">
-                            This field is required.
-                            </small>
-                        </div>
-                    </div>
             </div>
             <div>
-                <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
-                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
+                <button type="button" id="cancel-save" class="btn btn-secondary" (click)="previousState()">
+                    <fa-icon [icon]="'ban'"></fa-icon>&nbsp;
+                    <span>Cancel</span>
                 </button>
                 <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
-                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
+                    <fa-icon [icon]="'save'"></fa-icon>&nbsp;
+                    <span>Save</span>
                 </button>
             </div>
         </form>
+    </div>
+    <div class="col-md-6">
+        <div class="row" *ngIf="timings">
+            <div class="col-md-3">
+                <label class="form-control-label" for="field_startTime">Start Time</label>
+            </div>
+            <div class="col-md-3">
+                <label class="form-control-label" for="field_endTime">End Time</label>
+            </div>
+            <div class="col-md-2">
+                <button (click)="addField()">Add</button>
+            </div>
+            <div class="col-md-2">
+                <button *ngIf="isRemove" (click)="removeField()">Remove</button>
+    
+            </div>
+        </div>
+    
+        <div class="row" *ngFor="let timing of timings">
+            <div class="col-md-3">
+                <input type="time" class="form-control" name="startTime" id="field_startTime"  [(ngModel)]="timing.startTime"  required/>
+                <div [hidden]="!(editForm.controls.startTime?.dirty && editForm.controls.startTime?.invalid)">
+                    <small class="form-text text-danger" [hidden]="!editForm.controls.startTime?.errors?.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+            <div class="col-md-3">
+    
+                <input type="time" class="form-control" name="endTime" id="field_endTime"  [(ngModel)]="timing.endTime"  required/>
+                <div [hidden]="!(editForm.controls.endTime?.dirty && editForm.controls.endTime?.invalid)">
+                    <small class="form-text text-danger" [hidden]="!editForm.controls.endTime?.errors?.required">
+                        This field is required.
+                    </small>
+                </div>
+            </div>
+            <br>
+            <br>
+        </div>
+    
+    
     </div>
 </div>

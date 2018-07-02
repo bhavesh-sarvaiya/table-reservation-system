@@ -1,9 +1,13 @@
 package com.trs.service.impl;
 
 import com.trs.service.TimingService;
+import com.trs.domain.TimeSlot;
 import com.trs.domain.Timing;
+import com.trs.repository.TimeSlotRepository;
 import com.trs.repository.TimingRepository;
+import com.trs.service.dto.TimeSlotDTO;
 import com.trs.service.dto.TimingDTO;
+import com.trs.service.mapper.TimeSlotMapper;
 import com.trs.service.mapper.TimingMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,10 +31,15 @@ public class TimingServiceImpl implements TimingService {
     private final TimingRepository timingRepository;
 
     private final TimingMapper timingMapper;
+    private final TimeSlotMapper timeSlotMapper;
+    private final TimeSlotRepository timeSlotRepository;
 
-    public TimingServiceImpl(TimingRepository timingRepository, TimingMapper timingMapper) {
+    public TimingServiceImpl(TimingRepository timingRepository, TimingMapper timingMapper,TimeSlotMapper timeSlotMapper
+    ,TimeSlotRepository timeSlotRepository) {
         this.timingRepository = timingRepository;
         this.timingMapper = timingMapper;
+        this.timeSlotMapper = timeSlotMapper;
+        this.timeSlotRepository = timeSlotRepository;
     }
 
     /**
@@ -85,5 +94,28 @@ public class TimingServiceImpl implements TimingService {
     public void delete(Long id) {
         log.debug("Request to delete Timing : {}", id);
         timingRepository.deleteById(id);
+    }
+//custom method
+    @Override
+    public TimingDTO save(TimingDTO[] timingDTOs,TimeSlotDTO timeSlotDTO) {
+        log.debug("Request to save Timing : {}", timingDTOs);
+        Timing timing =null;
+        for (TimingDTO timingDTO : timingDTOs) {
+            timing = timingMapper.toEntity(timingDTO);
+            timing.setTimeSlot(timeSlotMapper.toEntity(timeSlotDTO));
+            timing = timingRepository.save(timing);
+        }
+        
+        return timingMapper.toDto(timing);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<TimingDTO> findAllByTimeSolt(Long timeSLotId) {
+        log.debug("Request to get all Timings");
+        TimeSlot timeSlot = timeSlotRepository.getOne(timeSLotId);
+        return timingRepository.findAllByTimeSlot(timeSlot).stream()
+            .map(timingMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 }
