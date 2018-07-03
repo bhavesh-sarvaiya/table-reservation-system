@@ -15,6 +15,7 @@ import { TimingService } from 'app/entities/timing';
 import { ITiming } from 'app/shared/model/timing.model';
 import { ITimeSlot, DayName } from 'app/shared/model/time-slot.model';
 import { TimeSlotService } from 'app/entities/time-slot';
+import { getLocaleDayNames } from '@angular/common';
 
 @Component({
     selector: 'jhi-hotel-detail',
@@ -34,7 +35,7 @@ export class TableBookComponent implements OnInit {
     moreGuest: boolean;
     success: boolean;
     private timings: ITiming[];
-    tableLength: number;
+    tableLength: boolean;
 
     constructor(
         private dataUtils: JhiDataUtils,
@@ -54,26 +55,16 @@ export class TableBookComponent implements OnInit {
         this.timeSlot = [];
         this.activatedRoute.data.subscribe(({ hotel }) => {
             this.hotel = hotel;
-            this.hotelTableService.findAllByHotelAndStatusBasedOnStaff(this.hotel.id, 'Available').subscribe(
-                (res: HttpResponse<IHotelTable[]>) => {
-                    this.hotelTables = res.body;
-                    this.tableLength = this.hotelTables.length;
-                    if ( this.tableLength === 0) {
-                        this.hotelTables = undefined;
-                        this.tableLength = undefined;
-                    }
-                },
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
-            this.hotelTableService.getTablesByHotelAndStatus(this.hotel.id, 'Available').subscribe(
-                (res: HttpResponse<IHotelTable[]>) => {
-                    this.availableHotelTables = res.body;
-                    if (this.availableHotelTables.length === 0) {
-                        this.availableHotelTables = undefined;
-                    }
-                },
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
+            this.getHotelTable();
+            // this.hotelTableService.getTablesByHotelAndStatus(this.hotel.id, 'Available').subscribe(
+            //     (res: HttpResponse<IHotelTable[]>) => {
+            //         this.availableHotelTables = res.body;
+            //         if (this.availableHotelTables.length === 0) {
+            //             this.availableHotelTables = undefined;
+            //         }
+            //     },
+            //     (res: HttpErrorResponse) => this.onError(res.message)
+            // );
         });
     }
 
@@ -149,9 +140,52 @@ export class TableBookComponent implements OnInit {
     set booking(booking: IBooking) {
         this._booking = booking;
     }
-
     private dateChange() {
+        const day = this.getDay();
         this.timeSlot = [];
+        this.timeSlotService.findOneByHotelAndDay(this.hotel.id, day).subscribe(
+            (res: HttpResponse<ITimeSlot>) => {
+                this.timeSlots = res.body;
+                this.timingService.findAllByTimeSlot(this.timeSlots.id).subscribe(
+                    (res2: HttpResponse<ITiming[]>) => {
+                        this.timings = res2.body;
+                        this.timings.forEach(element => {
+                            this.timeSlot.push(element.startTime);
+                        });
+                    },
+                    (res2: HttpErrorResponse) => this.onError(res2.message)
+                );
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
+        this.getHotelTable();
+    }
+    private getHotelTable() {
+        const day = this.getDay();
+        let time;
+        if (!this._booking.bookTime) {
+            time = 'null';
+        } else {
+            time = this._booking.bookTime;
+        }
+        this.hotelTableService.findAllByHotelAndStatusBasedOnStaff(this.hotel.id, 'Available', day, time).subscribe(
+            (res: HttpResponse<IHotelTable[]>) => {
+                this.hotelTables = res.body;
+                if (this.hotelTables == null) {
+                    this.tableLength = false;
+                } else {
+                    this.tableLength = true;
+                }
+                if (!this.tableLength) {
+                    this.hotelTables = undefined;
+                }
+                this.setTableForSelect();
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
+    }
+
+    getDay() {
         let d;
         if (this._booking.bookDate) {
             d = new Date(this._booking.bookDate.toString()).getDay();
@@ -182,20 +216,14 @@ export class TableBookComponent implements OnInit {
                 day = DayName.SATURDAY;
                 break;
         }
-        this.timeSlotService.findOneByHotelAndDay(this.hotel.id, day).subscribe(
-            (res: HttpResponse<ITimeSlot>) => {
-                this.timeSlots = res.body;
-                this.timingService.findAllByTimeSlot(this.timeSlots.id).subscribe(
-                    (res2: HttpResponse<ITiming[]>) => {
-                        this.timings = res2.body;
-                        this.timings.forEach(element => {
-                            this.timeSlot.push(element.startTime);
-                        });
-                    },
-                    (res2: HttpErrorResponse) => this.onError(res2.message)
-                );
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
+        return day;
+    }
+    setTableForSelect() {
+        this.availableHotelTables = [];
+        this.hotelTables.forEach(element => {
+            if (element.status === 'Available') {
+                this.availableHotelTables.push(element);
+            }
+        });
     }
 }

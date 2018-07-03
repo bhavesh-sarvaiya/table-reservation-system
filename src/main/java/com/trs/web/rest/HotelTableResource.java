@@ -1,6 +1,7 @@
 package com.trs.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.trs.domain.enumeration.DayName;
 import com.trs.service.HotelTableService;
 import com.trs.web.rest.errors.BadRequestAlertException;
 import com.trs.web.rest.util.HeaderUtil;
@@ -141,8 +142,8 @@ public class HotelTableResource {
 
     @GetMapping("/hotel-tables-hotel-status-based-on-staff")
     @Timed
-    public List<HotelTableDTO> findAllByHotelAndStatusBasedOnStaff(@RequestParam Long id, String status) {
+    public List<HotelTableDTO> findAllByHotelAndStatusBasedOnStaff(@RequestParam Long id, String status, DayName dayName, String time) {
         log.debug("REST request to get all HotelTables by Hotel");
-        return hotelTableService.findAllByHotelAndStatusBasedOnStaff(id,status);
+        return hotelTableService.findAllByHotelAndStatusBasedOnStaff(id,status,dayName,time);
     }
 }

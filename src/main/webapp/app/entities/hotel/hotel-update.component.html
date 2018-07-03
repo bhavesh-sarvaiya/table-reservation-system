@@ -62,7 +62,7 @@
                         <small class="form-text text-danger"
                             [hidden]="!editForm.controls.openTime?.errors?.ZonedDateTimelocal">
                             This field should be a date and time.
-                        </small>
+                        </small>    
                     </div>
                 </div>
                 <div class="form-group">
@@ -103,6 +103,29 @@
                         This field is required.
                         </small>
                     </div>
+                </div>
+                <div class="form-group" [hidden]="hotel.id">
+                        <label class="form-control-label" for="field_staffInRushHour" style="margin-right: 2%">How many Table handle in Rush Hours (per staff member)</label>
+                        <input type="number" class="form-control" name="staffInRushHour" id="field_staffInRushHour" min="1" [(ngModel)]="hotel.staffInRushHour"
+                        required>
+                        <div [hidden]="!(editForm.controls.staffInRushHour?.dirty && editForm.controls.staffInRushHour?.invalid)">
+                            <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.staffInRushHour?.errors?.required">
+                            This field is required.
+                            </small>
+                        </div>
+                   
+                </div>
+                <div class="form-group" [hidden]="hotel.id">
+                        <label class="form-control-label" for="field_staffInNormal" style="margin-right: 2%">How many Table handle in normal Hours (per staff member)</label>
+                        <input type="number" class="form-control" name="staffInNormal" id="field_staffInNormal" min="1" [(ngModel)]="hotel.staffInNormal"
+                        required/>
+                        <div [hidden]="!(editForm.controls.staffInNormal?.dirty && editForm.controls.staffInNormal?.invalid)">
+                            <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.staffInNormal?.errors?.required">
+                            This field is required.
+                            </small>
+                        </div>
                 </div>
                 <div class="form-group">
                     <label class="form-control-label" for="field_pincode">Pincode</label>

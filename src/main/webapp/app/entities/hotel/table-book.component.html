@@ -98,8 +98,9 @@
                         <!-- <input type="time" class="form-control" name="bookTime" id="field_bookTime" 
                         [(ngModel)]="booking.bookTime" required /> -->
 
-                        <select class="form-control" id="field_bookTime" name="bookTime"  [(ngModel)]="booking.bookTime" required>
-                                <option *ngFor="let item of timeSlot" >{{item}}</option>
+                        <select class="form-control" id="field_bookTime" name="bookTime" (change) = "getHotelTable()"  [(ngModel)]="booking.bookTime" required>
+                                <option *ngIf="!editForm.value.booking" [ngValue]="null" selected></option> 
+                            <option *ngFor="let item of timeSlot" >{{item}}</option>
                             </select>
 
                         <div [hidden]="!(editForm.controls.bookTime?.dirty && editForm.controls.bookTime?.invalid)">

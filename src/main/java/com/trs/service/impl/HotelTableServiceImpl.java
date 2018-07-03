@@ -129,44 +129,53 @@ public class HotelTableServiceImpl implements HotelTableService {
     }
     
     @Override
-	public List<HotelTableDTO> findAllByHotelAndStatusBasedOnStaff(Long id,String status) {
+	public List<HotelTableDTO> findAllByHotelAndStatusBasedOnStaff(Long id,String status,DayName day, String time) {
 		 log.debug("Request to get all HotelTables by findAllByHotelAndStatusBasedOnStaff");
          Hotel hotel = hotelRepository.findById(id).get();
          List<Staff> staff = staffRepository.findAllByHotel(hotel);
+         System.out.println("\n\n## "+staff.size()+" \n");
          if(staff == null){
              return null;
          }
          int staffLength = staff.size();
- 
-         int d = LocalDate.now().getDayOfWeek().getValue();
-         DayName day = null;
-         switch (d) {
-            
-             case 1:
-                 day = DayName.MONDAY;
-                 break;
-             case 2:
-                 day = DayName.TUESDAY;
-                 break;
-             case 3:
-                 day = DayName.WEDNESDAY;
-                 break;
-             case 4:
-                 day = DayName.THRUSDAY;
-                 break;
-             case 5:
-                 day = DayName.FRIDAY;
-                 break;
-             case 6:
-                 day = DayName.SATURDAY;
-                 break;
-             case 7:
-                 day = DayName.SUNDAY;
-                 break;
+         if(day == null) {
+            int d = LocalDate.now().getDayOfWeek().getValue();
+            switch (d) {
+                case 1:
+                    day = DayName.MONDAY;
+                    break;
+                case 2:
+                    day = DayName.TUESDAY;
+                    break;
+                case 3:
+                    day = DayName.WEDNESDAY;
+                    break;
+                case 4:
+                    day = DayName.THRUSDAY;
+                    break;
+                case 5:
+                    day = DayName.FRIDAY;
+                    break;
+                case 6:
+                    day = DayName.SATURDAY;
+                    break;
+                case 7:
+                    day = DayName.SUNDAY;
+                    break;
          }
+        }
          TimeSlot timeSlot = timeSlotRepository.findOneByHotelAndDay(hotel, day);
-         String hour = LocalTime.now().getHour() + ":00";
-         Timing timing = timingRepository.findOneByTimeSlotAndStartTime(timeSlot, hour);
+         if(time.equals("null")){
+            time= LocalTime.now().getHour()+"";
+            if(time.length() == 1) {
+                time = "0"+time;
+            }
+            time+= ":00";
+        }
+         Timing timing = timingRepository.findOneByTimeSlotAndStartTime(timeSlot, time);
+         System.out.println("\n\n## timeslot "+timeSlot+" \n hour: "+time);
+         System.out.println("\n\n## time "+timing+" \n");
+
          if(timing == null) {
              return null;
          }

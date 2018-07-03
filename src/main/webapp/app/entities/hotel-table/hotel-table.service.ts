@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { SERVER_API_URL } from 'app/app.constants';
 import { createRequestOption } from 'app/shared';
 import { IHotelTable } from 'app/shared/model/hotel-table.model';
+import { DayName } from 'app/shared/model/time-slot.model';
 
 type EntityResponseType = HttpResponse<IHotelTable>;
 type EntityArrayResponseType = HttpResponse<IHotelTable[]>;
@@ -42,17 +43,17 @@ export class HotelTableService {
     // Custom method
 
     getTablesByHotel(id?: any): Observable<EntityArrayResponseType> {
-        const options = createRequestOption({id});
+        const options = createRequestOption({ id });
         return this.http.get<IHotelTable[]>(this.resourceUrl1, { params: options, observe: 'response' });
     }
 
     getTablesByHotelAndStatus(id: any, status: String): Observable<EntityArrayResponseType> {
-        const options = createRequestOption({id, status});
+        const options = createRequestOption({ id, status });
         return this.http.get<IHotelTable[]>(this.resourceUrl2, { params: options, observe: 'response' });
     }
 
-    findAllByHotelAndStatusBasedOnStaff(id: any, status: String): Observable<EntityArrayResponseType> {
-        const options = createRequestOption({id, status});
+    findAllByHotelAndStatusBasedOnStaff(id: any, status: String, dayName: DayName, time?: string): Observable<EntityArrayResponseType> {
+        const options = createRequestOption({ id, status, dayName, time });
         return this.http.get<IHotelTable[]>(this.resourceUrl3, { params: options, observe: 'response' });
     }
 }

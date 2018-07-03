@@ -1,5 +1,6 @@
 package com.trs.service;
 
+import com.trs.domain.enumeration.DayName;
 import com.trs.service.dto.HotelTableDTO;
 
 import java.util.List;
@@ -51,5 +52,5 @@ public interface HotelTableService {
      */
     List<HotelTableDTO> findAllByHotel(Long id);
     List<HotelTableDTO> findAllByHotelAndStatus(Long id, String status);
-    List<HotelTableDTO> findAllByHotelAndStatusBasedOnStaff(Long id, String status);
+    List<HotelTableDTO> findAllByHotelAndStatusBasedOnStaff(Long id, String status,DayName dayName, String time);
 }
