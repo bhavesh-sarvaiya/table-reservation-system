@@ -8,6 +8,8 @@ import { Principal } from 'app/core';
 
 import { ITEMS_PER_PAGE } from 'app/shared';
 import { CuisineService } from './cuisine.service';
+import { IHotel } from 'app/shared/model/hotel.model';
+import { HotelService } from 'app/entities/hotel';
 
 @Component({
     selector: 'jhi-cuisine',
@@ -24,12 +26,14 @@ export class CuisineComponent implements OnInit, OnDestroy {
     queryCount: any;
     reverse: any;
     totalItems: number;
-
+    hotels: IHotel[];
+    hotel: number;
     constructor(
         private cuisineService: CuisineService,
         private jhiAlertService: JhiAlertService,
         private dataUtils: JhiDataUtils,
         private eventManager: JhiEventManager,
+        private hotelService: HotelService,
         private parseLinks: JhiParseLinks,
         private principal: Principal
     ) {
@@ -54,6 +58,7 @@ export class CuisineComponent implements OnInit, OnDestroy {
                 (res: HttpResponse<ICuisine[]>) => this.paginateCuisines(res.body, res.headers),
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
+            this.getHotels();
     }
 
     reset() {
@@ -114,4 +119,40 @@ export class CuisineComponent implements OnInit, OnDestroy {
     private onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
     }
+
+    getHotels() {
+        this.hotelService.query().subscribe(
+            (res: HttpResponse<IHotel[]>) => {
+                this.hotels = res.body;
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
+}
+
+changeHotel() {
+    this.cuisines = [];
+    if (this.hotel === 1) {
+        this.cuisineService
+            .query({
+                page: this.page,
+                size: this.itemsPerPage,
+                sort: this.sort()
+            })
+            .subscribe(
+                (res: HttpResponse<ICuisine[]>) => this.paginateCuisines(res.body, res.headers),
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
+    } else {
+        this.cuisineService
+            .getCuisineByHotelPage({
+                page: this.page,
+                size: this.itemsPerPage,
+                sort: this.sort()
+            }, this.hotel)
+            .subscribe(
+                (res: HttpResponse<ICuisine[]>) => this.paginateCuisines(res.body, res.headers),
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
+}
+}
 }

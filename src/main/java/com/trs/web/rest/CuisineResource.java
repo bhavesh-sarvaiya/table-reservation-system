@@ -60,6 +60,11 @@ public class CuisineResource {
         if (cuisineDTO.getId() != null) {
             throw new BadRequestAlertException("A new cuisine cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        CuisineDTO cuisineDTO2 = cuisineService.findOneByTypeAndHotel(cuisineDTO.getType(), cuisineDTO.getHotelId()).get();
+
+        if(cuisineDTO2 != null) {
+            throw new BadRequestAlertException("Cuisine already Exists", ENTITY_NAME, "idexists");
+        }
         CuisineDTO result = cuisineService.save(cuisineDTO);
         return ResponseEntity.created(new URI("/api/cuisines/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -82,6 +87,7 @@ public class CuisineResource {
         if (cuisineDTO.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
+     
         CuisineDTO result = cuisineService.save(cuisineDTO);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, cuisineDTO.getId().toString()))
@@ -138,5 +144,14 @@ public class CuisineResource {
     public List<CuisineDTO> getAllCuisinesByHotel(Long id) {
         log.debug("REST request to get Cuisines by hotel: {}",id);
         return cuisineService.findAllByHotel(id);
+    }
+
+    @GetMapping("/cuisines-hotel-page")
+    @Timed
+    public ResponseEntity<List<CuisineDTO>> getAllCuisinesByHotelPageable(Pageable pageable,Long hotelId) {
+        log.debug("REST request to get Cuisines by hotel: {}", hotelId);
+        Page<CuisineDTO> page = cuisineService.findAllByHotel(pageable, hotelId);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/cuisines");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 }

@@ -1,12 +1,29 @@
 <div>
     <h2 id="page-heading">
-        <span>Cuisines</span>
+        <!-- <span>Cuisines</span>
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-cuisine" [routerLink]="['/cuisine/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span >
             Create new Cuisine
             </span>
-        </button>
+        </button> -->
+        <div class="row">
+                <div class="col-4"> <span>Cuisines</span></div>
+                <div class="col-4"><div class="input-group">
+                        <label class="form-control-label" for="field_hotel" style="margin-right: 2%;">Hotel</label>
+                        <select class="form-control" id="field_hotel" name="hotel" [(ngModel)]="hotel" (change)="changeHotel()">
+                            <option [ngValue]="1" selected>All</option>
+                            <option [ngValue]="hotelOption.id" *ngFor="let hotelOption of hotels;">{{hotelOption.name}}</option>
+                        </select>
+                    </div></div>
+                <div class="col align-self-end">     <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-cuisine" [routerLink]="['/cuisine/new']">
+                    <fa-icon [icon]="'plus'"></fa-icon>
+                    <span >
+                    Create new Cuisine
+                    </span>
+                </button></div>
+            </div> 
+
     </h2>
     <jhi-alert></jhi-alert>
     <br/>
@@ -14,9 +31,7 @@
         <table class="table table-striped">
             <thead>
             <tr jhiSort [(predicate)]="predicate" [(ascending)]="reverse" [callback]="reset.bind(this)">
-            <th jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="name"><span>Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="price"><span>Price</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <!-- <th jhiSortBy="id"><span>ID</span> <fa-icon [icon]="'sort'"></fa-icon></th> -->
             <th jhiSortBy="type"><span>Type</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="foodImage"><span>Food Image</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="hotelName"><span>Hotel</span> <fa-icon [icon]="'sort'"></fa-icon></th>
@@ -25,9 +40,7 @@
             </thead>
             <tbody infinite-scroll (scrolled)="loadPage(page + 1)" [infiniteScrollDisabled]="page >= links['last']" [infiniteScrollDistance]="0">
             <tr *ngFor="let cuisine of cuisines ;trackBy: trackId">
-                <td><a [routerLink]="['/cuisine', cuisine.id, 'view' ]">{{cuisine.id}}</a></td>
-                <td>{{cuisine.name}}</td>
-                <td>{{cuisine.price}}</td>
+                <!-- <td><a [routerLink]="['/cuisine', cuisine.id, 'view' ]">{{cuisine.id}}</a></td> -->
                 <td>{{cuisine.type}}</td>
                 <td>
                     <a *ngIf="cuisine.foodImage" (click)="openFile(cuisine.foodImageContentType, cuisine.foodImage)">

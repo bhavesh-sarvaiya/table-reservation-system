@@ -121,7 +121,12 @@ public class HotelResource {
     @Timed
     public ResponseEntity<Void> deleteHotel(@PathVariable Long id) {
         log.debug("REST request to delete Hotel : {}", id);
+        try{
         hotelService.delete(id);
+        } catch(Exception e){
+            throw new BadRequestAlertException("Can't be delete, Because it has table, staff, booking,etc...", ENTITY_NAME, "idnull");
+
+        }
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
     

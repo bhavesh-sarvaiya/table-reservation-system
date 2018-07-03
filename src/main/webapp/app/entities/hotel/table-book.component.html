@@ -80,7 +80,7 @@
                     <div class="form-group">
                         <label class="form-control-label" for="field_bookDate">Select Date</label>
                         <div class="input-group">
-                            <input id="field_bookDate" type="date" class="form-control" (change)="dateChange()" name="bookDate"  min="{{dateToday | date:'yyyy-mm-dd'}}" ngbDatepicker  #bookDateDp="ngbDatepicker" [(ngModel)]="booking.bookDate"
+                            <input id="field_bookDate" type="date" class="form-control" (change)="dateChange()" name="bookDate"  min="{{currentDate}}" ngbDatepicker  #bookDateDp="ngbDatepicker" [(ngModel)]="booking.bookDate"
                             required/>
                             <!-- <span class="input-group-append">
                                 <button type="button" class="btn btn-secondary" (click)="bookDateDp.toggle()"><fa-icon [icon]="'calendar-alt'"></fa-icon></button>

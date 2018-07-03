@@ -25,14 +25,6 @@ public class Cuisine implements Serializable {
     private Long id;
 
     @NotNull
-    @Column(name = "name", nullable = false)
-    private String name;
-
-    @NotNull
-    @Column(name = "price", nullable = false)
-    private Double price;
-
-    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "jhi_type", nullable = false)
     private FoodType type;
@@ -56,32 +48,6 @@ public class Cuisine implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Cuisine name(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public Cuisine price(Double price) {
-        this.price = price;
-        return this;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
     }
 
     public FoodType getType() {
@@ -161,8 +127,6 @@ public class Cuisine implements Serializable {
     public String toString() {
         return "Cuisine{" +
             "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", price=" + getPrice() +
             ", type='" + getType() + "'" +
             ", foodImage='" + getFoodImage() + "'" +
             ", foodImageContentType='" + getFoodImageContentType() + "'" +

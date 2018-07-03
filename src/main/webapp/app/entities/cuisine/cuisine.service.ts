@@ -13,6 +13,7 @@ type EntityArrayResponseType = HttpResponse<ICuisine[]>;
 export class CuisineService {
     private resourceUrl = SERVER_API_URL + 'api/cuisines';
     private resourceUrl1 = SERVER_API_URL + 'api/cuisines-hotel';
+    private resourceUrl2 = SERVER_API_URL + 'api/cuisines-hotel-page';
 
     constructor(private http: HttpClient) {}
 
@@ -37,8 +38,13 @@ export class CuisineService {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
     // custom method
-    getCuisineByHotel(id?: number): Observable<EntityArrayResponseType> {
+    getCuisineByHotel( id?: number): Observable<EntityArrayResponseType> {
         const options = createRequestOption({id});
         return this.http.get<ICuisine[]>(this.resourceUrl1, { params: options, observe: 'response' });
+    }
+
+    getCuisineByHotelPage(req: any, hotelId: number): Observable<EntityArrayResponseType> {
+        const options = createRequestOption({req, hotelId});
+        return this.http.get<ICuisine[]>(this.resourceUrl2, { params: options, observe: 'response' });
     }
 }

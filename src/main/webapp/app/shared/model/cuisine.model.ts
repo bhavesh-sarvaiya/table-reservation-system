@@ -12,8 +12,6 @@ export const enum FoodType {
 
 export interface ICuisine {
     id?: number;
-    name?: string;
-    price?: number;
     type?: FoodType;
     foodImageContentType?: string;
     foodImage?: any;
@@ -24,8 +22,6 @@ export interface ICuisine {
 export class Cuisine implements ICuisine {
     constructor(
         public id?: number,
-        public name?: string,
-        public price?: number,
         public type?: FoodType,
         public foodImageContentType?: string,
         public foodImage?: any,

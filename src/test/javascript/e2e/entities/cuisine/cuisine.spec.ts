@@ -33,10 +33,6 @@ describe('Cuisine e2e test', () => {
 
     /* it('should create and save Cuisines', () => {
         cuisineComponentsPage.clickOnCreateButton();
-        cuisineUpdatePage.setNameInput('name');
-        expect(cuisineUpdatePage.getNameInput()).toMatch('name');
-        cuisineUpdatePage.setPriceInput('5');
-        expect(cuisineUpdatePage.getPriceInput()).toMatch('5');
         cuisineUpdatePage.typeSelectLastOption();
         cuisineUpdatePage.setFoodImageInput(absolutePath);
         cuisineUpdatePage.hotelSelectLastOption();

@@ -1,12 +1,29 @@
 <div>
     <h2 id="page-heading">
-        <span>Hotel Tables</span>
+        <!-- <span>Hotel Tables</span>
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-hotel-table" [routerLink]="['/hotel-table/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span >
             Create new Hotel Table
             </span>
-        </button>
+        </button> -->
+
+        <div class="row">
+                <div class="col"> <span>Hotel Tables</span></div>
+                <div class="col-4"><div class="input-group">
+                        <label class="form-control-label" for="field_hotel" style="margin-right: 2%;">Hotel</label>
+                        <select class="form-control" id="field_hotel" name="hotel" [(ngModel)]="hotel" (change)="changeHotel()">
+                            <option [ngValue]="1" selected>All</option>
+                            <option [ngValue]="hotelOption.id" *ngFor="let hotelOption of hotels;">{{hotelOption.name}}</option>
+                        </select>
+                    </div></div>
+                <div class="col align-self-end">  <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-hotel-table" [routerLink]="['/hotel-table/new']">
+                    <fa-icon [icon]="'plus'"></fa-icon>
+                    <span >
+                    Create new Hotel Table
+                    </span>
+                </button></div>
+            </div>
     </h2>
     <jhi-alert></jhi-alert>
     <br/>

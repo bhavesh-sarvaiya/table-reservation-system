@@ -97,4 +97,10 @@ public class TimeSlotServiceImpl implements TimeSlotService {
         Hotel hotel = hotelRepository.getOne(hotelId);
         return timeSlotMapper.toDto(timeSlotRepository.findOneByHotelAndDay(hotel, day));
     }
+
+    @Override
+    public List<TimeSlotDTO> findAllByHotel(Long hotelID) {
+        Hotel hotel = hotelRepository.getOne(hotelID);
+        return timeSlotMapper.toDto(timeSlotRepository.findAllByHotel(hotel));
+    }
 }

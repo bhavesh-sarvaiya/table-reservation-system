@@ -124,4 +124,13 @@ public class BookingResource {
         bookingService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    @GetMapping("/bookings-hotel")
+    @Timed
+    public ResponseEntity<List<BookingDTO>> getAllBookingsByHotel(Pageable pageable,Long hotelId) {
+        log.debug("REST request to get a page of Bookings by Hotel");
+        Page<BookingDTO> page = bookingService.findAll(pageable, hotelId);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/bookings");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
 }

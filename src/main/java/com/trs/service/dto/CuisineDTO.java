@@ -16,12 +16,6 @@ public class CuisineDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private String name;
-
-    @NotNull
-    private Double price;
-
-    @NotNull
     private FoodType type;
 
     @Lob
@@ -38,12 +32,10 @@ public class CuisineDTO implements Serializable {
 
     public CuisineDTO(Cuisine cuisine){
         this.id=cuisine.getId();
-        this.name = cuisine.getName();
         this.type = cuisine.getType();
         this.foodImage = cuisine.getFoodImage();
         this.hotelId = cuisine.getHotel().getId();
         this.hotelName = cuisine.getHotel().getName();
-        this.price = cuisine.getPrice();
         this.foodImageContentType = cuisine.getFoodImageContentType();
     }
 
@@ -53,22 +45,6 @@ public class CuisineDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
     }
 
     public FoodType getType() {
@@ -136,8 +112,6 @@ public class CuisineDTO implements Serializable {
     public String toString() {
         return "CuisineDTO{" +
             "id=" + getId() +
-            ", name='" + getName() + "'" +
-            ", price=" + getPrice() +
             ", type='" + getType() + "'" +
             ", foodImage='" + getFoodImage() + "'" +
             ", hotel=" + getHotelId() +

@@ -35,10 +35,6 @@ public class CuisineCriteria implements Serializable {
 
     private LongFilter id;
 
-    private StringFilter name;
-
-    private DoubleFilter price;
-
     private FoodTypeFilter type;
 
     private LongFilter hotelId;
@@ -52,22 +48,6 @@ public class CuisineCriteria implements Serializable {
 
     public void setId(LongFilter id) {
         this.id = id;
-    }
-
-    public StringFilter getName() {
-        return name;
-    }
-
-    public void setName(StringFilter name) {
-        this.name = name;
-    }
-
-    public DoubleFilter getPrice() {
-        return price;
-    }
-
-    public void setPrice(DoubleFilter price) {
-        this.price = price;
     }
 
     public FoodTypeFilter getType() {
@@ -90,8 +70,6 @@ public class CuisineCriteria implements Serializable {
     public String toString() {
         return "CuisineCriteria{" +
                 (id != null ? "id=" + id + ", " : "") +
-                (name != null ? "name=" + name + ", " : "") +
-                (price != null ? "price=" + price + ", " : "") +
                 (type != null ? "type=" + type + ", " : "") +
                 (hotelId != null ? "hotelId=" + hotelId + ", " : "") +
             "}";

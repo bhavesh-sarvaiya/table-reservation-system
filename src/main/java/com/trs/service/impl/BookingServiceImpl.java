@@ -3,6 +3,7 @@ package com.trs.service.impl;
 import com.trs.service.BookingService;
 import com.trs.service.UserService;
 import com.trs.domain.Booking;
+import com.trs.domain.Hotel;
 import com.trs.domain.HotelTable;
 import com.trs.domain.User;
 import com.trs.repository.BookingRepository;
@@ -35,13 +36,15 @@ public class BookingServiceImpl implements BookingService {
     private final HotelTableRepository hotelTableRepository;
     private final BookingMapper bookingMapper;
     private final UserRepository userRepository;
+    private final HotelRepository hotelRepository;
 
     public BookingServiceImpl(BookingRepository bookingRepository, BookingMapper bookingMapper,
-     HotelTableRepository hotelTableRepository, UserRepository userRepository) {
+     HotelTableRepository hotelTableRepository, UserRepository userRepository,HotelRepository hotelRepository) {
         this.bookingRepository = bookingRepository;
         this.bookingMapper = bookingMapper;
         this.hotelTableRepository = hotelTableRepository;
         this.userRepository = userRepository;
+        this.hotelRepository = hotelRepository;
     }
 
     /**
@@ -57,7 +60,7 @@ public class BookingServiceImpl implements BookingService {
         HotelTable hotelTable = hotelTableRepository.getOne(bookingDTO.getHotelTableId());
         User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
         booking.setUser(user);
-        hotelTable.setStatus("Unavailable");
+        //hotelTable.setStatus("Unavailable");
         hotelTable = hotelTableRepository.save(hotelTable);
         booking = bookingRepository.save(booking);
         return bookingMapper.toDto(booking);
@@ -101,5 +104,14 @@ public class BookingServiceImpl implements BookingService {
     public void delete(Long id) {
         log.debug("Request to delete Booking : {}", id);
         bookingRepository.deleteById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Page<BookingDTO> findAll(Pageable pageable, Long hotelId) {
+        log.debug("Request to get all Bookings by Hotel");
+        Hotel hotel = hotelRepository.getOne(hotelId);
+        return bookingRepository.findAllByHotel(pageable, hotel)
+            .map(bookingMapper::toDto);
     }
 }

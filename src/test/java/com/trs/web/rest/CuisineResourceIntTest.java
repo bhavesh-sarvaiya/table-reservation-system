@@ -47,12 +47,6 @@ import com.trs.domain.enumeration.FoodType;
 @SpringBootTest(classes = TableReservationApp.class)
 public class CuisineResourceIntTest {
 
-    private static final String DEFAULT_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_NAME = "BBBBBBBBBB";
-
-    private static final Double DEFAULT_PRICE = 1D;
-    private static final Double UPDATED_PRICE = 2D;
-
     private static final FoodType DEFAULT_TYPE = FoodType.GUJARATI;
     private static final FoodType UPDATED_TYPE = FoodType.PUNJABI;
 
@@ -110,8 +104,6 @@ public class CuisineResourceIntTest {
      */
     public static Cuisine createEntity(EntityManager em) {
         Cuisine cuisine = new Cuisine()
-            .name(DEFAULT_NAME)
-            .price(DEFAULT_PRICE)
             .type(DEFAULT_TYPE)
             .foodImage(DEFAULT_FOOD_IMAGE)
             .foodImageContentType(DEFAULT_FOOD_IMAGE_CONTENT_TYPE);
@@ -144,8 +136,6 @@ public class CuisineResourceIntTest {
         List<Cuisine> cuisineList = cuisineRepository.findAll();
         assertThat(cuisineList).hasSize(databaseSizeBeforeCreate + 1);
         Cuisine testCuisine = cuisineList.get(cuisineList.size() - 1);
-        assertThat(testCuisine.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testCuisine.getPrice()).isEqualTo(DEFAULT_PRICE);
         assertThat(testCuisine.getType()).isEqualTo(DEFAULT_TYPE);
         assertThat(testCuisine.getFoodImage()).isEqualTo(DEFAULT_FOOD_IMAGE);
         assertThat(testCuisine.getFoodImageContentType()).isEqualTo(DEFAULT_FOOD_IMAGE_CONTENT_TYPE);
@@ -169,44 +159,6 @@ public class CuisineResourceIntTest {
         // Validate the Cuisine in the database
         List<Cuisine> cuisineList = cuisineRepository.findAll();
         assertThat(cuisineList).hasSize(databaseSizeBeforeCreate);
-    }
-
-    @Test
-    @Transactional
-    public void checkNameIsRequired() throws Exception {
-        int databaseSizeBeforeTest = cuisineRepository.findAll().size();
-        // set the field null
-        cuisine.setName(null);
-
-        // Create the Cuisine, which fails.
-        CuisineDTO cuisineDTO = cuisineMapper.toDto(cuisine);
-
-        restCuisineMockMvc.perform(post("/api/cuisines")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(cuisineDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Cuisine> cuisineList = cuisineRepository.findAll();
-        assertThat(cuisineList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkPriceIsRequired() throws Exception {
-        int databaseSizeBeforeTest = cuisineRepository.findAll().size();
-        // set the field null
-        cuisine.setPrice(null);
-
-        // Create the Cuisine, which fails.
-        CuisineDTO cuisineDTO = cuisineMapper.toDto(cuisine);
-
-        restCuisineMockMvc.perform(post("/api/cuisines")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(cuisineDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Cuisine> cuisineList = cuisineRepository.findAll();
-        assertThat(cuisineList).hasSize(databaseSizeBeforeTest);
     }
 
     @Test
@@ -239,8 +191,6 @@ public class CuisineResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(cuisine.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].foodImageContentType").value(hasItem(DEFAULT_FOOD_IMAGE_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].foodImage").value(hasItem(Base64Utils.encodeToString(DEFAULT_FOOD_IMAGE))));
@@ -258,89 +208,9 @@ public class CuisineResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(cuisine.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
-            .andExpect(jsonPath("$.price").value(DEFAULT_PRICE.doubleValue()))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
             .andExpect(jsonPath("$.foodImageContentType").value(DEFAULT_FOOD_IMAGE_CONTENT_TYPE))
             .andExpect(jsonPath("$.foodImage").value(Base64Utils.encodeToString(DEFAULT_FOOD_IMAGE)));
-    }
-
-    @Test
-    @Transactional
-    public void getAllCuisinesByNameIsEqualToSomething() throws Exception {
-        // Initialize the database
-        cuisineRepository.saveAndFlush(cuisine);
-
-        // Get all the cuisineList where name equals to DEFAULT_NAME
-        defaultCuisineShouldBeFound("name.equals=" + DEFAULT_NAME);
-
-        // Get all the cuisineList where name equals to UPDATED_NAME
-        defaultCuisineShouldNotBeFound("name.equals=" + UPDATED_NAME);
-    }
-
-    @Test
-    @Transactional
-    public void getAllCuisinesByNameIsInShouldWork() throws Exception {
-        // Initialize the database
-        cuisineRepository.saveAndFlush(cuisine);
-
-        // Get all the cuisineList where name in DEFAULT_NAME or UPDATED_NAME
-        defaultCuisineShouldBeFound("name.in=" + DEFAULT_NAME + "," + UPDATED_NAME);
-
-        // Get all the cuisineList where name equals to UPDATED_NAME
-        defaultCuisineShouldNotBeFound("name.in=" + UPDATED_NAME);
-    }
-
-    @Test
-    @Transactional
-    public void getAllCuisinesByNameIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        cuisineRepository.saveAndFlush(cuisine);
-
-        // Get all the cuisineList where name is not null
-        defaultCuisineShouldBeFound("name.specified=true");
-
-        // Get all the cuisineList where name is null
-        defaultCuisineShouldNotBeFound("name.specified=false");
-    }
-
-    @Test
-    @Transactional
-    public void getAllCuisinesByPriceIsEqualToSomething() throws Exception {
-        // Initialize the database
-        cuisineRepository.saveAndFlush(cuisine);
-
-        // Get all the cuisineList where price equals to DEFAULT_PRICE
-        defaultCuisineShouldBeFound("price.equals=" + DEFAULT_PRICE);
-
-        // Get all the cuisineList where price equals to UPDATED_PRICE
-        defaultCuisineShouldNotBeFound("price.equals=" + UPDATED_PRICE);
-    }
-
-    @Test
-    @Transactional
-    public void getAllCuisinesByPriceIsInShouldWork() throws Exception {
-        // Initialize the database
-        cuisineRepository.saveAndFlush(cuisine);
-
-        // Get all the cuisineList where price in DEFAULT_PRICE or UPDATED_PRICE
-        defaultCuisineShouldBeFound("price.in=" + DEFAULT_PRICE + "," + UPDATED_PRICE);
-
-        // Get all the cuisineList where price equals to UPDATED_PRICE
-        defaultCuisineShouldNotBeFound("price.in=" + UPDATED_PRICE);
-    }
-
-    @Test
-    @Transactional
-    public void getAllCuisinesByPriceIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        cuisineRepository.saveAndFlush(cuisine);
-
-        // Get all the cuisineList where price is not null
-        defaultCuisineShouldBeFound("price.specified=true");
-
-        // Get all the cuisineList where price is null
-        defaultCuisineShouldNotBeFound("price.specified=false");
     }
 
     @Test
@@ -408,8 +278,6 @@ public class CuisineResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(cuisine.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
-            .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
             .andExpect(jsonPath("$.[*].foodImageContentType").value(hasItem(DEFAULT_FOOD_IMAGE_CONTENT_TYPE)))
             .andExpect(jsonPath("$.[*].foodImage").value(hasItem(Base64Utils.encodeToString(DEFAULT_FOOD_IMAGE))));
@@ -447,8 +315,6 @@ public class CuisineResourceIntTest {
         // Disconnect from session so that the updates on updatedCuisine are not directly saved in db
         em.detach(updatedCuisine);
         updatedCuisine
-            .name(UPDATED_NAME)
-            .price(UPDATED_PRICE)
             .type(UPDATED_TYPE)
             .foodImage(UPDATED_FOOD_IMAGE)
             .foodImageContentType(UPDATED_FOOD_IMAGE_CONTENT_TYPE);
@@ -463,8 +329,6 @@ public class CuisineResourceIntTest {
         List<Cuisine> cuisineList = cuisineRepository.findAll();
         assertThat(cuisineList).hasSize(databaseSizeBeforeUpdate);
         Cuisine testCuisine = cuisineList.get(cuisineList.size() - 1);
-        assertThat(testCuisine.getName()).isEqualTo(UPDATED_NAME);
-        assertThat(testCuisine.getPrice()).isEqualTo(UPDATED_PRICE);
         assertThat(testCuisine.getType()).isEqualTo(UPDATED_TYPE);
         assertThat(testCuisine.getFoodImage()).isEqualTo(UPDATED_FOOD_IMAGE);
         assertThat(testCuisine.getFoodImageContentType()).isEqualTo(UPDATED_FOOD_IMAGE_CONTENT_TYPE);

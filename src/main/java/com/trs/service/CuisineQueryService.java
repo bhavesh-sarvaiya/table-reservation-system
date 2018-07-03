@@ -76,12 +76,6 @@ public class CuisineQueryService extends QueryService<Cuisine> {
             if (criteria.getId() != null) {
                 specification = specification.and(buildSpecification(criteria.getId(), Cuisine_.id));
             }
-            if (criteria.getName() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getName(), Cuisine_.name));
-            }
-            if (criteria.getPrice() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getPrice(), Cuisine_.price));
-            }
             if (criteria.getType() != null) {
                 specification = specification.and(buildSpecification(criteria.getType(), Cuisine_.type));
             }

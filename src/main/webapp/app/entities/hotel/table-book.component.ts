@@ -15,7 +15,7 @@ import { TimingService } from 'app/entities/timing';
 import { ITiming } from 'app/shared/model/timing.model';
 import { ITimeSlot, DayName } from 'app/shared/model/time-slot.model';
 import { TimeSlotService } from 'app/entities/time-slot';
-import { getLocaleDayNames } from '@angular/common';
+import { getLocaleDayNames, DatePipe } from '@angular/common';
 
 @Component({
     selector: 'jhi-hotel-detail',
@@ -36,6 +36,7 @@ export class TableBookComponent implements OnInit {
     success: boolean;
     private timings: ITiming[];
     tableLength: boolean;
+    currentDate: string;
 
     constructor(
         private dataUtils: JhiDataUtils,
@@ -49,6 +50,8 @@ export class TableBookComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        const now = Date.now();
+        this.currentDate = new DatePipe('en-US').transform(now, 'yyyy-MM-dd');
         this.activatedRoute.data.subscribe(({ booking }) => {
             this.booking = new Booking();
         });
@@ -161,14 +164,19 @@ export class TableBookComponent implements OnInit {
         this.getHotelTable();
     }
     private getHotelTable() {
-        const day = this.getDay();
+        let d;
+        if (this._booking.bookDate) {
+            d = this._booking.bookDate._i;
+        } else {
+            d = null;
+        }
         let time;
         if (!this._booking.bookTime) {
             time = 'null';
         } else {
             time = this._booking.bookTime;
         }
-        this.hotelTableService.findAllByHotelAndStatusBasedOnStaff(this.hotel.id, 'Available', day, time).subscribe(
+        this.hotelTableService.findAllByHotelAndStatusBasedOnStaff(this.hotel.id, 'Available', d, time).subscribe(
             (res: HttpResponse<IHotelTable[]>) => {
                 this.hotelTables = res.body;
                 if (this.hotelTables == null) {
@@ -180,6 +188,7 @@ export class TableBookComponent implements OnInit {
                     this.hotelTables = undefined;
                 }
                 this.setTableForSelect();
+                console.log(this.hotelTables);
             },
             (res: HttpErrorResponse) => this.onError(res.message)
         );
@@ -188,7 +197,7 @@ export class TableBookComponent implements OnInit {
     getDay() {
         let d;
         if (this._booking.bookDate) {
-            d = new Date(this._booking.bookDate.toString()).getDay();
+          d = new Date(this._booking.bookDate._i).getDay();
         } else {
             d = new Date().getDay();
         }
@@ -220,10 +229,12 @@ export class TableBookComponent implements OnInit {
     }
     setTableForSelect() {
         this.availableHotelTables = [];
+        if (this.hotelTables) {
         this.hotelTables.forEach(element => {
             if (element.status === 'Available') {
                 this.availableHotelTables.push(element);
             }
         });
+    }
     }
 }

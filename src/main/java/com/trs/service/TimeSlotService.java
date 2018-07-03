@@ -45,4 +45,6 @@ public interface TimeSlotService {
     // custom method
 
     TimeSlotDTO findOneByHotelAndDay(Long hotelId, DayName day);
+    List<TimeSlotDTO> findAllByHotel(Long hotelID);
+
 }

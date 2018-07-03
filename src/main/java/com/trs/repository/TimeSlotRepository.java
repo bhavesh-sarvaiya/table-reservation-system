@@ -1,11 +1,14 @@
 package com.trs.repository;
 
+import java.util.List;
+
 import com.trs.domain.Hotel;
 import com.trs.domain.TimeSlot;
 import com.trs.domain.enumeration.DayName;
 
 import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
+
 
 
 /**
@@ -15,4 +18,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TimeSlotRepository extends JpaRepository<TimeSlot, Long> {
     TimeSlot findOneByHotelAndDay(Hotel hotel, DayName day);
+    List<TimeSlot> findAllByHotel(Hotel hotel);
 }

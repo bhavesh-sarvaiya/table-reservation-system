@@ -17,30 +17,12 @@ export class CuisineUpdatePage {
     pageTitle = element(by.id('jhi-cuisine-heading'));
     saveButton = element(by.id('save-entity'));
     cancelButton = element(by.id('cancel-save'));
-    nameInput = element(by.id('field_name'));
-    priceInput = element(by.id('field_price'));
     typeSelect = element(by.id('field_type'));
     foodImageInput = element(by.id('file_foodImage'));
     hotelSelect = element(by.id('field_hotel'));
 
     getPageTitle() {
         return this.pageTitle.getText();
-    }
-
-    setNameInput(name): promise.Promise<void> {
-        return this.nameInput.sendKeys(name);
-    }
-
-    getNameInput() {
-        return this.nameInput.getAttribute('value');
-    }
-
-    setPriceInput(price): promise.Promise<void> {
-        return this.priceInput.sendKeys(price);
-    }
-
-    getPriceInput() {
-        return this.priceInput.getAttribute('value');
     }
 
     setTypeSelect(type): promise.Promise<void> {

@@ -13,12 +13,12 @@
                     <label [hidden]="hotel.id" class="form-control-label" for="field_image">Image</label>
                     <div>
                         <img [src]="'data:' + hotel.imageContentType + ';base64,' + hotel.image" style="max-height: 100px;" *ngIf="hotel.image" alt="hotel image"/>
-                        <div *ngIf="hotel.image" class="form-text text-danger clearfix">
+                        <!-- <div *ngIf="hotel.image" class="form-text text-danger clearfix">
                             <span class="pull-left">{{hotel.imageContentType}}, {{byteSize(hotel.image)}}</span>
                             <button type="button" (click)="clearInputImage('image', 'imageContentType', 'fileImage')" class="btn btn-secondary btn-xs pull-right">
                                 <fa-icon [icon]="'times'"></fa-icon>
                             </button>
-                        </div>
+                        </div> -->
                         <input type="file" id="file_image" (change)="setFileData($event, hotel, 'image', true)" accept="image/*"/>
                     </div>
                     <input type="hidden" class="form-control" name="image" id="field_image"
@@ -27,7 +27,7 @@
                         [(ngModel)]="hotel.imageContentType" />
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" for="field_name">Name</label>
+                    <label class="form-control-label" for="field_name">Hotel Name</label>
                     <input type="text" class="form-control" name="name" id="field_name"
                         [(ngModel)]="hotel.name" required/>
                     <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">

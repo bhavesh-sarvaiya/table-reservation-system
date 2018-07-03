@@ -43,4 +43,6 @@ public interface BookingService {
      * @param id the id of the entity
      */
     void delete(Long id);
+    Page<BookingDTO> findAll(Pageable pageable, Long hotelId);
+
 }

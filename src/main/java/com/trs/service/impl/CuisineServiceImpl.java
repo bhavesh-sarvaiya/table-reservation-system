@@ -3,6 +3,7 @@ package com.trs.service.impl;
 import com.trs.service.CuisineService;
 import com.trs.domain.Cuisine;
 import com.trs.domain.Hotel;
+import com.trs.domain.enumeration.FoodType;
 import com.trs.repository.CuisineRepository;
 import com.trs.repository.HotelRepository;
 import com.trs.service.dto.CuisineDTO;
@@ -103,4 +104,21 @@ public class CuisineServiceImpl implements CuisineService {
         }
         return listDto;
     }
+
+    @Override
+    public Page<CuisineDTO> findAllByHotel(Pageable pageable, Long hotelId) {
+        log.debug("Request to get all Cuisines by hotel pagenation");
+        Hotel hotel = hotelRepository.getOne(hotelId);
+        return cuisineRepository.findAllByHotel(pageable, hotel)
+            .map(cuisineMapper::toDto);
+    }
+
+    @Override
+    public Optional<CuisineDTO> findOneByTypeAndHotel(FoodType foodType, Long hotelId) {
+        log.debug("Request to get Cuisine : {}", foodType);
+        Hotel hotel = hotelRepository.getOne(hotelId);
+        return cuisineRepository.findOneByTypeAndHotel(foodType, hotel)
+            .map(cuisineMapper::toDto);
+    }
+    
 }

@@ -39,6 +39,7 @@ export class HomeComponent implements OnInit {
         });
     }
     searchHotel() {
+        this.search = this.search.trim();
         this.hotelService
         .searchHotel(this.search)
         .subscribe(

@@ -1,18 +1,21 @@
 package com.trs.service.impl;
 
 import com.trs.service.HotelTableService;
+import com.trs.domain.Booking;
 import com.trs.domain.Hotel;
 import com.trs.domain.HotelTable;
 import com.trs.domain.Staff;
 import com.trs.domain.TimeSlot;
 import com.trs.domain.Timing;
 import com.trs.domain.enumeration.DayName;
+import com.trs.repository.BookingRepository;
 import com.trs.repository.HotelRepository;
 import com.trs.repository.HotelTableRepository;
 import com.trs.repository.StaffRepository;
 import com.trs.repository.TimeSlotRepository;
 import com.trs.repository.TimingRepository;
 import com.trs.service.dto.HotelTableDTO;
+import com.trs.service.mapper.HotelMapper;
 import com.trs.service.mapper.HotelTableMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -41,18 +45,20 @@ public class HotelTableServiceImpl implements HotelTableService {
     private final StaffRepository staffRepository;
     private final TimingRepository timingRepository;
     private final TimeSlotRepository timeSlotRepository;
+    private final BookingRepository bookingRepository;
 
     
     private final HotelTableMapper hotelTableMapper;
 
     public HotelTableServiceImpl(HotelTableRepository hotelTableRepository, HotelTableMapper hotelTableMapper, StaffRepository staffRepository,
-    HotelRepository hotelRepository,TimingRepository timingRepository, TimeSlotRepository timeSlotRepository) {
+    HotelRepository hotelRepository,TimingRepository timingRepository, TimeSlotRepository timeSlotRepository, BookingRepository bookingRepository) {
         this.hotelTableMapper = hotelTableMapper;
         this.hotelRepository = hotelRepository;
         this.staffRepository = staffRepository;
         this.timingRepository = timingRepository;
         this.timeSlotRepository = timeSlotRepository;
         this.hotelTableRepository = hotelTableRepository;
+        this.bookingRepository = bookingRepository;
     }
 
     /**
@@ -129,75 +135,101 @@ public class HotelTableServiceImpl implements HotelTableService {
     }
     
     @Override
-	public List<HotelTableDTO> findAllByHotelAndStatusBasedOnStaff(Long id,String status,DayName day, String time) {
-		 log.debug("Request to get all HotelTables by findAllByHotelAndStatusBasedOnStaff");
-         Hotel hotel = hotelRepository.findById(id).get();
-         List<Staff> staff = staffRepository.findAllByHotel(hotel);
-         System.out.println("\n\n## "+staff.size()+" \n");
-         if(staff == null){
-             return null;
-         }
-         int staffLength = staff.size();
-         if(day == null) {
-            int d = LocalDate.now().getDayOfWeek().getValue();
-            switch (d) {
-                case 1:
-                    day = DayName.MONDAY;
-                    break;
-                case 2:
-                    day = DayName.TUESDAY;
-                    break;
-                case 3:
-                    day = DayName.WEDNESDAY;
-                    break;
-                case 4:
-                    day = DayName.THRUSDAY;
-                    break;
-                case 5:
-                    day = DayName.FRIDAY;
-                    break;
-                case 6:
-                    day = DayName.SATURDAY;
-                    break;
-                case 7:
-                    day = DayName.SUNDAY;
-                    break;
-         }
+	public List<HotelTableDTO> findAllByHotelAndStatusBasedOnStaff(Long id,String status,String bookDate, String time) {
+		log.debug("Request to get all HotelTables by findAllByHotelAndStatusBasedOnStaff");
+        Hotel hotel = hotelRepository.findById(id).get();
+        List<Staff> staff = staffRepository.findAllByHotel(hotel);
+        System.out.println("\n\n## " + staff.size() + " \n");
+        System.out.println("\n\n## bookDate: " + bookDate + " \n");
+        if (staff == null) {
+            return null;
         }
-         TimeSlot timeSlot = timeSlotRepository.findOneByHotelAndDay(hotel, day);
-         if(time.equals("null")){
-            time= LocalTime.now().getHour()+"";
-            if(time.length() == 1) {
-                time = "0"+time;
+        int staffLength = staff.size();
+        LocalDate localDate;
+        if (bookDate.equals("null")) {
+            localDate = LocalDate.now();
+        } else {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-M-d");
+            localDate = LocalDate.parse(bookDate, formatter);
+        }
+        DayName day = null;
+        switch (localDate.getDayOfWeek().getValue()) {
+        case 1:
+            day = DayName.MONDAY;
+            break;
+        case 2:
+            day = DayName.TUESDAY;
+            break;
+        case 3:
+            day = DayName.WEDNESDAY;
+            break;
+        case 4:
+            day = DayName.THRUSDAY;
+            break;
+        case 5:
+            day = DayName.FRIDAY;
+            break;
+        case 6:
+            day = DayName.SATURDAY;
+            break;
+        case 7:
+            day = DayName.SUNDAY;
+            break;
+        }
+
+        TimeSlot timeSlot = timeSlotRepository.findOneByHotelAndDay(hotel, day);
+        if (time.equals("null")) {
+            time = LocalTime.now().getHour() + "";
+            if (time.length() == 1) {
+                time = "0" + time;
             }
-            time+= ":00";
+            time += ":00";
         }
-         Timing timing = timingRepository.findOneByTimeSlotAndStartTime(timeSlot, time);
-         System.out.println("\n\n## timeslot "+timeSlot+" \n hour: "+time);
-         System.out.println("\n\n## time "+timing+" \n");
+        Timing timing = timingRepository.findOneByTimeSlotAndStartTime(timeSlot, time);
+        System.out.println("\n\n## timeslot " + timeSlot + " \n hour: " + time);
+        System.out.println("\n\n## time " + timing + " \n");
 
-         if(timing == null) {
-             return null;
-         }
-         Boolean isRushHour = timing.isRushHour();
-         int bookableTables;
+        if (timing == null) {
+            return null;
+        }
+        Boolean isRushHour = timing.isRushHour();
+        int bookableTables;
+        if (isRushHour) {
+            bookableTables = hotel.getStaffInRushHour() * staffLength;
+        } else {
+            bookableTables = hotel.getStaffInNormal() * staffLength;
+        }
+        System.out.println("\n\n## bookableTables " + bookableTables + " \n");
+        List<HotelTable> hList = new ArrayList<>();
+        List<Booking> bookings = bookingRepository.findAllByHotelAndBookDateAndBookTime(hotel, localDate, time);
+      
+        List<Long> idList = new ArrayList<>();
 
-         if(isRushHour) {
-             bookableTables = hotel.getStaffInRushHour() * staffLength;
-         } else {
-             bookableTables = hotel.getStaffInNormal() * staffLength;
-         }
-         List<HotelTable> hList = hotelTableRepository.findAllByHotelAndStatus(hotel, "Unavailable");
-         int i = 1;
-         for (HotelTable hotelTable : hotelTableRepository.findAllByHotelAndStatusOrderByTableNumber(hotel,status)) {
-             if(i >= bookableTables) {
-                 break;
-             }
-             hList.add(hotelTable);
-             i++;
-         }
-	        return hList.stream()
-	            .map(hotelTableMapper::toDto)
-	            .collect(Collectors.toCollection(LinkedList::new));
+        System.out.println("\n\nbooking size: " + bookings.size());
+        for (Booking booking : bookings) {
+            HotelTableDTO hotelTable = hotelTableMapper.toDto(booking.getHotelTable());
+            System.out.println("\n\n##  booking: "+ hotelTable);
+            idList.add(hotelTable.getId());
+            hotelTable.setStatus("Unavailable");
+            hList.add(hotelTableMapper.toEntity(hotelTable));
+        }
+
+        int i = 1;
+        List<HotelTable> hotelTablesList;
+        if (idList.size() == 0) {
+            hotelTablesList = hotelTableRepository.findAllByHotel(hotel);
+        } else {
+            hotelTablesList = hotelTableRepository.findAllByHotelAndIdNotInOrderByTableNumber(hotel, idList);
+        }
+
+        for (HotelTable hotelTable1 : hotelTablesList) {
+            System.out.println("\n\nhotelTable1: " + hotelTable1);
+            hList.add(hotelTable1);
+            if (i >= bookableTables - bookings.size()) {
+                break;
+            }
+            i++;
+        }
+        return hList.stream().map(hotelTableMapper::toDto).collect(Collectors.toCollection(LinkedList::new));
     }
 }

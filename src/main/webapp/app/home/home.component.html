@@ -2,11 +2,15 @@
 
 
     <div class="row" *ngSwitchCase="true" >
-           <div class="container col-md-7  input-group">
-                <input type="text" name="search" [(ngModel)]="search" class="form-control" placeholder="Search hotel..." style="height: 50px; font-size: 20px; font-weight: bold;">
-                <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="submit" (click)="searchHotel()" style="width: 130px; font-size: 21px; background-color: #ffa200c2;color: #3e0909fa;" >Search</button>
+           <div class="container col-md-7">
+               <form action="searchHotel()" (submit)="searchHotel()">
+                   <div class="row input-group">
+                       <input type="text" name="search" [(ngModel)]="search" class="form-control" placeholder="Search hotel..." style="height: 50px; font-size: 20px; font-weight: bold;">
+                            <button class="btn btn-outline-secondary" type="submit" style="width: 130px; font-size: 21px; background-color: #ffa200c2;color: #3e0909fa;" >Search</button>
+                   
                 </div>
+                
+            </form>
                 <!-- <button class="btn btn-outline-secondary">clear</button> -->
             </div>
            

@@ -1,6 +1,8 @@
 package com.trs.service;
 
 import com.trs.domain.Cuisine;
+import com.trs.domain.Hotel;
+import com.trs.domain.enumeration.FoodType;
 import com.trs.service.dto.CuisineDTO;
 
 import org.springframework.data.domain.Page;
@@ -49,5 +51,7 @@ public interface CuisineService {
     // custom method
 
     List<CuisineDTO> findAllByHotel(Long hotelId);
-
+    Page<CuisineDTO> findAllByHotel(Pageable pageable,Long hotelId);
+    Optional<CuisineDTO> findOneByTypeAndHotel(FoodType foodType, Long hotelId);
+    
 }

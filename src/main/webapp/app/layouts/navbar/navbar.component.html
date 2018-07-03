@@ -47,6 +47,12 @@
                                     <span>Staff</span>
                                 </a>
                             </li>
+                            <li>
+                                    <a class="dropdown-item" routerLink="time-slot" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                                        <fa-icon [icon]="'asterisk'" [fixedWidth]="true"></fa-icon>
+                                        <span>Time Slot</span>
+                                    </a>
+                                </li>
                     </ul>
                 </li>
 
@@ -97,22 +103,24 @@
                             <span>Cuisine</span>
                         </a>
                     </li>
-                    <li>
-                        <a class="dropdown-item" routerLink="time-slot" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon [icon]="'asterisk'" [fixedWidth]="true"></fa-icon>
-                            <span>Time Slot</span>
-                        </a>
-                    </li>
-                    <li>
+                    
+                    <!-- <li>
                         <a class="dropdown-item" routerLink="timing" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                             <fa-icon [icon]="'asterisk'" [fixedWidth]="true"></fa-icon>
                             <span>Timing</span>
                         </a>
-                    </li>
+                    </li> -->
+
                     <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
                 </ul>
             </li>
-            <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <li *jhiHasAnyAuthority="'ROLE_ADMIN'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                    <a class="nav-link" routerLink="admin/user-management"  (click)="collapseNavbar()">
+                        <fa-icon [icon]="'user'" [fixedWidth]="true"></fa-icon>
+                        <span>Customers</span>
+                    </a>
+                </li>
+            <!-- <li *jhiHasAnyAuthority="'ROLE_ADMIN'" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="admin-menu">
                     <span>
                         <fa-icon [icon]="'user-plus'"></fa-icon>
@@ -163,8 +171,8 @@
                         </a>
                     </li> -->
                     <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
-                </ul>
-            </li>
+                <!-- </ul> -->
+            <!-- </li> --> 
             <li ngbDropdown class="nav-item dropdown pointer" placement="bottom-right" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="account-menu">
                   <span *ngIf="!getImageUrl()">

@@ -1,7 +1,11 @@
 package com.trs.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.trs.domain.Hotel;
+import com.trs.domain.HotelTable;
 import com.trs.domain.enumeration.DayName;
+import com.trs.repository.HotelRepository;
+import com.trs.repository.HotelTableRepository;
 import com.trs.service.HotelTableService;
 import com.trs.web.rest.errors.BadRequestAlertException;
 import com.trs.web.rest.util.HeaderUtil;
@@ -15,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,9 +35,13 @@ public class HotelTableResource {
     private static final String ENTITY_NAME = "hotelTable";
 
     private final HotelTableService hotelTableService;
+    private final HotelRepository hotelRepository;
+    private final HotelTableRepository hotelTableRepository;
 
-    public HotelTableResource(HotelTableService hotelTableService) {
+    public HotelTableResource(HotelTableService hotelTableService,HotelRepository hotelRepository, HotelTableRepository hotelTableRepository) {
         this.hotelTableService = hotelTableService;
+        this.hotelRepository = hotelRepository;
+        this.hotelTableRepository = hotelTableRepository;
     }
 
     /**
@@ -50,6 +58,7 @@ public class HotelTableResource {
         if (hotelTableDTO.getId() != null) {
             throw new BadRequestAlertException("A new hotelTable cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        checkValidation(hotelTableDTO);
         HotelTableDTO result = hotelTableService.save(hotelTableDTO);
         return ResponseEntity.created(new URI("/api/hotel-tables/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
@@ -114,7 +123,13 @@ public class HotelTableResource {
     @Timed
     public ResponseEntity<Void> deleteHotelTable(@PathVariable Long id) {
         log.debug("REST request to delete HotelTable : {}", id);
+        try{
         hotelTableService.delete(id);
+        }
+        catch(Exception e){
+            throw new BadRequestAlertException("Can't be delete, Because it has booking", ENTITY_NAME, "idnull");
+
+        }
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
     
@@ -142,8 +157,16 @@ public class HotelTableResource {
 
     @GetMapping("/hotel-tables-hotel-status-based-on-staff")
     @Timed
-    public List<HotelTableDTO> findAllByHotelAndStatusBasedOnStaff(@RequestParam Long id, String status, DayName dayName, String time) {
+    public List<HotelTableDTO> findAllByHotelAndStatusBasedOnStaff(@RequestParam Long id, String status, String bookDate, String time) {
         log.debug("REST request to get all HotelTables by Hotel");
-        return hotelTableService.findAllByHotelAndStatusBasedOnStaff(id,status,dayName,time);
+        return hotelTableService.findAllByHotelAndStatusBasedOnStaff(id,status,bookDate,time);
+    }
+
+    public void checkValidation(HotelTableDTO hotelTableDTO) {
+        Hotel hotel = hotelRepository.getOne(hotelTableDTO.getHotelId());
+        HotelTable hotelTable= hotelTableRepository.findOneByHotelAndTableNumber(hotel, hotelTableDTO.getTableNumber());
+        if(hotelTable != null){
+            throw new BadRequestAlertException("Table already exits", ENTITY_NAME, "idexists");
+        }
     }
 }

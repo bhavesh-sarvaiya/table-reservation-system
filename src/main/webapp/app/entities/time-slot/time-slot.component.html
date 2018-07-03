@@ -1,12 +1,28 @@
 <div>
     <h2 id="page-heading">
-        <span>Time Slots</span>
+        <!-- <span>Time Slots</span>
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-time-slot" [routerLink]="['/time-slot/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
             <span >
             Create new Time Slot
             </span>
-        </button>
+        </button> -->
+        <div class="row">
+                <div class="col"> <span>Time Slots</span></div>
+                <div class="col-4"><div class="input-group">
+                        <label class="form-control-label" for="field_hotel" style="margin-right: 2%;">Hotel</label>
+                        <select class="form-control" id="field_hotel" name="hotel" [(ngModel)]="hotel" (change)="changeHotel()">
+                            <option [ngValue]="1" selected>All</option>
+                            <option [ngValue]="hotelOption.id" *ngFor="let hotelOption of hotels;">{{hotelOption.name}}</option>
+                        </select>
+                    </div></div>
+                <div class="col align-self-end">    <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-time-slot" [routerLink]="['/time-slot/new']">
+                    <fa-icon [icon]="'plus'"></fa-icon>
+                    <span >
+                    Create new Time Slot
+                    </span>
+                </button></div>
+            </div>
     </h2>
     <jhi-alert></jhi-alert>
     <br/>
@@ -14,7 +30,7 @@
         <table class="table table-striped">
             <thead>
             <tr>
-            <th><span>ID</span></th>
+            <!-- <th><span>ID</span></th> -->
             <th><span>Day</span></th>
             <th><span>Status</span></th>
             <th><span>Hotel</span></th>
@@ -23,7 +39,7 @@
             </thead>
             <tbody>
             <tr *ngFor="let timeSlot of timeSlots ;trackBy: trackId">
-                <td><a [routerLink]="['/time-slot', timeSlot.id, 'view' ]">{{timeSlot.id}}</a></td>
+                <!-- <td><a [routerLink]="['/time-slot', timeSlot.id, 'view' ]">{{timeSlot.id}}</a></td> -->
                 <td>{{timeSlot.day}}</td>
                 <td>{{timeSlot.status}}</td>
                 <td>

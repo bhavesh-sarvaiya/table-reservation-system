@@ -8,6 +8,8 @@ import { Principal } from 'app/core';
 
 import { ITEMS_PER_PAGE } from 'app/shared';
 import { BookingService } from './booking.service';
+import { IHotel } from 'app/shared/model/hotel.model';
+import { HotelService } from 'app/entities/hotel';
 
 @Component({
     selector: 'jhi-booking',
@@ -24,11 +26,14 @@ export class BookingComponent implements OnInit, OnDestroy {
     queryCount: any;
     reverse: any;
     totalItems: number;
+    hotels: IHotel[];
+    hotel: number;
 
     constructor(
         private bookingService: BookingService,
         private jhiAlertService: JhiAlertService,
         private eventManager: JhiEventManager,
+        private hotelService: HotelService,
         private parseLinks: JhiParseLinks,
         private principal: Principal
     ) {
@@ -53,7 +58,8 @@ export class BookingComponent implements OnInit, OnDestroy {
                 (res: HttpResponse<IBooking[]>) => this.paginateBookings(res.body, res.headers),
                 (res: HttpErrorResponse) => this.onError(res.message)
             );
-    }
+            this.getHotels();
+        }
 
     reset() {
         this.page = 0;
@@ -105,4 +111,39 @@ export class BookingComponent implements OnInit, OnDestroy {
     private onError(errorMessage: string) {
         this.jhiAlertService.error(errorMessage, null, null);
     }
+    getHotels() {
+        this.hotelService.query().subscribe(
+            (res: HttpResponse<IHotel[]>) => {
+                this.hotels = res.body;
+            },
+            (res: HttpErrorResponse) => this.onError(res.message)
+        );
+}
+
+changeHotel() {
+    this.bookings = [];
+    if (this.hotel === 1) {
+        this.bookingService
+            .query({
+                page: this.page,
+                size: this.itemsPerPage,
+                sort: this.sort()
+            })
+            .subscribe(
+                (res: HttpResponse<IBooking[]>) => this.paginateBookings(res.body, res.headers),
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
+    } else {
+        this.bookingService
+            .getBookingByHotel({
+                page: this.page,
+                size: this.itemsPerPage,
+                sort: this.sort()
+            }, this.hotel)
+            .subscribe(
+                (res: HttpResponse<IBooking[]>) => this.paginateBookings(res.body, res.headers),
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
+}
+}
 }

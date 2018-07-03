@@ -128,12 +128,16 @@ public class TimeSlotResource {
     @Timed
     public ResponseEntity<Void> deleteTimeSlot(@PathVariable Long id) {
         log.debug("REST request to delete TimeSlot : {}", id);
+        
+        List<TimingDTO> timings= timingService.findAllByTimeSolt(id);
+        for (TimingDTO timingDTO : timings) {
+            timingService.delete(timingDTO.getId());
+        }
         timeSlotService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
     // custom method
-
     /**
      * PUT  /time-slots : Updates an existing timeSlot.
      *
@@ -168,5 +172,12 @@ public class TimeSlotResource {
     public TimeSlotDTO getTimeSlotByHotelAndDay(@RequestParam Long hotelId, DayName day) {
         log.debug("REST request to get TimeSlot by hotel and day : {},{}", hotelId, day);
         return timeSlotService.findOneByHotelAndDay(hotelId, day);
+    }
+
+    @GetMapping("/time-slots-hotel")
+    @Timed
+    public List<TimeSlotDTO> getTimeSlotByHotel(@RequestParam Long hotelId) {
+        log.debug("REST request to get TimeSlot by hotel and day : {}", hotelId);
+        return timeSlotService.findAllByHotel(hotelId);
     }
 }

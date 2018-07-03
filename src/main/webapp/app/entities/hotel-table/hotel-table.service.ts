@@ -52,8 +52,8 @@ export class HotelTableService {
         return this.http.get<IHotelTable[]>(this.resourceUrl2, { params: options, observe: 'response' });
     }
 
-    findAllByHotelAndStatusBasedOnStaff(id: any, status: String, dayName: DayName, time?: string): Observable<EntityArrayResponseType> {
-        const options = createRequestOption({ id, status, dayName, time });
+    findAllByHotelAndStatusBasedOnStaff(id: any, status: String, bookDate: any, time?: string): Observable<EntityArrayResponseType> {
+        const options = createRequestOption({ id, status, bookDate, time });
         return this.http.get<IHotelTable[]>(this.resourceUrl3, { params: options, observe: 'response' });
     }
 }

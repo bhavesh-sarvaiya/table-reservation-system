@@ -3,6 +3,7 @@ package com.trs.service;
 import com.trs.domain.enumeration.DayName;
 import com.trs.service.dto.HotelTableDTO;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,5 +53,5 @@ public interface HotelTableService {
      */
     List<HotelTableDTO> findAllByHotel(Long id);
     List<HotelTableDTO> findAllByHotelAndStatus(Long id, String status);
-    List<HotelTableDTO> findAllByHotelAndStatusBasedOnStaff(Long id, String status,DayName dayName, String time);
+    List<HotelTableDTO> findAllByHotelAndStatusBasedOnStaff(Long id, String status,String bookDate, String time);
 }

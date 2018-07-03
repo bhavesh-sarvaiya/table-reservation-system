@@ -10,32 +10,6 @@
                         [(ngModel)]="cuisine.id" readonly />
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" for="field_name">Name</label>
-                    <input type="text" class="form-control" name="name" id="field_name"
-                        [(ngModel)]="cuisine.name" required/>
-                    <div [hidden]="!(editForm.controls.name?.dirty && editForm.controls.name?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.name?.errors?.required">
-                        This field is required.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_price">Price</label>
-                    <input type="number" class="form-control" name="price" id="field_price"
-                        [(ngModel)]="cuisine.price" required/>
-                    <div [hidden]="!(editForm.controls.price?.dirty && editForm.controls.price?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.price?.errors?.required">
-                        This field is required.
-                        </small>
-                        <small class="form-text text-danger"
-                            [hidden]="!editForm.controls.price?.errors?.number">
-                            This field should be a number.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
                     <label class="form-control-label" for="field_type">Type</label>
                     <select class="form-control" name="type" [(ngModel)]="cuisine.type" id="field_type"  required>
                         <option value="GUJARATI">GUJARATI</option>

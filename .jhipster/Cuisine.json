@@ -14,20 +14,6 @@
     ],
     "fields": [
         {
-            "fieldName": "name",
-            "fieldType": "String",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "price",
-            "fieldType": "Double",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
             "fieldName": "type",
             "fieldType": "FoodType",
             "fieldValues": "GUJARATI,PUNJABI,SOUTHINDIAN,CHINESE,RAJASTHANI,ITALIAN,FRENCH,AMERICAN,MEXICAN",

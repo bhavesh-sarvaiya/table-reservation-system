@@ -16,6 +16,7 @@ export class TimeSlotService {
     private resourceUrl = SERVER_API_URL + 'api/time-slots';
     private resourceUrl1 = SERVER_API_URL + 'api/time-slots-timing';
     private resourceUrl2 = SERVER_API_URL + 'api/time-slots-hotel-day';
+    private resourceUrl3 = SERVER_API_URL + 'api/time-slots-hotel';
 
     constructor(private http: HttpClient) {}
 
@@ -49,5 +50,10 @@ export class TimeSlotService {
     findOneByHotelAndDay(hotelId: number, day: string): Observable<EntityResponseType> {
         const options = createRequestOption({ hotelId, day });
         return this.http.get<ITimeSlot>(this.resourceUrl2, { params: options, observe: 'response' });
+    }
+
+    findAllByHotel(hotelId: number): Observable<EntityArrayResponseType> {
+        const options = createRequestOption({hotelId});
+        return this.http.get<ITimeSlot[]>(this.resourceUrl3, { params: options, observe: 'response' });
     }
 }
