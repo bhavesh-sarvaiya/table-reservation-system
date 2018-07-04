@@ -61,7 +61,7 @@ public class HotelTableResource {
         checkValidation(hotelTableDTO);
         HotelTableDTO result = hotelTableService.save(hotelTableDTO);
         return ResponseEntity.created(new URI("/api/hotel-tables/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getTableNumber().toString()))
             .body(result);
     }
 
@@ -83,7 +83,7 @@ public class HotelTableResource {
         }
         HotelTableDTO result = hotelTableService.save(hotelTableDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, hotelTableDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, hotelTableDTO.getTableNumber().toString()))
             .body(result);
     }
 

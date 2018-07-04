@@ -113,6 +113,10 @@
                             [hidden]="!editForm.controls.staffInRushHour?.errors?.required">
                             This field is required.
                             </small>
+                            <small class="form-text text-danger"
+                            [hidden]="!editForm.controls.staffInRushHour?.errors?.min">
+                            Rush hour value must be greater than 0
+                            </small>
                         </div>
                    
                 </div>
@@ -153,7 +157,7 @@
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">
                     <fa-icon [icon]="'ban'"></fa-icon>&nbsp;<span>Cancel</span>
                 </button>
-                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving" class="btn btn-primary">
+                <button type="submit" id="save-entity" [disabled]="editForm.form.invalid || isSaving || hotel.staffInRushHour < 1 || hotel.staffInNormal < 1" class="btn btn-primary">
                     <fa-icon [icon]="'save'"></fa-icon>&nbsp;<span>Save</span>
                 </button>
             </div>

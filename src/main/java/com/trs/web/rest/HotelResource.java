@@ -56,7 +56,7 @@ public class HotelResource {
         }
         HotelDTO result = hotelService.save(hotelDTO);
         return ResponseEntity.created(new URI("/api/hotels/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getName().toString()))
             .body(result);
     }
 
@@ -78,7 +78,7 @@ public class HotelResource {
         }
         HotelDTO result = hotelService.save(hotelDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, hotelDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, hotelDTO.getName().toString()))
             .body(result);
     }
 

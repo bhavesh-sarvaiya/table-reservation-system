@@ -2,11 +2,16 @@ package com.trs;
 
 import com.trs.config.ApplicationProperties;
 import com.trs.config.DefaultProfileUtil;
+import com.trs.repository.TimeSlotRepository;
+import com.trs.service.impl.BookingServiceImpl;
+import com.trs.web.rest.BookingResource;
 
 import io.github.jhipster.config.JHipsterConstants;
 
+import org.aspectj.weaver.ast.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
@@ -17,6 +22,7 @@ import javax.annotation.PostConstruct;
 import java.net.InetAddress;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Timer;
 
 @SpringBootApplication
 @EnableConfigurationProperties({LiquibaseProperties.class, ApplicationProperties.class})
@@ -25,6 +31,8 @@ public class TableReservationApp {
     private static final Logger log = LoggerFactory.getLogger(TableReservationApp.class);
 
     private final Environment env;
+    @Autowired
+    private static TimeSlotRepository timeSlotRepository;
 
     public TableReservationApp(Environment env) {
         this.env = env;
@@ -81,5 +89,15 @@ public class TableReservationApp {
             hostAddress,
             env.getProperty("server.port"),
             env.getActiveProfiles());
+
+            Timer time = new Timer(); // Instantiate Timer Object
+           
+		ScheduledTask st = new ScheduledTask(); // Instantiate SheduledTask class
+        time.schedule(st, 0, 10000); // Create Repetitively task for every 10 secs
+
+        //for demo only.
+        System.out.println("time: "+timeSlotRepository);
     }
+   
+    
 }

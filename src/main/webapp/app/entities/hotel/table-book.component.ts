@@ -153,7 +153,11 @@ export class TableBookComponent implements OnInit {
                     (res2: HttpResponse<ITiming[]>) => {
                         this.timings = res2.body;
                         this.timings.forEach(element => {
-                            this.timeSlot.push(element.startTime);
+                            let currTime = new Date().getTime();
+                            let time = new Date(this._booking.bookDate._i + ' ' + element.startTime).getTime();
+                            if (time - currTime >= 0) {
+                                this.timeSlot.push(element.startTime);
+                            }
                         });
                     },
                     (res2: HttpErrorResponse) => this.onError(res2.message)
@@ -197,7 +201,7 @@ export class TableBookComponent implements OnInit {
     getDay() {
         let d;
         if (this._booking.bookDate) {
-          d = new Date(this._booking.bookDate._i).getDay();
+            d = new Date(this._booking.bookDate._i).getDay();
         } else {
             d = new Date().getDay();
         }
@@ -230,11 +234,11 @@ export class TableBookComponent implements OnInit {
     setTableForSelect() {
         this.availableHotelTables = [];
         if (this.hotelTables) {
-        this.hotelTables.forEach(element => {
-            if (element.status === 'Available') {
-                this.availableHotelTables.push(element);
-            }
-        });
-    }
+            this.hotelTables.forEach(element => {
+                if (element.status === 'Available') {
+                    this.availableHotelTables.push(element);
+                }
+            });
+        }
     }
 }

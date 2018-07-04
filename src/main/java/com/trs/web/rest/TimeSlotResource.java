@@ -66,7 +66,7 @@ public class TimeSlotResource {
             timingService.save(timingDTOs, result);
         }
         return ResponseEntity.created(new URI("/api/time-slots/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getDay().toString()))
             .body(result);
     }
 
@@ -88,7 +88,7 @@ public class TimeSlotResource {
         }
         TimeSlotDTO result = timeSlotService.save(timeSlotDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, timeSlotDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, timeSlotDTO.getDay().toString()))
             .body(result);
     }
 

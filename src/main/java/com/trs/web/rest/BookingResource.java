@@ -56,7 +56,7 @@ public class BookingResource {
         }
         BookingDTO result = bookingService.save(bookingDTO);
         return ResponseEntity.created(new URI("/api/bookings/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
+            .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getBookDate().toString()))
             .body(result);
     }
 
@@ -78,7 +78,7 @@ public class BookingResource {
         }
         BookingDTO result = bookingService.save(bookingDTO);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, bookingDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, "hotel: " + bookingDTO.getHotelName() +", Table: "+bookingDTO.getHotelTableTableNumber()+", "+ bookingDTO.getBookDate().toString() + " "+ bookingDTO.getBookTime()))
             .body(result);
     }
 

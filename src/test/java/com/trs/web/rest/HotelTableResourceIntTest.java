@@ -4,6 +4,7 @@ import com.trs.TableReservationApp;
 
 import com.trs.domain.HotelTable;
 import com.trs.domain.Hotel;
+import com.trs.repository.HotelRepository;
 import com.trs.repository.HotelTableRepository;
 import com.trs.service.HotelTableService;
 import com.trs.service.dto.HotelTableDTO;
@@ -55,6 +56,10 @@ public class HotelTableResourceIntTest {
     @Autowired
     private HotelTableRepository hotelTableRepository;
 
+    @Autowired
+    private HotelRepository hotelRepository;
+
+   
 
     @Autowired
     private HotelTableMapper hotelTableMapper;
@@ -82,7 +87,7 @@ public class HotelTableResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final HotelTableResource hotelTableResource = new HotelTableResource(hotelTableService);
+        final HotelTableResource hotelTableResource = new HotelTableResource(hotelTableService,hotelRepository,hotelTableRepository);
         this.restHotelTableMockMvc = MockMvcBuilders.standaloneSetup(hotelTableResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
