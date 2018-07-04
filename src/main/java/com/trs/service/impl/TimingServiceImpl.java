@@ -122,4 +122,12 @@ public class TimingServiceImpl implements TimingService {
             .map(timingMapper::toDto)
             .collect(Collectors.toCollection(LinkedList::new));
     }
+
+    @Override
+    public TimingDTO findOneByTimeSlotAndStartTime(Long timeslotID, String starTime) {
+        log.debug("Request to get findOneByTimeSlotAndStartTime : {}", timeslotID);
+        TimeSlot timeSlot = timeSlotRepository.getOne(timeslotID);
+        return timingMapper.toDto(timingRepository.findOneByTimeSlotAndStartTime(timeSlot, starTime));
+           
+    }
 }

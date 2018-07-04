@@ -29,6 +29,7 @@
             <th jhiSortBy="bookDate"><span>Book Date</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="bookTime"><span>Book Time</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="noOfGuest"><span>No Of Guest</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="active"><span>Active</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="hotelName"><span>Hotel</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="hotelTableTableNumber"><span>Hotel Table</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="userLogin"><span>Customer</span> <fa-icon [icon]="'sort'"></fa-icon></th>
@@ -41,6 +42,7 @@
                 <td>{{booking.bookDate | date:'mediumDate'}}</td>
                 <td>{{booking.bookTime}}</td>
                 <td>{{booking.noOfGuest}}</td>
+                <td>{{booking.active}}</td>
                 <td>
                     <div *ngIf="booking.hotelId">
                         <a [routerLink]="['../hotel', booking.hotelId , 'view' ]" >{{booking.hotelName}}</a>

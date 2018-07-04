@@ -40,15 +40,17 @@ export class HomeComponent implements OnInit {
     }
     searchHotel() {
         this.search = this.search.trim();
-        this.hotelService
-        .searchHotel(this.search)
-        .subscribe(
-            (res: HttpResponse<IHotel[]>) => {
-                this.hotels = res.body;
-                this.length = this.hotels.length;
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
+        if (this.search !== '') {
+            this.hotelService
+                .searchHotel(this.search)
+                .subscribe(
+                    (res: HttpResponse<IHotel[]>) => {
+                        this.hotels = res.body;
+                        this.length = this.hotels.length;
+                    },
+                    (res: HttpErrorResponse) => this.onError(res.message)
+                );
+        }
     }
     isAuthenticated() {
         return this.principal.isAuthenticated();

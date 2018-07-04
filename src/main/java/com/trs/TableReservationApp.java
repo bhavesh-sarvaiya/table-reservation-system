@@ -31,8 +31,7 @@ public class TableReservationApp {
     private static final Logger log = LoggerFactory.getLogger(TableReservationApp.class);
 
     private final Environment env;
-    @Autowired
-    private static TimeSlotRepository timeSlotRepository;
+  
 
     public TableReservationApp(Environment env) {
         this.env = env;
@@ -93,10 +92,10 @@ public class TableReservationApp {
             Timer time = new Timer(); // Instantiate Timer Object
            
 		ScheduledTask st = new ScheduledTask(); // Instantiate SheduledTask class
-        time.schedule(st, 0, 10000); // Create Repetitively task for every 10 secs
+        time.schedule(st, 5, 20000); // Create Repetitively task for every 10 secs
 
         //for demo only.
-        System.out.println("time: "+timeSlotRepository);
+       
     }
    
     

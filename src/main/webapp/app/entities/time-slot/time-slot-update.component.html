@@ -38,10 +38,10 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
-                            <label class="form-control-label" for="field_status">Is Open?</label>
+                    <div class="col-md-5">
+                            <label class="form-control-label" for="field_status">Hotel is Open?</label>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-2">
                     <input style="margin-top: 8%;" type="checkbox" class="form-control" name="status" id="field_status" [(ngModel)]="timeSlot.status" />
 
                     </div>
@@ -122,7 +122,9 @@
             <br>
             <br>
         </div>
-    
+        <div class="alert alert-danger" *ngIf="isInvalid">
+                <strong>{{errorMessage}}</strong>
+            </div>
     
     </div>
 </div>

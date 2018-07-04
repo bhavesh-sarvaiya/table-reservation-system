@@ -21,7 +21,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 /**
  * Service Implementation for managing Booking.
@@ -57,11 +59,11 @@ public class BookingServiceImpl implements BookingService {
     public BookingDTO save(BookingDTO bookingDTO) {
         log.debug("Request to save Booking : {}", bookingDTO);
         Booking booking = bookingMapper.toEntity(bookingDTO);
-        HotelTable hotelTable = hotelTableRepository.getOne(bookingDTO.getHotelTableId());
-        User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
-        booking.setUser(user);
-        //hotelTable.setStatus("Unavailable");
-        hotelTable = hotelTableRepository.save(hotelTable);
+        if(bookingDTO.getId() == null){
+            User user = userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin().get()).get();
+            booking.setUser(user);
+        }
+        booking.active(true);
         booking = bookingRepository.save(booking);
         return bookingMapper.toDto(booking);
     }
@@ -113,5 +115,15 @@ public class BookingServiceImpl implements BookingService {
         Hotel hotel = hotelRepository.getOne(hotelId);
         return bookingRepository.findAllByHotel(pageable, hotel)
             .map(bookingMapper::toDto);
+    }
+
+    @Override
+    public List<BookingDTO> findAllBookDateAndActive(LocalDate bookDate, Boolean active) {
+        List<Booking> lBookings = bookingRepository.findAllByBookDateAndActive(bookDate,active);
+        List<BookingDTO> bookingDTOs = new ArrayList<>(); 
+        for (Booking booking : lBookings) {
+            bookingDTOs.add(bookingMapper.toDto(booking));
+        }
+        return bookingDTOs;
     }
 }

@@ -61,6 +61,11 @@ public class TimeSlotResource {
         if (timeSlotDTO.getId() != null) {
             throw new BadRequestAlertException("A new timeSlot cannot already have an ID", ENTITY_NAME, "idexists");
         }
+        TimeSlotDTO timeSlotDTO2 = timeSlotService.findOneByHotelAndDay(timeSlotDTO.getHotelId(), timeSlotDTO.getDay());
+        if( timeSlotDTO2 != null) {
+            throw new BadRequestAlertException("Time Slot already exits", ENTITY_NAME, "idexists");
+        }
+
         TimeSlotDTO result = timeSlotService.save(timeSlotDTO);
         if(result != null){
             timingService.save(timingDTOs, result);
@@ -161,7 +166,7 @@ public class TimeSlotResource {
             timingService.save(timingDTOs, result);
         }
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, timeSlotDTO.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, timeSlotDTO.getDay().toString()))
             .body(result);
     }
 

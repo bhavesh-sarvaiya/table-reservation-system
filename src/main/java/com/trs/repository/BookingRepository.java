@@ -23,6 +23,8 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     Page<Booking> findAllByHotel(Pageable pageable, Hotel hotel);
     List<Booking> findAllByHotelAndBookDate(Hotel hotel,LocalDate bookDate);
     List<Booking> findAllByHotelAndBookDateAndBookTime(Hotel hotel,LocalDate bookDate,String bookTime);
+    List<Booking> findAllByHotelAndBookDateAndBookTimeAndActive(Hotel hotel,LocalDate bookDate,String bookTime,Boolean active);
+    List<Booking> findAllByBookDateAndActive(LocalDate bookDate, Boolean active);
 
 
 }

@@ -35,6 +35,9 @@ public class Booking implements Serializable {
     @Column(name = "no_of_guest", nullable = false)
     private Integer noOfGuest;
 
+    @Column(name = "active")
+    private Boolean active;
+
     @ManyToOne(optional = false)
     @NotNull
     @JsonIgnoreProperties("")
@@ -95,6 +98,19 @@ public class Booking implements Serializable {
 
     public void setNoOfGuest(Integer noOfGuest) {
         this.noOfGuest = noOfGuest;
+    }
+
+    public Boolean isActive() {
+        return active;
+    }
+
+    public Booking active(Boolean active) {
+        this.active = active;
+        return this;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public Hotel getHotel() {
@@ -164,6 +180,7 @@ public class Booking implements Serializable {
             ", bookDate='" + getBookDate() + "'" +
             ", bookTime='" + getBookTime() + "'" +
             ", noOfGuest=" + getNoOfGuest() +
+            ", active='" + isActive() + "'" +
             "}";
     }
 }

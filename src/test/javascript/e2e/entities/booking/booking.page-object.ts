@@ -20,6 +20,7 @@ export class BookingUpdatePage {
     bookDateInput = element(by.id('field_bookDate'));
     bookTimeInput = element(by.id('field_bookTime'));
     noOfGuestInput = element(by.id('field_noOfGuest'));
+    activeInput = element(by.id('field_active'));
     hotelSelect = element(by.id('field_hotel'));
     hotelTableSelect = element(by.id('field_hotelTable'));
     userSelect = element(by.id('field_user'));
@@ -52,6 +53,9 @@ export class BookingUpdatePage {
         return this.noOfGuestInput.getAttribute('value');
     }
 
+    getActiveInput() {
+        return this.activeInput;
+    }
     hotelSelectLastOption(): promise.Promise<void> {
         return this.hotelSelect
             .all(by.tagName('option'))

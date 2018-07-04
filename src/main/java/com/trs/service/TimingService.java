@@ -47,4 +47,7 @@ public interface TimingService {
     TimingDTO save(TimingDTO[] timingDTO,TimeSlotDTO timeSlotDTO);
 
     List<TimingDTO> findAllByTimeSolt(Long timeSlotId);
+
+    TimingDTO findOneByTimeSlotAndStartTime(Long timeslotID, String starTime);
+
 }

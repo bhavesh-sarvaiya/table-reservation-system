@@ -17,6 +17,7 @@
     <include file="config/liquibase/changelog/20180629145904_added_entity_Timing.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180702073010_added_rush_hour_field_to_timing.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180702091247_added_two_field_to_hotel.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180704093126_add_active_field_to_booking.xml" relativeToChangelogFile="false"/>
 
     
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->

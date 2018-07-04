@@ -21,6 +21,8 @@ public class BookingDTO implements Serializable {
     @NotNull
     private Integer noOfGuest;
 
+    private Boolean active;
+
     private Long hotelId;
 
     private String hotelName;
@@ -63,6 +65,14 @@ public class BookingDTO implements Serializable {
 
     public void setNoOfGuest(Integer noOfGuest) {
         this.noOfGuest = noOfGuest;
+    }
+
+    public Boolean isActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     public Long getHotelId() {
@@ -141,6 +151,7 @@ public class BookingDTO implements Serializable {
             ", bookDate='" + getBookDate() + "'" +
             ", bookTime='" + getBookTime() + "'" +
             ", noOfGuest=" + getNoOfGuest() +
+            ", active='" + isActive() + "'" +
             ", hotel=" + getHotelId() +
             ", hotel='" + getHotelName() + "'" +
             ", hotelTable=" + getHotelTableId() +

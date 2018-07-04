@@ -5,6 +5,8 @@ import com.trs.service.dto.BookingDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -44,5 +46,6 @@ public interface BookingService {
      */
     void delete(Long id);
     Page<BookingDTO> findAll(Pageable pageable, Long hotelId);
+    List<BookingDTO> findAllBookDateAndActive(LocalDate bookdate,Boolean active);
 
 }

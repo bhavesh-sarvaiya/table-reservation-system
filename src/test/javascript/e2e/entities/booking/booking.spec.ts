@@ -36,6 +36,15 @@ describe('Booking e2e test', () => {
         expect(bookingUpdatePage.getBookTimeInput()).toMatch('bookTime');
         bookingUpdatePage.setNoOfGuestInput('5');
         expect(bookingUpdatePage.getNoOfGuestInput()).toMatch('5');
+        bookingUpdatePage.getActiveInput().isSelected().then((selected) => {
+            if (selected) {
+                bookingUpdatePage.getActiveInput().click();
+                expect(bookingUpdatePage.getActiveInput().isSelected()).toBeFalsy();
+            } else {
+                bookingUpdatePage.getActiveInput().click();
+                expect(bookingUpdatePage.getActiveInput().isSelected()).toBeTruthy();
+            }
+        });
         bookingUpdatePage.hotelSelectLastOption();
         bookingUpdatePage.hotelTableSelectLastOption();
         bookingUpdatePage.userSelectLastOption();

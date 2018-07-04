@@ -55,6 +55,9 @@ public class BookingResourceIntTest {
     private static final Integer DEFAULT_NO_OF_GUEST = 1;
     private static final Integer UPDATED_NO_OF_GUEST = 2;
 
+    private static final Boolean DEFAULT_ACTIVE = false;
+    private static final Boolean UPDATED_ACTIVE = true;
+
     @Autowired
     private BookingRepository bookingRepository;
 
@@ -103,7 +106,8 @@ public class BookingResourceIntTest {
         Booking booking = new Booking()
             .bookDate(DEFAULT_BOOK_DATE)
             .bookTime(DEFAULT_BOOK_TIME)
-            .noOfGuest(DEFAULT_NO_OF_GUEST);
+            .noOfGuest(DEFAULT_NO_OF_GUEST)
+            .active(DEFAULT_ACTIVE);
         // Add required entity
         Hotel hotel = HotelResourceIntTest.createEntity(em);
         em.persist(hotel);
@@ -141,6 +145,7 @@ public class BookingResourceIntTest {
         assertThat(testBooking.getBookDate()).isEqualTo(DEFAULT_BOOK_DATE);
         assertThat(testBooking.getBookTime()).isEqualTo(DEFAULT_BOOK_TIME);
         assertThat(testBooking.getNoOfGuest()).isEqualTo(DEFAULT_NO_OF_GUEST);
+        assertThat(testBooking.isActive()).isEqualTo(DEFAULT_ACTIVE);
     }
 
     @Test
@@ -233,7 +238,8 @@ public class BookingResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(booking.getId().intValue())))
             .andExpect(jsonPath("$.[*].bookDate").value(hasItem(DEFAULT_BOOK_DATE.toString())))
             .andExpect(jsonPath("$.[*].bookTime").value(hasItem(DEFAULT_BOOK_TIME.toString())))
-            .andExpect(jsonPath("$.[*].noOfGuest").value(hasItem(DEFAULT_NO_OF_GUEST)));
+            .andExpect(jsonPath("$.[*].noOfGuest").value(hasItem(DEFAULT_NO_OF_GUEST)))
+            .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE.booleanValue())));
     }
     
 
@@ -250,7 +256,8 @@ public class BookingResourceIntTest {
             .andExpect(jsonPath("$.id").value(booking.getId().intValue()))
             .andExpect(jsonPath("$.bookDate").value(DEFAULT_BOOK_DATE.toString()))
             .andExpect(jsonPath("$.bookTime").value(DEFAULT_BOOK_TIME.toString()))
-            .andExpect(jsonPath("$.noOfGuest").value(DEFAULT_NO_OF_GUEST));
+            .andExpect(jsonPath("$.noOfGuest").value(DEFAULT_NO_OF_GUEST))
+            .andExpect(jsonPath("$.active").value(DEFAULT_ACTIVE.booleanValue()));
     }
     @Test
     @Transactional
@@ -275,7 +282,8 @@ public class BookingResourceIntTest {
         updatedBooking
             .bookDate(UPDATED_BOOK_DATE)
             .bookTime(UPDATED_BOOK_TIME)
-            .noOfGuest(UPDATED_NO_OF_GUEST);
+            .noOfGuest(UPDATED_NO_OF_GUEST)
+            .active(UPDATED_ACTIVE);
         BookingDTO bookingDTO = bookingMapper.toDto(updatedBooking);
 
         restBookingMockMvc.perform(put("/api/bookings")
@@ -290,6 +298,7 @@ public class BookingResourceIntTest {
         assertThat(testBooking.getBookDate()).isEqualTo(UPDATED_BOOK_DATE);
         assertThat(testBooking.getBookTime()).isEqualTo(UPDATED_BOOK_TIME);
         assertThat(testBooking.getNoOfGuest()).isEqualTo(UPDATED_NO_OF_GUEST);
+        assertThat(testBooking.isActive()).isEqualTo(UPDATED_ACTIVE);
     }
 
     @Test

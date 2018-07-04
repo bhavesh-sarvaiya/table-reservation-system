@@ -201,7 +201,7 @@ public class HotelTableServiceImpl implements HotelTableService {
         }
         System.out.println("\n\n## bookableTables " + bookableTables + " \n");
         List<HotelTable> hList = new ArrayList<>();
-        List<Booking> bookings = bookingRepository.findAllByHotelAndBookDateAndBookTime(hotel, localDate, time);
+        List<Booking> bookings = bookingRepository.findAllByHotelAndBookDateAndBookTimeAndActive(hotel, localDate, time, true);
       
         List<Long> idList = new ArrayList<>();
 
