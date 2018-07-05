@@ -49,40 +49,6 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" for="field_openTime">Open Time</label>
-                    <div class="d-flex">
-                        <input id="field_openTime" type="datetime-local" class="form-control" name="openTime" [(ngModel)]="openTime"
-                        required/>
-                    </div>
-                    <div [hidden]="!(editForm.controls.openTime?.dirty && editForm.controls.openTime?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.openTime?.errors?.required">
-                        This field is required.
-                        </small>
-                        <small class="form-text text-danger"
-                            [hidden]="!editForm.controls.openTime?.errors?.ZonedDateTimelocal">
-                            This field should be a date and time.
-                        </small>    
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="form-control-label" for="field_closeTime">Close Time</label>
-                    <div class="d-flex">
-                        <input id="field_closeTime" type="datetime-local" class="form-control" name="closeTime" [(ngModel)]="closeTime"
-                        required/>
-                    </div>
-                    <div [hidden]="!(editForm.controls.closeTime?.dirty && editForm.controls.closeTime?.invalid)">
-                        <small class="form-text text-danger"
-                        [hidden]="!editForm.controls.closeTime?.errors?.required">
-                        This field is required.
-                        </small>
-                        <small class="form-text text-danger"
-                            [hidden]="!editForm.controls.closeTime?.errors?.ZonedDateTimelocal">
-                            This field should be a date and time.
-                        </small>
-                    </div>
-                </div>
-                <div class="form-group">
                     <label class="form-control-label" for="field_city">City</label>
                     <input type="text" class="form-control" name="city" id="field_city"
                         [(ngModel)]="hotel.city" required/>
@@ -151,7 +117,31 @@
                     <input type="text" class="form-control" name="description" id="field_description"
                         [(ngModel)]="hotel.description" />
                 </div>
-
+                <div class="form-group">
+                    <label class="form-control-label" for="field_openTime">Open Time</label>
+                    <input type="time" class="form-control" name="openTime" id="field_openTime"
+                        [(ngModel)]="hotel.openTime" required/>
+                    <div [hidden]="!(editForm.controls.openTime?.dirty && editForm.controls.openTime?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.openTime?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="field_closeTime">Close Time</label>
+                    <input type="time" class="form-control" name="closeTime" id="field_closeTime"
+                        [(ngModel)]="hotel.closeTime" required/>
+                    <div [hidden]="!(editForm.controls.closeTime?.dirty && editForm.controls.closeTime?.invalid)">
+                        <small class="form-text text-danger"
+                        [hidden]="!editForm.controls.closeTime?.errors?.required">
+                        This field is required.
+                        </small>
+                    </div>
+                </div>
+                <div class="alert alert-danger" *ngIf="isInvalid">
+                    <strong>{{errorMessage}}</strong>
+                </div>
             </div>
             <div>
                 <button type="button" id="cancel-save" class="btn btn-secondary"  (click)="previousState()">

@@ -1,4 +1,4 @@
-import { browser, protractor } from 'protractor';
+import { browser } from 'protractor';
 import { NavBarPage } from './../../page-objects/jhi-page-objects';
 import { HotelComponentsPage, HotelUpdatePage } from './hotel.page-object';
 import * as path from 'path';
@@ -38,10 +38,6 @@ describe('Hotel e2e test', () => {
         expect(hotelUpdatePage.getNameInput()).toMatch('name');
         hotelUpdatePage.setTypeInput('type');
         expect(hotelUpdatePage.getTypeInput()).toMatch('type');
-        hotelUpdatePage.setOpenTimeInput('01/01/2001' + protractor.Key.TAB + '02:30AM');
-        expect(hotelUpdatePage.getOpenTimeInput()).toContain('2001-01-01T02:30');
-        hotelUpdatePage.setCloseTimeInput('01/01/2001' + protractor.Key.TAB + '02:30AM');
-        expect(hotelUpdatePage.getCloseTimeInput()).toContain('2001-01-01T02:30');
         hotelUpdatePage.setCityInput('city');
         expect(hotelUpdatePage.getCityInput()).toMatch('city');
         hotelUpdatePage.setAddressInput('address');
@@ -54,6 +50,10 @@ describe('Hotel e2e test', () => {
         expect(hotelUpdatePage.getStaffInRushHourInput()).toMatch('5');
         hotelUpdatePage.setStaffInNormalInput('5');
         expect(hotelUpdatePage.getStaffInNormalInput()).toMatch('5');
+        hotelUpdatePage.setOpenTimeInput('openTime');
+        expect(hotelUpdatePage.getOpenTimeInput()).toMatch('openTime');
+        hotelUpdatePage.setCloseTimeInput('closeTime');
+        expect(hotelUpdatePage.getCloseTimeInput()).toMatch('closeTime');
         hotelUpdatePage.save();
         expect(hotelUpdatePage.getSaveButton().isPresent()).toBeFalsy();
     });

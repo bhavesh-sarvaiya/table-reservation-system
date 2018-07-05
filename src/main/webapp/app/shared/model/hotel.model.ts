@@ -1,19 +1,17 @@
-import { Moment } from 'moment';
-
 export interface IHotel {
     id?: number;
     imageContentType?: string;
     image?: any;
     name?: string;
     type?: string;
-    openTime?: Moment;
-    closeTime?: Moment;
     city?: string;
     address?: string;
     pincode?: string;
     description?: string;
     staffInRushHour?: number;
     staffInNormal?: number;
+    openTime?: string;
+    closeTime?: string;
 }
 
 export class Hotel implements IHotel {
@@ -23,13 +21,13 @@ export class Hotel implements IHotel {
         public image?: any,
         public name?: string,
         public type?: string,
-        public openTime?: Moment,
-        public closeTime?: Moment,
         public city?: string,
         public address?: string,
         public pincode?: string,
         public description?: string,
         public staffInRushHour?: number,
-        public staffInNormal?: number
+        public staffInNormal?: number,
+        public openTime?: string,
+        public closeTime?: string
     ) {}
 }

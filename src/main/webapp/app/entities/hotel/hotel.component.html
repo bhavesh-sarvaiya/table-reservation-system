@@ -18,13 +18,13 @@
             <th jhiSortBy="image"><span>Image</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="name"><span>Name</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="type"><span>Type</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="openTime"><span>Open Time</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="closeTime"><span>Close Time</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="city"><span>City</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="city"><span>Table in rush hour</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="city"><span>Table in normal hour</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <!-- <th jhiSortBy="address"><span>Address</span> <fa-icon [icon]="'sort'"></fa-icon></th>    -->
             <!-- <th jhiSortBy="description"><span>Description</span> <fa-icon [icon]="'sort'"></fa-icon></th> -->
+            <th jhiSortBy="openTime"><span>Open Time</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="closeTime"><span>Close Time</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
@@ -39,13 +39,13 @@
                 </td>
                 <td>{{hotel.name}}</td>
                 <td>{{hotel.type}}</td>
-                <td>{{hotel.openTime | date:'shortTime'}}</td>
-                <td>{{hotel.closeTime | date:'shortTime'}}</td>
                 <td>{{hotel.city}}</td>
                 <!-- <td>{{hotel.address}}</td> -->
                 <!-- <td>{{hotel.description}}</td> -->
                 <td>{{hotel.staffInRushHour}}</td>
                 <td>{{hotel.staffInNormal}}</td>
+                <td>{{hotel.openTime}}</td>
+                <td>{{hotel.closeTime}}</td>
                 <td class="text-right">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"

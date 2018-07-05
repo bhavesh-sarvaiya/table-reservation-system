@@ -1,6 +1,5 @@
 package com.trs.service.dto;
 
-import java.time.Instant;
 import javax.validation.constraints.*;
 import java.io.Serializable;
 import java.util.Objects;
@@ -24,12 +23,6 @@ public class HotelDTO implements Serializable {
     private String type;
 
     @NotNull
-    private Instant openTime;
-
-    @NotNull
-    private Instant closeTime;
-
-    @NotNull
     private String city;
 
     @NotNull
@@ -44,6 +37,12 @@ public class HotelDTO implements Serializable {
     private Integer staffInRushHour;
 
     private Integer staffInNormal;
+
+    @NotNull
+    private String openTime;
+
+    @NotNull
+    private String closeTime;
 
     public Long getId() {
         return id;
@@ -83,22 +82,6 @@ public class HotelDTO implements Serializable {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public Instant getOpenTime() {
-        return openTime;
-    }
-
-    public void setOpenTime(Instant openTime) {
-        this.openTime = openTime;
-    }
-
-    public Instant getCloseTime() {
-        return closeTime;
-    }
-
-    public void setCloseTime(Instant closeTime) {
-        this.closeTime = closeTime;
     }
 
     public String getCity() {
@@ -149,6 +132,22 @@ public class HotelDTO implements Serializable {
         this.staffInNormal = staffInNormal;
     }
 
+    public String getOpenTime() {
+        return openTime;
+    }
+
+    public void setOpenTime(String openTime) {
+        this.openTime = openTime;
+    }
+
+    public String getCloseTime() {
+        return closeTime;
+    }
+
+    public void setCloseTime(String closeTime) {
+        this.closeTime = closeTime;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -177,14 +176,14 @@ public class HotelDTO implements Serializable {
             ", image='" + getImage() + "'" +
             ", name='" + getName() + "'" +
             ", type='" + getType() + "'" +
-            ", openTime='" + getOpenTime() + "'" +
-            ", closeTime='" + getCloseTime() + "'" +
             ", city='" + getCity() + "'" +
             ", address='" + getAddress() + "'" +
             ", pincode='" + getPincode() + "'" +
             ", description='" + getDescription() + "'" +
             ", staffInRushHour=" + getStaffInRushHour() +
             ", staffInNormal=" + getStaffInNormal() +
+            ", openTime='" + getOpenTime() + "'" +
+            ", closeTime='" + getCloseTime() + "'" +
             "}";
     }
 }

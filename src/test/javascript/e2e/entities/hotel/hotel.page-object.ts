@@ -20,14 +20,14 @@ export class HotelUpdatePage {
     imageInput = element(by.id('file_image'));
     nameInput = element(by.id('field_name'));
     typeInput = element(by.id('field_type'));
-    openTimeInput = element(by.id('field_openTime'));
-    closeTimeInput = element(by.id('field_closeTime'));
     cityInput = element(by.id('field_city'));
     addressInput = element(by.id('field_address'));
     pincodeInput = element(by.id('field_pincode'));
     descriptionInput = element(by.id('field_description'));
     staffInRushHourInput = element(by.id('field_staffInRushHour'));
     staffInNormalInput = element(by.id('field_staffInNormal'));
+    openTimeInput = element(by.id('field_openTime'));
+    closeTimeInput = element(by.id('field_closeTime'));
 
     getPageTitle() {
         return this.pageTitle.getText();
@@ -55,22 +55,6 @@ export class HotelUpdatePage {
 
     getTypeInput() {
         return this.typeInput.getAttribute('value');
-    }
-
-    setOpenTimeInput(openTime): promise.Promise<void> {
-        return this.openTimeInput.sendKeys(openTime);
-    }
-
-    getOpenTimeInput() {
-        return this.openTimeInput.getAttribute('value');
-    }
-
-    setCloseTimeInput(closeTime): promise.Promise<void> {
-        return this.closeTimeInput.sendKeys(closeTime);
-    }
-
-    getCloseTimeInput() {
-        return this.closeTimeInput.getAttribute('value');
     }
 
     setCityInput(city): promise.Promise<void> {
@@ -119,6 +103,22 @@ export class HotelUpdatePage {
 
     getStaffInNormalInput() {
         return this.staffInNormalInput.getAttribute('value');
+    }
+
+    setOpenTimeInput(openTime): promise.Promise<void> {
+        return this.openTimeInput.sendKeys(openTime);
+    }
+
+    getOpenTimeInput() {
+        return this.openTimeInput.getAttribute('value');
+    }
+
+    setCloseTimeInput(closeTime): promise.Promise<void> {
+        return this.closeTimeInput.sendKeys(closeTime);
+    }
+
+    getCloseTimeInput() {
+        return this.closeTimeInput.getAttribute('value');
     }
 
     save(): promise.Promise<void> {

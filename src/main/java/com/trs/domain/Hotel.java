@@ -5,7 +5,6 @@ import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -38,14 +37,6 @@ public class Hotel implements Serializable {
     private String type;
 
     @NotNull
-    @Column(name = "open_time", nullable = false)
-    private Instant openTime;
-
-    @NotNull
-    @Column(name = "close_time", nullable = false)
-    private Instant closeTime;
-
-    @NotNull
     @Column(name = "city", nullable = false)
     private String city;
 
@@ -66,6 +57,14 @@ public class Hotel implements Serializable {
 
     @Column(name = "staff_in_normal")
     private Integer staffInNormal;
+
+    @NotNull
+    @Column(name = "open_time", nullable = false)
+    private String openTime;
+
+    @NotNull
+    @Column(name = "close_time", nullable = false)
+    private String closeTime;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -126,32 +125,6 @@ public class Hotel implements Serializable {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public Instant getOpenTime() {
-        return openTime;
-    }
-
-    public Hotel openTime(Instant openTime) {
-        this.openTime = openTime;
-        return this;
-    }
-
-    public void setOpenTime(Instant openTime) {
-        this.openTime = openTime;
-    }
-
-    public Instant getCloseTime() {
-        return closeTime;
-    }
-
-    public Hotel closeTime(Instant closeTime) {
-        this.closeTime = closeTime;
-        return this;
-    }
-
-    public void setCloseTime(Instant closeTime) {
-        this.closeTime = closeTime;
     }
 
     public String getCity() {
@@ -231,6 +204,32 @@ public class Hotel implements Serializable {
     public void setStaffInNormal(Integer staffInNormal) {
         this.staffInNormal = staffInNormal;
     }
+
+    public String getOpenTime() {
+        return openTime;
+    }
+
+    public Hotel openTime(String openTime) {
+        this.openTime = openTime;
+        return this;
+    }
+
+    public void setOpenTime(String openTime) {
+        this.openTime = openTime;
+    }
+
+    public String getCloseTime() {
+        return closeTime;
+    }
+
+    public Hotel closeTime(String closeTime) {
+        this.closeTime = closeTime;
+        return this;
+    }
+
+    public void setCloseTime(String closeTime) {
+        this.closeTime = closeTime;
+    }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -261,14 +260,14 @@ public class Hotel implements Serializable {
             ", imageContentType='" + getImageContentType() + "'" +
             ", name='" + getName() + "'" +
             ", type='" + getType() + "'" +
-            ", openTime='" + getOpenTime() + "'" +
-            ", closeTime='" + getCloseTime() + "'" +
             ", city='" + getCity() + "'" +
             ", address='" + getAddress() + "'" +
             ", pincode='" + getPincode() + "'" +
             ", description='" + getDescription() + "'" +
             ", staffInRushHour=" + getStaffInRushHour() +
             ", staffInNormal=" + getStaffInNormal() +
+            ", openTime='" + getOpenTime() + "'" +
+            ", closeTime='" + getCloseTime() + "'" +
             "}";
     }
 }

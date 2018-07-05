@@ -36,14 +36,6 @@
                 <constraints nullable="false" />
             </column>
 
-            <column name="open_time" type="datetime">
-                <constraints nullable="false" />
-            </column>
-
-            <column name="close_time" type="datetime">
-                <constraints nullable="false" />
-            </column>
-
             <column name="city" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
@@ -68,10 +60,16 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="open_time" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="close_time" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
-        <dropDefaultValue tableName="hotel" columnName="open_time" columnDataType="datetime"/>
-        <dropDefaultValue tableName="hotel" columnName="close_time" columnDataType="datetime"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

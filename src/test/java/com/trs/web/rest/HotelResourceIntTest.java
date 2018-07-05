@@ -25,8 +25,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Base64Utils;
 
 import javax.persistence.EntityManager;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 
@@ -56,12 +54,6 @@ public class HotelResourceIntTest {
     private static final String DEFAULT_TYPE = "AAAAAAAAAA";
     private static final String UPDATED_TYPE = "BBBBBBBBBB";
 
-    private static final Instant DEFAULT_OPEN_TIME = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_OPEN_TIME = Instant.now().truncatedTo(ChronoUnit.MILLIS);
-
-    private static final Instant DEFAULT_CLOSE_TIME = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_CLOSE_TIME = Instant.now().truncatedTo(ChronoUnit.MILLIS);
-
     private static final String DEFAULT_CITY = "AAAAAAAAAA";
     private static final String UPDATED_CITY = "BBBBBBBBBB";
 
@@ -79,6 +71,12 @@ public class HotelResourceIntTest {
 
     private static final Integer DEFAULT_STAFF_IN_NORMAL = 1;
     private static final Integer UPDATED_STAFF_IN_NORMAL = 2;
+
+    private static final String DEFAULT_OPEN_TIME = "AAAAAAAAAA";
+    private static final String UPDATED_OPEN_TIME = "BBBBBBBBBB";
+
+    private static final String DEFAULT_CLOSE_TIME = "AAAAAAAAAA";
+    private static final String UPDATED_CLOSE_TIME = "BBBBBBBBBB";
 
     @Autowired
     private HotelRepository hotelRepository;
@@ -130,14 +128,14 @@ public class HotelResourceIntTest {
             .imageContentType(DEFAULT_IMAGE_CONTENT_TYPE)
             .name(DEFAULT_NAME)
             .type(DEFAULT_TYPE)
-            .openTime(DEFAULT_OPEN_TIME)
-            .closeTime(DEFAULT_CLOSE_TIME)
             .city(DEFAULT_CITY)
             .address(DEFAULT_ADDRESS)
             .pincode(DEFAULT_PINCODE)
             .description(DEFAULT_DESCRIPTION)
             .staffInRushHour(DEFAULT_STAFF_IN_RUSH_HOUR)
-            .staffInNormal(DEFAULT_STAFF_IN_NORMAL);
+            .staffInNormal(DEFAULT_STAFF_IN_NORMAL)
+            .openTime(DEFAULT_OPEN_TIME)
+            .closeTime(DEFAULT_CLOSE_TIME);
         return hotel;
     }
 
@@ -166,14 +164,14 @@ public class HotelResourceIntTest {
         assertThat(testHotel.getImageContentType()).isEqualTo(DEFAULT_IMAGE_CONTENT_TYPE);
         assertThat(testHotel.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testHotel.getType()).isEqualTo(DEFAULT_TYPE);
-        assertThat(testHotel.getOpenTime()).isEqualTo(DEFAULT_OPEN_TIME);
-        assertThat(testHotel.getCloseTime()).isEqualTo(DEFAULT_CLOSE_TIME);
         assertThat(testHotel.getCity()).isEqualTo(DEFAULT_CITY);
         assertThat(testHotel.getAddress()).isEqualTo(DEFAULT_ADDRESS);
         assertThat(testHotel.getPincode()).isEqualTo(DEFAULT_PINCODE);
         assertThat(testHotel.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
         assertThat(testHotel.getStaffInRushHour()).isEqualTo(DEFAULT_STAFF_IN_RUSH_HOUR);
         assertThat(testHotel.getStaffInNormal()).isEqualTo(DEFAULT_STAFF_IN_NORMAL);
+        assertThat(testHotel.getOpenTime()).isEqualTo(DEFAULT_OPEN_TIME);
+        assertThat(testHotel.getCloseTime()).isEqualTo(DEFAULT_CLOSE_TIME);
     }
 
     @Test
@@ -221,44 +219,6 @@ public class HotelResourceIntTest {
         int databaseSizeBeforeTest = hotelRepository.findAll().size();
         // set the field null
         hotel.setType(null);
-
-        // Create the Hotel, which fails.
-        HotelDTO hotelDTO = hotelMapper.toDto(hotel);
-
-        restHotelMockMvc.perform(post("/api/hotels")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(hotelDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Hotel> hotelList = hotelRepository.findAll();
-        assertThat(hotelList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkOpenTimeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = hotelRepository.findAll().size();
-        // set the field null
-        hotel.setOpenTime(null);
-
-        // Create the Hotel, which fails.
-        HotelDTO hotelDTO = hotelMapper.toDto(hotel);
-
-        restHotelMockMvc.perform(post("/api/hotels")
-            .contentType(TestUtil.APPLICATION_JSON_UTF8)
-            .content(TestUtil.convertObjectToJsonBytes(hotelDTO)))
-            .andExpect(status().isBadRequest());
-
-        List<Hotel> hotelList = hotelRepository.findAll();
-        assertThat(hotelList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    public void checkCloseTimeIsRequired() throws Exception {
-        int databaseSizeBeforeTest = hotelRepository.findAll().size();
-        // set the field null
-        hotel.setCloseTime(null);
 
         // Create the Hotel, which fails.
         HotelDTO hotelDTO = hotelMapper.toDto(hotel);
@@ -331,6 +291,44 @@ public class HotelResourceIntTest {
 
     @Test
     @Transactional
+    public void checkOpenTimeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = hotelRepository.findAll().size();
+        // set the field null
+        hotel.setOpenTime(null);
+
+        // Create the Hotel, which fails.
+        HotelDTO hotelDTO = hotelMapper.toDto(hotel);
+
+        restHotelMockMvc.perform(post("/api/hotels")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(hotelDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Hotel> hotelList = hotelRepository.findAll();
+        assertThat(hotelList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    public void checkCloseTimeIsRequired() throws Exception {
+        int databaseSizeBeforeTest = hotelRepository.findAll().size();
+        // set the field null
+        hotel.setCloseTime(null);
+
+        // Create the Hotel, which fails.
+        HotelDTO hotelDTO = hotelMapper.toDto(hotel);
+
+        restHotelMockMvc.perform(post("/api/hotels")
+            .contentType(TestUtil.APPLICATION_JSON_UTF8)
+            .content(TestUtil.convertObjectToJsonBytes(hotelDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Hotel> hotelList = hotelRepository.findAll();
+        assertThat(hotelList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     public void getAllHotels() throws Exception {
         // Initialize the database
         hotelRepository.saveAndFlush(hotel);
@@ -344,14 +342,14 @@ public class HotelResourceIntTest {
             .andExpect(jsonPath("$.[*].image").value(hasItem(Base64Utils.encodeToString(DEFAULT_IMAGE))))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE.toString())))
-            .andExpect(jsonPath("$.[*].openTime").value(hasItem(DEFAULT_OPEN_TIME.toString())))
-            .andExpect(jsonPath("$.[*].closeTime").value(hasItem(DEFAULT_CLOSE_TIME.toString())))
             .andExpect(jsonPath("$.[*].city").value(hasItem(DEFAULT_CITY.toString())))
             .andExpect(jsonPath("$.[*].address").value(hasItem(DEFAULT_ADDRESS.toString())))
             .andExpect(jsonPath("$.[*].pincode").value(hasItem(DEFAULT_PINCODE.toString())))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())))
             .andExpect(jsonPath("$.[*].staffInRushHour").value(hasItem(DEFAULT_STAFF_IN_RUSH_HOUR)))
-            .andExpect(jsonPath("$.[*].staffInNormal").value(hasItem(DEFAULT_STAFF_IN_NORMAL)));
+            .andExpect(jsonPath("$.[*].staffInNormal").value(hasItem(DEFAULT_STAFF_IN_NORMAL)))
+            .andExpect(jsonPath("$.[*].openTime").value(hasItem(DEFAULT_OPEN_TIME.toString())))
+            .andExpect(jsonPath("$.[*].closeTime").value(hasItem(DEFAULT_CLOSE_TIME.toString())));
     }
     
 
@@ -370,14 +368,14 @@ public class HotelResourceIntTest {
             .andExpect(jsonPath("$.image").value(Base64Utils.encodeToString(DEFAULT_IMAGE)))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE.toString()))
-            .andExpect(jsonPath("$.openTime").value(DEFAULT_OPEN_TIME.toString()))
-            .andExpect(jsonPath("$.closeTime").value(DEFAULT_CLOSE_TIME.toString()))
             .andExpect(jsonPath("$.city").value(DEFAULT_CITY.toString()))
             .andExpect(jsonPath("$.address").value(DEFAULT_ADDRESS.toString()))
             .andExpect(jsonPath("$.pincode").value(DEFAULT_PINCODE.toString()))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()))
             .andExpect(jsonPath("$.staffInRushHour").value(DEFAULT_STAFF_IN_RUSH_HOUR))
-            .andExpect(jsonPath("$.staffInNormal").value(DEFAULT_STAFF_IN_NORMAL));
+            .andExpect(jsonPath("$.staffInNormal").value(DEFAULT_STAFF_IN_NORMAL))
+            .andExpect(jsonPath("$.openTime").value(DEFAULT_OPEN_TIME.toString()))
+            .andExpect(jsonPath("$.closeTime").value(DEFAULT_CLOSE_TIME.toString()));
     }
     @Test
     @Transactional
@@ -404,14 +402,14 @@ public class HotelResourceIntTest {
             .imageContentType(UPDATED_IMAGE_CONTENT_TYPE)
             .name(UPDATED_NAME)
             .type(UPDATED_TYPE)
-            .openTime(UPDATED_OPEN_TIME)
-            .closeTime(UPDATED_CLOSE_TIME)
             .city(UPDATED_CITY)
             .address(UPDATED_ADDRESS)
             .pincode(UPDATED_PINCODE)
             .description(UPDATED_DESCRIPTION)
             .staffInRushHour(UPDATED_STAFF_IN_RUSH_HOUR)
-            .staffInNormal(UPDATED_STAFF_IN_NORMAL);
+            .staffInNormal(UPDATED_STAFF_IN_NORMAL)
+            .openTime(UPDATED_OPEN_TIME)
+            .closeTime(UPDATED_CLOSE_TIME);
         HotelDTO hotelDTO = hotelMapper.toDto(updatedHotel);
 
         restHotelMockMvc.perform(put("/api/hotels")
@@ -427,14 +425,14 @@ public class HotelResourceIntTest {
         assertThat(testHotel.getImageContentType()).isEqualTo(UPDATED_IMAGE_CONTENT_TYPE);
         assertThat(testHotel.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testHotel.getType()).isEqualTo(UPDATED_TYPE);
-        assertThat(testHotel.getOpenTime()).isEqualTo(UPDATED_OPEN_TIME);
-        assertThat(testHotel.getCloseTime()).isEqualTo(UPDATED_CLOSE_TIME);
         assertThat(testHotel.getCity()).isEqualTo(UPDATED_CITY);
         assertThat(testHotel.getAddress()).isEqualTo(UPDATED_ADDRESS);
         assertThat(testHotel.getPincode()).isEqualTo(UPDATED_PINCODE);
         assertThat(testHotel.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
         assertThat(testHotel.getStaffInRushHour()).isEqualTo(UPDATED_STAFF_IN_RUSH_HOUR);
         assertThat(testHotel.getStaffInNormal()).isEqualTo(UPDATED_STAFF_IN_NORMAL);
+        assertThat(testHotel.getOpenTime()).isEqualTo(UPDATED_OPEN_TIME);
+        assertThat(testHotel.getCloseTime()).isEqualTo(UPDATED_CLOSE_TIME);
     }
 
     @Test

@@ -23,20 +23,6 @@
             ]
         },
         {
-            "fieldName": "openTime",
-            "fieldType": "Instant",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
-            "fieldName": "closeTime",
-            "fieldType": "Instant",
-            "fieldValidateRules": [
-                "required"
-            ]
-        },
-        {
             "fieldName": "city",
             "fieldType": "String",
             "fieldValidateRules": [
@@ -70,6 +56,20 @@
         {
             "fieldName": "staffInNormal",
             "fieldType": "Integer"
+        },
+        {
+            "fieldName": "openTime",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "closeTime",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
         }
     ],
     "changelogDate": "20180621151803",

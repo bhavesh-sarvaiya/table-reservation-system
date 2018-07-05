@@ -153,8 +153,8 @@ export class TableBookComponent implements OnInit {
                     (res2: HttpResponse<ITiming[]>) => {
                         this.timings = res2.body;
                         this.timings.forEach(element => {
-                            let currTime = new Date().getTime();
-                            let time = new Date(this._booking.bookDate._i + ' ' + element.startTime).getTime();
+                            const currTime = new Date().getTime();
+                            const time = new Date(this._booking.bookDate._i + ' ' + element.startTime).getTime();
                             if (time - currTime >= 0) {
                                 this.timeSlot.push(element.startTime);
                             }
