@@ -32,7 +32,7 @@
             <th jhiSortBy="active"><span>Active</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="hotelName"><span>Hotel</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th jhiSortBy="hotelTableTableNumber"><span>Hotel Table</span> <fa-icon [icon]="'sort'"></fa-icon></th>
-            <th jhiSortBy="userLogin"><span>Customer</span> <fa-icon [icon]="'sort'"></fa-icon></th>
+            <th jhiSortBy="userLogin" *ngIf="currentAccount.name == 'admin'"><span>Customer</span> <fa-icon [icon]="'sort'"></fa-icon></th>
             <th></th>
             </tr>
             </thead>
@@ -42,7 +42,8 @@
                 <td>{{booking.bookDate | date:'mediumDate'}}</td>
                 <td>{{booking.bookTime}}</td>
                 <td>{{booking.noOfGuest}}</td>
-                <td>{{booking.active}}</td>
+                <td *ngIf="booking.active"><span class="badge badge-success">Active</span></td>
+                <td *ngIf="!booking.active"><span class="badge badge-secondary">Done</span></td>
                 <td>
                     <div *ngIf="booking.hotelId">
                         <a [routerLink]="['../hotel', booking.hotelId , 'view' ]" >{{booking.hotelName}}</a>
@@ -53,10 +54,10 @@
                         <a [routerLink]="['../hotel-table', booking.hotelTableId , 'view' ]" >{{booking.hotelTableTableNumber}}</a>
                     </div>
                 </td>
-                <td>
+                <td *ngIf="currentAccount.name == 'admin'">
                     {{booking.userLogin}}
                 </td>
-                <td class="text-right">
+                <td class="text-right" *ngIf="currentAccount.name == 'admin'">
                     <div class="btn-group flex-btn-group-container">
                         <button type="submit"
                                 [routerLink]="['/booking', booking.id, 'view' ]"

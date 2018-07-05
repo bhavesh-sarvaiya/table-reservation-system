@@ -29,7 +29,7 @@ export const hotelTableRoute: Routes = [
         path: 'hotel-table',
         component: HotelTableComponent,
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'HotelTables'
         },
         canActivate: [UserRouteAccessService]
@@ -41,7 +41,7 @@ export const hotelTableRoute: Routes = [
             hotelTable: HotelTableResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'HotelTables'
         },
         canActivate: [UserRouteAccessService]
@@ -53,7 +53,7 @@ export const hotelTableRoute: Routes = [
             hotelTable: HotelTableResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'HotelTables'
         },
         canActivate: [UserRouteAccessService]
@@ -65,7 +65,7 @@ export const hotelTableRoute: Routes = [
             hotelTable: HotelTableResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'HotelTables'
         },
         canActivate: [UserRouteAccessService]
@@ -80,7 +80,7 @@ export const hotelTablePopupRoute: Routes = [
             hotelTable: HotelTableResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'HotelTables'
         },
         canActivate: [UserRouteAccessService],

@@ -6,7 +6,7 @@ import { LoginModalService, Principal, Account } from 'app/core';
 import { HotelService } from 'app/entities/hotel';
 import { IHotel } from 'app/shared/model/hotel.model';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-
+import {jQuery} from 'jquery';
 @Component({
     selector: 'jhi-home',
     templateUrl: './home.component.html',
@@ -47,9 +47,28 @@ export class HomeComponent implements OnInit {
                     (res: HttpResponse<IHotel[]>) => {
                         this.hotels = res.body;
                         this.length = this.hotels.length;
+                       /* const temp = [];
+                        this.hotels.forEach(function(ele) {
+                            temp.push(ele.id);
+                        });
+                        const result = [];
+                        const seen = new Set();
+                        outer:
+                        for (let index = 0; index < this.length; index++) {
+                          const value = temp[index];
+                          if (seen.has(value)) { continue outer; }
+                          seen.add(value);
+                          result.push(this.hotels[index]);
+                        }
+                        result.forEach(function(ele) {
+                            console.log(ele);
+                        });
+                        this.hotels = result;*/
                     },
                     (res: HttpErrorResponse) => this.onError(res.message)
                 );
+        } else {
+            this.hotels = [];
         }
     }
     isAuthenticated() {
@@ -66,5 +85,14 @@ export class HomeComponent implements OnInit {
 
     openFile(contentType, field) {
         return this.dataUtils.openFile(contentType, field);
+    }
+    getUnique(inputArray) {
+        const outputArray = [];
+        for (let i = 0; i < inputArray.length; i++) {
+            if ((jQuery.inArray(inputArray[i], outputArray)) === -1) {
+                outputArray.push(inputArray[i]);
+            }
+        }
+        return outputArray;
     }
 }

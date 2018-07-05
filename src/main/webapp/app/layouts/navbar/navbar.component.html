@@ -53,17 +53,23 @@
                                         <span>Time Slot</span>
                                     </a>
                                 </li>
+                                <li>
+                                    <a class="dropdown-item" routerLink="cuisine" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
+                                        <fa-icon [icon]="'asterisk'" [fixedWidth]="true"></fa-icon>
+                                        <span>Cuisine</span>
+                                    </a>
+                                </li>
                     </ul>
                 </li>
 
-                <li *jhiHasAnyAuthority="'ROLE_ADMIN'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                <li *jhiHasAnyAuthority="'ROLE_USER'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                     <a class="nav-link" routerLink="booking" (click)="collapseNavbar()">
                         <fa-icon [icon]="'asterisk'" [fixedWidth]="true"></fa-icon>
                         <span>Booking</span>
                     </a>
                 </li>
             <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-            <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+            <!-- <li *ngSwitchCase="true" ngbDropdown class="nav-item dropdown pointer" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                 <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="entity-menu">
                     <span>
                         <fa-icon [icon]="'th-list'"></fa-icon>
@@ -72,7 +78,7 @@
                         </span>
                     </span>
                 </a>
-                <ul class="dropdown-menu" ngbDropdownMenu>
+                <ul class="dropdown-menu" ngbDropdownMenu> -->
                     <!-- <li>
                         <a class="dropdown-item" routerLink="hotel" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
                             <fa-icon [icon]="'asterisk'" [fixedWidth]="true"></fa-icon>
@@ -97,12 +103,7 @@
                             <span>Booking</span>
                         </a>
                     </li> -->
-                    <li>
-                        <a class="dropdown-item" routerLink="cuisine" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon [icon]="'asterisk'" [fixedWidth]="true"></fa-icon>
-                            <span>Cuisine</span>
-                        </a>
-                    </li>
+                   
                     
                     <!-- <li>
                         <a class="dropdown-item" routerLink="timing" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
@@ -111,15 +112,10 @@
                         </a>
                     </li> -->
 
-                    <li>
-                        <a class="dropdown-item" routerLink="hotel" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" (click)="collapseNavbar()">
-                            <fa-icon [icon]="'asterisk'" [fixedWidth]="true"></fa-icon>
-                            <span>Hotel</span>
-                        </a>
-                    </li>
+                   
                     <!-- jhipster-needle-add-entity-to-menu - JHipster will add entities to the menu here -->
-                </ul>
-            </li>
+                <!-- </ul>
+            </li> -->
             <li *jhiHasAnyAuthority="'ROLE_ADMIN'" class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
                     <a class="nav-link" routerLink="admin/user-management"  (click)="collapseNavbar()">
                         <fa-icon [icon]="'user'" [fixedWidth]="true"></fa-icon>

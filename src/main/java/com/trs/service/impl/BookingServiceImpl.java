@@ -126,4 +126,15 @@ public class BookingServiceImpl implements BookingService {
         }
         return bookingDTOs;
     }
+    @Override
+    public Page<BookingDTO> findByUserIsCurrentUser(Pageable pageable) {
+        return bookingRepository.findByUserIsCurrentUser(pageable)
+        .map(bookingMapper::toDto);
+    }
+    @Override
+    public Page<BookingDTO> findByUserIsCurrentUserAndHotel(Pageable pageable,Long hotelId) {
+        Hotel hotel = hotelRepository.getOne(hotelId);
+        return bookingRepository.findByUserIsCurrentUserAndHotel(hotel,pageable)
+        .map(bookingMapper::toDto);
+    }
 }

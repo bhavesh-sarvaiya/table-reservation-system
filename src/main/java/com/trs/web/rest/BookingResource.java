@@ -133,4 +133,22 @@ public class BookingResource {
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/bookings");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
+
+    @GetMapping("/bookings-user")
+    @Timed
+    public ResponseEntity<List<BookingDTO>> findByUserIsCurrentUser(Pageable pageable) {
+        log.debug("REST request to get a page of Bookings");
+        Page<BookingDTO> page = bookingService.findByUserIsCurrentUser(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/bookings");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/bookings-user-hotel")
+    @Timed
+    public ResponseEntity<List<BookingDTO>> findByUserIsCurrentUserAndHotel(Pageable pageable,Long hotelId) {
+        log.debug("REST request to get a page of Bookings");
+        Page<BookingDTO> page = bookingService.findByUserIsCurrentUserAndHotel(pageable, hotelId);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/bookings");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
 }

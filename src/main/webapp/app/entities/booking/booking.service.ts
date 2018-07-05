@@ -15,6 +15,8 @@ type EntityArrayResponseType = HttpResponse<IBooking[]>;
 export class BookingService {
     private resourceUrl = SERVER_API_URL + 'api/bookings';
     private resourceUrl1 = SERVER_API_URL + 'api/bookings-hotel';
+    private resourceUrl2 = SERVER_API_URL + 'api/bookings-user';
+    private resourceUrl3 = SERVER_API_URL + 'api/bookings-user-hotel';
 
     constructor(private http: HttpClient) {}
 
@@ -71,6 +73,19 @@ export class BookingService {
         const options = createRequestOption({req, hotelId});
         return this.http
             .get<IBooking[]>(this.resourceUrl1, { params: options, observe: 'response' })
+            .map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res));
+    }
+     getBookingByUser(req: any): Observable<EntityArrayResponseType> {
+        const options = createRequestOption({req});
+        return this.http
+            .get<IBooking[]>(this.resourceUrl2, { params: options, observe: 'response' })
+            .map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res));
+    }
+
+    getBookingByUserAndHotel(req: any, hotelId: number): Observable<EntityArrayResponseType> {
+        const options = createRequestOption({req, hotelId});
+        return this.http
+            .get<IBooking[]>(this.resourceUrl3, { params: options, observe: 'response' })
             .map((res: EntityArrayResponseType) => this.convertDateArrayFromServer(res));
     }
 }

@@ -17,7 +17,7 @@ import { HotelService } from 'app/entities/hotel';
 })
 export class BookingComponent implements OnInit, OnDestroy {
     bookings: IBooking[];
-    currentAccount: any;
+    currentAccount: Account;
     eventSubscriber: Subscription;
     itemsPerPage: number;
     links: any;
@@ -48,18 +48,31 @@ export class BookingComponent implements OnInit, OnDestroy {
     }
 
     loadAll() {
-        this.bookingService
-            .query({
-                page: this.page,
-                size: this.itemsPerPage,
-                sort: this.sort()
-            })
-            .subscribe(
-                (res: HttpResponse<IBooking[]>) => this.paginateBookings(res.body, res.headers),
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
-            this.getHotels();
-        }
+        if (this.currentAccount.name !== 'admin') {
+            this.bookingService
+                .getBookingByUser({
+                    page: this.page,
+                    size: this.itemsPerPage,
+                    sort: this.sort()
+                })
+                .subscribe(
+                    (res: HttpResponse<IBooking[]>) => this.paginateBookings(res.body, res.headers),
+                    (res: HttpErrorResponse) => this.onError(res.message)
+                );
+        } else {
+            this.bookingService
+                .query({
+                    page: this.page,
+                    size: this.itemsPerPage,
+                    sort: this.sort()
+                })
+                .subscribe(
+                    (res: HttpResponse<IBooking[]>) => this.paginateBookings(res.body, res.headers),
+                    (res: HttpErrorResponse) => this.onError(res.message)
+                );
+       }
+        this.getHotels();
+    }
 
     reset() {
         this.page = 0;
@@ -73,9 +86,9 @@ export class BookingComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.loadAll();
         this.principal.identity().then(account => {
             this.currentAccount = account;
+            this.loadAll();
         });
         this.registerChangeInBookings();
     }
@@ -120,30 +133,56 @@ export class BookingComponent implements OnInit, OnDestroy {
         );
 }
 
-changeHotel() {
-    this.bookings = [];
-    if (this.hotel === 1) {
-        this.bookingService
-            .query({
-                page: this.page,
-                size: this.itemsPerPage,
-                sort: this.sort()
-            })
-            .subscribe(
-                (res: HttpResponse<IBooking[]>) => this.paginateBookings(res.body, res.headers),
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
-    } else {
-        this.bookingService
-            .getBookingByHotel({
-                page: this.page,
-                size: this.itemsPerPage,
-                sort: this.sort()
-            }, this.hotel)
-            .subscribe(
-                (res: HttpResponse<IBooking[]>) => this.paginateBookings(res.body, res.headers),
-                (res: HttpErrorResponse) => this.onError(res.message)
-            );
-}
-}
+    changeHotel() {
+        this.bookings = [];
+        if (this.hotel === 1) {
+            if (this.currentAccount.login !== 'admin') {
+                this.bookingService
+                    .getBookingByUser({
+                        page: this.page,
+                        size: this.itemsPerPage,
+                        sort: this.sort()
+                    })
+                    .subscribe(
+                        (res: HttpResponse<IBooking[]>) => this.paginateBookings(res.body, res.headers),
+                        (res: HttpErrorResponse) => this.onError(res.message)
+                    );
+            } else {
+                this.bookingService
+                    .query({
+                        page: this.page,
+                        size: this.itemsPerPage,
+                        sort: this.sort()
+                    })
+                    .subscribe(
+                        (res: HttpResponse<IBooking[]>) => this.paginateBookings(res.body, res.headers),
+                        (res: HttpErrorResponse) => this.onError(res.message)
+                    );
+            }
+        } else {
+            if (this.currentAccount.login !== 'admin') {
+                this.bookingService
+                    .getBookingByUserAndHotel({
+                        page: this.page,
+                        size: this.itemsPerPage,
+                        sort: this.sort()
+                    }, this.hotel)
+                    .subscribe(
+                        (res: HttpResponse<IBooking[]>) => this.paginateBookings(res.body, res.headers),
+                        (res: HttpErrorResponse) => this.onError(res.message)
+                    );
+            } else {
+                this.bookingService
+                    .getBookingByHotel({
+                        page: this.page,
+                        size: this.itemsPerPage,
+                        sort: this.sort()
+                    }, this.hotel)
+                    .subscribe(
+                        (res: HttpResponse<IBooking[]>) => this.paginateBookings(res.body, res.headers),
+                        (res: HttpErrorResponse) => this.onError(res.message)
+                    );
+            }
+        }
+    }
 }

@@ -2,16 +2,11 @@ package com.trs;
 
 import com.trs.config.ApplicationProperties;
 import com.trs.config.DefaultProfileUtil;
-import com.trs.repository.TimeSlotRepository;
-import com.trs.service.impl.BookingServiceImpl;
-import com.trs.web.rest.BookingResource;
 
 import io.github.jhipster.config.JHipsterConstants;
 
-import org.aspectj.weaver.ast.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;

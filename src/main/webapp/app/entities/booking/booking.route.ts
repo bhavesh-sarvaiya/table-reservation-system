@@ -41,7 +41,7 @@ export const bookingRoute: Routes = [
             booking: BookingResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Bookings'
         },
         canActivate: [UserRouteAccessService]
@@ -53,7 +53,7 @@ export const bookingRoute: Routes = [
             booking: BookingResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Bookings'
         },
         canActivate: [UserRouteAccessService]
@@ -65,7 +65,7 @@ export const bookingRoute: Routes = [
             booking: BookingResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Bookings'
         },
         canActivate: [UserRouteAccessService]
@@ -80,7 +80,7 @@ export const bookingPopupRoute: Routes = [
             booking: BookingResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Bookings'
         },
         canActivate: [UserRouteAccessService],

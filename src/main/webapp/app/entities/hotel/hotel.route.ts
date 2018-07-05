@@ -34,7 +34,7 @@ export const hotelRoute: Routes = [
             pagingParams: JhiResolvePagingParams
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             defaultSort: 'id,asc',
             pageTitle: 'Hotels'
         },
@@ -47,7 +47,7 @@ export const hotelRoute: Routes = [
             hotel: HotelResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Hotels'
         },
         canActivate: [UserRouteAccessService]
@@ -71,7 +71,7 @@ export const hotelRoute: Routes = [
             hotel: HotelResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Hotels'
         },
         canActivate: [UserRouteAccessService]
@@ -83,7 +83,7 @@ export const hotelRoute: Routes = [
             hotel: HotelResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Hotels'
         },
         canActivate: [UserRouteAccessService]
@@ -98,7 +98,7 @@ export const hotelPopupRoute: Routes = [
             hotel: HotelResolve
         },
         data: {
-            authorities: ['ROLE_USER'],
+            authorities: ['ROLE_ADMIN'],
             pageTitle: 'Hotels'
         },
         canActivate: [UserRouteAccessService],

@@ -37,6 +37,7 @@ export class TableBookComponent implements OnInit {
     private timings: ITiming[];
     tableLength: boolean;
     currentDate: string;
+    maxDate: string;
 
     constructor(
         private dataUtils: JhiDataUtils,
@@ -50,8 +51,10 @@ export class TableBookComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        const now = Date.now();
+        const now = new  Date();
         this.currentDate = new DatePipe('en-US').transform(now, 'yyyy-MM-dd');
+        now.setDate(now.getDate() + 7);
+        this.maxDate = new DatePipe('en-US').transform(now, 'yyyy-MM-dd');
         this.activatedRoute.data.subscribe(({ booking }) => {
             this.booking = new Booking();
         });

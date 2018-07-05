@@ -25,6 +25,9 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     List<Booking> findAllByHotelAndBookDateAndBookTime(Hotel hotel,LocalDate bookDate,String bookTime);
     List<Booking> findAllByHotelAndBookDateAndBookTimeAndActive(Hotel hotel,LocalDate bookDate,String bookTime,Boolean active);
     List<Booking> findAllByBookDateAndActive(LocalDate bookDate, Boolean active);
-
+    @Query("select booking from Booking booking where booking.user.login = ?#{principal.username}")
+    Page<Booking> findByUserIsCurrentUser(Pageable pageable);
+    @Query("select booking from Booking booking where booking.user.login = ?#{principal.username} and booking.hotel = ?1")
+    Page<Booking> findByUserIsCurrentUserAndHotel(Hotel hotel, Pageable pageable);
 
 }

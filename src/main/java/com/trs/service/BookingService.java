@@ -47,5 +47,7 @@ public interface BookingService {
     void delete(Long id);
     Page<BookingDTO> findAll(Pageable pageable, Long hotelId);
     List<BookingDTO> findAllBookDateAndActive(LocalDate bookdate,Boolean active);
+    Page<BookingDTO> findByUserIsCurrentUser(Pageable pageable);
+    Page<BookingDTO> findByUserIsCurrentUserAndHotel(Pageable pageable,Long hotelId);
 
 }
