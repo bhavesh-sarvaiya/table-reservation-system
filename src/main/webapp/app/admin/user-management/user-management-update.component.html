@@ -96,7 +96,7 @@
                 <div class="form-group">
                     <label class="form-control-label" for="mobileNumber">Mobile Number</label>
                     <input type="text" class="form-control" id="mobileNumber" name="mobileNumber" placeholder="Your mobile number"
-                           [(ngModel)]="user.mobileNumber" minlength="10" maxlength="15" #mobileNumberInput="ngModel" required>
+                           [(ngModel)]="user.mobileNumber" minlength="10" maxlength="15" #mobileNumberInput="ngModel" pattern="^[+@0-9]*$" required>
                     <div *ngIf="mobileNumberInput.dirty && mobileNumberInput.invalid">
                         <small class="form-text text-danger"
                            *ngIf="mobileNumberInput.errors.required">
@@ -109,6 +109,9 @@
                         <small class="form-text text-danger"
                            *ngIf="mobileNumberInput.errors.maxlength">
                             Your mobile Number cannot be longer than 15 numbers.
+                        </small>
+                        <small class="form-text text-danger" *ngIf="mobileNumberInput.errors.pattern">
+                            Your mobile number can only contain number.
                         </small>
                     </div>
                 </div>

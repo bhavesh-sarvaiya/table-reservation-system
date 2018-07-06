@@ -18,7 +18,8 @@ export class StaffUpdateComponent implements OnInit {
     isSaving: boolean;
 
     hotels: IHotel[];
-
+    isInvalid: boolean;
+    errorMessage: string;
     constructor(
         private jhiAlertService: JhiAlertService,
         private staffService: StaffService,
@@ -44,12 +45,18 @@ export class StaffUpdateComponent implements OnInit {
     }
 
     save() {
-        this.isSaving = true;
+        if (this.staff.name.trim() === '') {
+            this.errorMessage = 'Please fill all the fields';
+            this.isInvalid = true;
+        } else {
+            this.isSaving = true;
         if (this.staff.id !== undefined) {
             this.subscribeToSaveResponse(this.staffService.update(this.staff));
         } else {
             this.subscribeToSaveResponse(this.staffService.create(this.staff));
         }
+
+    }
     }
 
     private subscribeToSaveResponse(result: Observable<HttpResponse<IStaff>>) {

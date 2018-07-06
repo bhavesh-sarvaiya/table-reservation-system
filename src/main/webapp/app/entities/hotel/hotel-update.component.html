@@ -100,7 +100,7 @@
                 <div class="form-group">
                     <label class="form-control-label" for="field_pincode">Pincode</label>
                     <input type="text" class="form-control" name="pincode" id="field_pincode"
-                        [(ngModel)]="hotel.pincode" required maxlength="6"/>
+                        [(ngModel)]="hotel.pincode" required maxlength="6" pattern="^[+@0-9]*$"/>
                     <div [hidden]="!(editForm.controls.pincode?.dirty && editForm.controls.pincode?.invalid)">
                         <small class="form-text text-danger"
                         [hidden]="!editForm.controls.pincode?.errors?.required">
@@ -109,6 +109,10 @@
                         <small class="form-text text-danger"
                         [hidden]="!editForm.controls.pincode?.errors?.maxlength">
                         This field cannot be longer than 6 characters.
+                        </small>
+                        <small class="form-text text-danger" 
+                        [hidden]="!editForm.controls.pincode?.errors?.pattern">
+                            Your pincode can only contain number.
                         </small>
                     </div>
                 </div>

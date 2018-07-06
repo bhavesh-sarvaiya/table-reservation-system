@@ -16,6 +16,9 @@ import { ITiming } from 'app/shared/model/timing.model';
 import { ITimeSlot, DayName } from 'app/shared/model/time-slot.model';
 import { TimeSlotService } from 'app/entities/time-slot';
 import { getLocaleDayNames, DatePipe } from '@angular/common';
+import * as _ from 'underscore';
+import { LoginModalService } from 'app/core';
+// import { ModalService } from 'app/entities/hotel/modal.service';
 
 @Component({
     selector: 'jhi-hotel-detail',
@@ -47,7 +50,7 @@ export class TableBookComponent implements OnInit {
         private hotelTableService: HotelTableService,
         private jhiAlertService: JhiAlertService,
         private bookingService: BookingService,
-        private activatedRoute: ActivatedRoute
+        private activatedRoute: ActivatedRoute,
     ) {}
 
     ngOnInit() {
@@ -130,8 +133,11 @@ export class TableBookComponent implements OnInit {
     }
     private onSaveSuccess() {
         this.isSaving = false;
-        this.success = true;
-        this.ngOnInit();
+        window.alert('Booking successfully.');
+        // this._booking  = new Booking();
+        // this.openModal('custom-modal-1');
+       window.location.reload();
+        // this.success = true;
         // this.previousState();
     }
 
@@ -244,4 +250,12 @@ export class TableBookComponent implements OnInit {
             });
         }
     }
+
+    // openModal(id: string) {
+    //     this.modalService.open(id);
+    // }
+
+    // closeModal(id: string) {
+    //     this.modalService.close(id);
+    // }
 }

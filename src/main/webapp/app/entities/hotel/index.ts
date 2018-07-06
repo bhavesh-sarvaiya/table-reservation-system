@@ -5,3 +5,4 @@ export * from './hotel-detail.component';
 export * from './table-book.component';
 export * from './hotel.component';
 export * from './hotel.route';
+export * from './modal.service';

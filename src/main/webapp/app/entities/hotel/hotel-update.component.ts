@@ -91,11 +91,17 @@ export class HotelUpdateComponent implements OnInit {
     save() {
         this.checkValidation(this._hotel);
         if (!this.isInvalid) {
+            if (this.hotel.name.trim() === '' || this.hotel.type.trim() === ''
+            || this.hotel.city.trim()  === '' || this.hotel.address.trim()  === '' || this.hotel.pincode.trim()  === '') {
+                this.errorMessage = 'Please fill all the fields';
+                this.isInvalid = true;
+            } else {
             this.isSaving = true;
             if (this.hotel.id !== undefined) {
                 this.subscribeToSaveResponse(this.hotelService.update(this.hotel));
             } else {
                 this.subscribeToSaveResponse(this.hotelService.create(this.hotel));
+            }
             }
         }
     }
