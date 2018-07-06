@@ -1,27 +1,40 @@
-# TableReservation
-This application was generated using JHipster 5.0.0, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v5.0.0](https://www.jhipster.tech/documentation-archive/v5.0.0).
+# Table Reservation System
+This application was generated using JHipster 5.0.0, you can find documentation of JHipster and help at [https://www.jhipster.tech/documentation-archive/v5.0.0](https://www.jhipster.tech/documentation-archive/v5.0.0).
 
-## Development
+## Uses & Functionalities
+In the Table reservation system customer can book the table from given hotel, which is added by admin.
+  1. Admin has faclities to add the hotels and related informations, such as staff details, table details, cuisines and time slot of the each hotel.
+  2. Admin can manage the rush and normal hours of the each hotel. This system has auto relese functionality to relese the table, after the time slot is completed then it will relese the table and table will be available for the booking to other customers.
+  3. Customer can register in the Table resrvation system and they can reserve the hotel table using this application.
+  4. For reserving the hotel, customer can search the hotel and book the table according to the available tables.
+  
+  
+ ## How to install?
+  1. Clone the repository: https://github.com/bhavesh-sarvaiya/table-reservation-system
+  
+  2. Database:
+      - This system is developed using PostgreSql database.
+      - So before installing this application in your machine, you must install the PostgreSql database on your machine https://www.postgresql.org/download/
+      - Create blank database in postgresql and add datasource at `src->main->resources->config->application-dev.yml` at line no. near 33.
+      - Database configure in `pom.xml` file at line no. near 523.
+      
+  3. Before you can build this project, you must install and configure the following dependencies on your machine:
 
-Before you can build this project, you must install and configure the following dependencies on your machine:
+    - [Node.js][]: We use Node to run a development web server and build the project.
+       Depending on your system, you can install Node either from source or as a pre-packaged bundle.
+    - [Yarn][]: We use Yarn to manage Node dependencies.
+       Depending on your system, you can install Yarn either from source or as a pre-packaged bundle.
 
-1. [Node.js][]: We use Node to run a development web server and build the project.
-   Depending on your system, you can install Node either from source or as a pre-packaged bundle.
-2. [Yarn][]: We use Yarn to manage Node dependencies.
-   Depending on your system, you can install Yarn either from source or as a pre-packaged bundle.
+ 4. After installing Node, you should be able to run the following command to install development tools.
+    You will only need to run this command when dependencies change in [package.json](package.json).
 
-After installing Node, you should be able to run the following command to install development tools.
-You will only need to run this command when dependencies change in [package.json](package.json).
+        yarn install
 
-    yarn install
+ 5. Run the following commands in two separate terminals from the root directory to create a blissful development experience where your      browser auto-refreshes when files change on your hard drive.
 
-We use yarn scripts and [Webpack][] as our build system.
-
-Run the following commands in two separate terminals to create a blissful development experience where your browser
-auto-refreshes when files change on your hard drive.
-
-    ./mvnw
-    yarn start
+        ./mvnw
+        yarn start
+ Note: Application is running on https://localhost:8080, So please make sure 8080 port should be free.
 
 [Yarn][] is also used to manage CSS and JavaScript dependencies used in this application. You can upgrade dependencies by
 specifying a newer version in [package.json](package.json). You can also run `yarn update` and `yarn install` to manage dependencies.
@@ -29,47 +42,6 @@ Add the `help` flag on any command to see how you can use it. For example, `yarn
 
 The `yarn run` command will list all of the scripts available to run for this project.
 
-### Service workers
-
-Service workers are commented by default, to enable them please uncomment the following code.
-
-* The service worker registering script in index.html
-
-```html
-<script>
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker
-        .register('./service-worker.js')
-        .then(function() { console.log('Service Worker Registered'); });
-    }
-</script>
-```
-
-Note: workbox creates the respective service worker and dynamically generate the `service-worker.js`
-
-### Managing dependencies
-
-For example, to add [Leaflet][] library as a runtime dependency of your application, you would run following command:
-
-    yarn add --exact leaflet
-
-To benefit from TypeScript type definitions from [DefinitelyTyped][] repository in development, you would run following command:
-
-    yarn add --dev --exact @types/leaflet
-
-Then you would import the JS and CSS files specified in library's installation instructions so that [Webpack][] knows about them:
-Edit [src/main/webapp/app/vendor.ts](src/main/webapp/app/vendor.ts) file:
-~~~
-import 'leaflet/dist/leaflet.js';
-~~~
-
-Edit [src/main/webapp/content/css/vendor.css](src/main/webapp/content/css/vendor.css) file:
-~~~
-@import '~leaflet/dist/leaflet.css';
-~~~
-Note: there are still few other things remaining to do for Leaflet that we won't detail here.
-
-For further instructions on how to develop with JHipster, have a look at [Using JHipster in development][].
 
 ### Using angular-cli
 
@@ -168,8 +140,9 @@ To configure CI for your project, run the ci-cd sub-generator (`jhipster ci-cd`)
 
 
 
-## liquibase
-    ### mvnw liquibase:diff
+## Liquibase
+  ### Generate changeset
+    - mvnw liquibase:diff
       	
-    ### clearCheckSums
-    mvnw liquibase:clearCheckSums
+ ### clearCheckSums
+    - liquibase:clearCheckSums
